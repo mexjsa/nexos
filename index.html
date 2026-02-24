@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXO IA | Ingeniería de Impacto</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Video Background -->
+    <video autoplay muted loop playsinline id="video-bg">
+        <source src="background.mp4" type="video/mp4">
+    </video>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="nexo_logo.jpg" alt="NEXO IA Logo" class="logo-img">
+                </div>
+                <div>
+                    <a href="#contacto" class="btn btn-primary"
+                        style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">Agendar Demo</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="subtitle">Ingeniería de Impacto & Consultoría Privada</span>
+                    <h1>Arquitectura de <br><span class="gradient-text">Negocios Autónomos</span></h1>
+                    <p>No somos una fábrica de software. Diseñamos ecosistemas digitales exclusivos que operan tu
+                        negocio
+                        mientras tú te enfocas en la visión estratégica. Trabajamos con un número limitado de socios al
+                        año.</p>
+                    <div style="margin-top: 3rem;">
+                        <a href="#servicios" class="btn btn-primary">Nuestras Soluciones</a>
+                        <a href="#proyectos" class="btn btn-outline" style="margin-left: 1rem;">Ver Portafolio</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="servicios" class="container" style="padding: 6rem 2rem;">
+            <span class="subtitle" style="text-align: center;">Capacidades</span>
+            <h2 style="text-align: center;">El Código es <span class="gradient-text">Poder</span></h2>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Ecosistemas Digitales</h3>
+                    <p>Orquestación total de tus herramientas (ERP, CRM, WhatsApp). Eliminamos la fricción operativa
+                        conectando sistemas que antes no se hablaban.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧠</div>
+                    <h3>Inteligencia Operativa</h3>
+                    <p>Agentes autónomos entrenados con tu *know-how*. No son chatbots genéricos; son empleados
+                        digitales capaces de tomar decisiones y cerrar ventas.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">👁️</div>
+                    <h3>Visión Computacional</h3>
+                    <p>Ojos digitales que auditan, verifican y extraen datos del mundo real. Desde lectura de documentos
+                        hasta análisis de video en tiempo real.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <!-- Portfolio Section -->
+        <section id="proyectos" class="container" style="padding: 6rem 2rem;">
+            <span class="subtitle">Casos de Éxito</span>
+            <h2>Ingeniería <span class="gradient-text">Aplicada</span></h2>
+
+            <!-- Portfolio Marquee Container -->
+            <div class="portfolio-marquee">
+                <div class="portfolio-track">
+                    <!-- Original Items -->
+                    <div class="card" style="border-color: var(--accent);">
+                        <span class="badge">Fintech</span>
+                        <h3>Sistema Riesgo Crédito</h3>
+                        <p style="margin-bottom: 1.5rem;">Calculadora de riesgo financiero basada en algoritmos
+                            institucionales. Procesa variables económicas y genera score en tiempo real.</p>
+                        <button onclick="openDemo('credit_risk')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Probar Demo Interactiva ▶</button>
+                    </div>
+
+                    <div class="card" style="border-color: var(--accent-glow);">
+                        <span class="badge">Gestión Deportiva</span>
+                        <h3>Sistema CATIMEX</h3>
+                        <p style="margin-bottom: 1.5rem;">Plataforma integral para gestión de clubes de tiro. Control de
+                            socios, inventario y trámites SEDENA automatizados.</p>
+                        <button onclick="openDemo('catimex')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Ver Dashboard Simulado ▶</button>
+                    </div>
+
+                    <div class="card" style="border-color: #10b981;">
+                        <span class="badge">AI / Betting</span>
+                        <h3>Bot de Arbitraje</h3>
+                        <p style="margin-bottom: 1.5rem;">Agente autónomo que analiza momios en tiempo real. Usa visión
+                            computacional para leer líneas y ejecutar apuestas.</p>
+                        <button onclick="openDemo('betting_bot')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Ver Terminal en Vivo ▶</button>
+                    </div>
+
+                    <div class="card" style="opacity: 0.8;">
+                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                        <h3>Agencia de Seguros</h3>
+                        <p style="margin-bottom: 1.5rem;">Plataforma de cotización y gestión de pólizas para aseguradora
+                            líder.</p>
+                    </div>
+
+                    <div class="card" style="opacity: 0.8;">
+                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                        <h3>Clínica Odontopediatría</h3>
+                        <p style="margin-bottom: 1.5rem;">Sitio web amigable y sistema de citas para especialista dental
+                            infantil.</p>
+                    </div>
+
+                    <div class="card" style="opacity: 0.8;">
+                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                        <h3>Portafolio Diseño</h3>
+                        <p style="margin-bottom: 1.5rem;">Galería inmersiva para diseñadora gráfica. Experiencia visual
+                            de
+                            alto impacto.</p>
+                    </div>
+
+                    <!-- Duplicated Items for Infinite Scroll -->
+                    <div class="card" style="border-color: var(--accent);">
+                        <span class="badge">Fintech</span>
+                        <h3>Sistema Riesgo Crédito</h3>
+                        <p style="margin-bottom: 1.5rem;">Calculadora de riesgo financiero basada en algoritmos
+                            institucionales. Procesa variables económicas y genera score en tiempo real.</p>
+                        <button onclick="openDemo('credit_risk')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Probar Demo Interactiva ▶</button>
+                    </div>
+
+                    <div class="card" style="border-color: var(--accent-glow);">
+                        <span class="badge">Gestión Deportiva</span>
+                        <h3>Sistema CATIMEX</h3>
+                        <p style="margin-bottom: 1.5rem;">Plataforma integral para gestión de clubes de tiro. Control de
+                            socios, inventario y trámites SEDENA automatizados.</p>
+                        <button onclick="openDemo('catimex')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Ver Dashboard Simulado ▶</button>
+                    </div>
+
+                    <div class="card" style="border-color: #10b981;">
+                        <span class="badge">AI / Betting</span>
+                        <h3>Bot de Arbitraje</h3>
+                        <p style="margin-bottom: 1.5rem;">Agente autónomo que analiza momios en tiempo real. Usa visión
+                            computacional para leer líneas y ejecutar apuestas.</p>
+                        <button onclick="openDemo('betting_bot')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Ver Terminal en Vivo ▶</button>
+                    </div>
+
+                    <div class="card" style="opacity: 0.8;">
+                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                        <h3>Agencia de Seguros</h3>
+                        <p style="margin-bottom: 1.5rem;">Plataforma de cotización y gestión de pólizas para aseguradora
+                            líder.</p>
+                    </div>
+
+                    <div class="card" style="opacity: 0.8;">
+                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                        <h3>Clínica Odontopediatría</h3>
+                        <p style="margin-bottom: 1.5rem;">Sitio web amigable y sistema de citas para especialista dental
+                            infantil.</p>
+                    </div>
+
+                    <div class="card" style="opacity: 0.8;">
+                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                        <h3>Portafolio Diseño</h3>
+                        <p style="margin-bottom: 1.5rem;">Galería inmersiva para diseñadora gráfica. Experiencia visual
+                            de
+                            alto impacto.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Modal Container -->
+        <div id="demo-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeDemo()">&times;</span>
+                <div id="demo-container">
+                    <!-- Dynamic Content Loaded Here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <section id="contacto" class="container" style="padding: 8rem 2rem; text-align: center;">
+            <div style="max-width: 600px; margin: 0 auto;">
+                <h2>¿Listo para <span class="gradient-text">Escalar?</span></h2>
+                <p style="margin-bottom: 3rem; color: var(--text-secondary);">Trabajamos con un número limitado de
+                    clientes para garantizar calidad boutique. Hablemos de tu proyecto.</p>
+                <a href="mailto:juan@nexoia.com" class="btn btn-primary">Iniciar Conversación</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="ey-footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="logo" style="margin-bottom: 0.5rem;">
+                        <img src="nexo_logo.jpg" alt="NEXO IA Logo" class="logo-img" style="height: 40px;">
+                    </div>
+                    <p class="footer-slogan">Ingeniería de Impacto</p>
+                </div>
+                <div class="footer-nav">
+                    <a href="#contacto">Contáctanos</a>
+                    <a href="#">Nuestras oficinas</a>
+                    <a href="#">My NEXO</a>
+                    <a href="#">Mapa del sitio</a>
+                    <a href="#">Aviso legal y privacidad</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <p>NEXO IA se refiere a la organización global de ingeniería de software e inteligencia artificial.
+                        Cada una de las firmas miembro es una entidad legal independiente.</p>
+                    <p style="margin-top: 1rem;">NEXO IA &copy; 2026. Todos los derechos reservados.<br>
+                        <span style="opacity: 0.7;">Desarrollado en Ciudad de México.</span>
+                    </p>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon" aria-label="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="TikTok">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 1 0-1 13.6 6.84 6.84 0 0 0 6.84-6.84V9.45c0-1.07.62-2.22 1.56-2.9a4.82 4.82 0 0 0 2.27.14Z">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple subtle parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const blobs = document.querySelectorAll('.hero::before');
+            blobs.forEach(blob => {
+                const x = (window.innerWidth - e.pageX * 2) / 100;
+                const y = (window.innerHeight - e.pageY * 2) / 100;
+                // Since pseudo-elements can't be selected easily for JS animation without custom properties, 
+                // we'll skip the complex parallax for this MVP and rely on CSS animations.
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <script src="chatbot.js"></script>
+    <script src="portfolio.js"></script>
+</body>
+
+</html>

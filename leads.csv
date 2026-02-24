@@ -1,0 +1,3 @@
+timestamp,interest_type,business_size,session_interest,name,company_name,preferred_contact,whatsapp,phone,email,preferred_schedule
+2026-02-17 02:11:20,automation,,,Test User 2,,,,,test2@example.com,
+2026-02-17 11:20:23,demo,1,info_first,Juan,SKYNET2,whatsapp,5514803488,,,flexible
