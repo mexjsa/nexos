@@ -6,20 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEXO IA | Ingeniería de Impacto</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&family=Inter:wght@400..700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
-    <!-- Video Background -->
-    <video autoplay muted loop playsinline id="video-bg">
-        <source src="background.mp4" type="video/mp4">
-    </video>
 
     <header>
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="nexo_logo.jpg" alt="NEXO IA Logo" class="logo-img">
+                    <span
+                        style="color: var(--accent); font-size: 2.2rem; display: flex; align-items: center; gap: 10px;">
+                        <!-- Minimalist retro icon -->
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="2" y="8" width="4" height="8" />
+                            <rect x="10" y="4" width="4" height="16" />
+                            <rect x="18" y="8" width="4" height="8" />
+                        </svg>
+                        NEXO AI.
+                    </span>
                 </div>
                 <div>
                     <a href="#contacto" class="btn btn-primary"
@@ -112,26 +119,31 @@
                             style="font-size: 0.8rem; width: 100%;">Ver Terminal en Vivo ▶</button>
                     </div>
 
-                    <div class="card" style="opacity: 0.8;">
-                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                    <div class="card" style="border-color: #3b82f6;">
+                        <span class="badge">Insurtech</span>
                         <h3>Agencia de Seguros</h3>
                         <p style="margin-bottom: 1.5rem;">Plataforma de cotización y gestión de pólizas para aseguradora
                             líder.</p>
+                        <button onclick="openDemo('insurance')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Probar Cotizador ▶</button>
                     </div>
 
-                    <div class="card" style="opacity: 0.8;">
-                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                    <div class="card" style="border-color: #db2777;">
+                        <span class="badge">Health / UX</span>
                         <h3>Clínica Odontopediatría</h3>
                         <p style="margin-bottom: 1.5rem;">Sitio web amigable y sistema de citas para especialista dental
                             infantil.</p>
+                        <button onclick="openDemo('dental')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Ver Sistema de Citas ▶</button>
                     </div>
 
-                    <div class="card" style="opacity: 0.8;">
-                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                    <div class="card" style="border-color: #8b5cf6;">
+                        <span class="badge">Branding</span>
                         <h3>Portafolio Diseño</h3>
                         <p style="margin-bottom: 1.5rem;">Galería inmersiva para diseñadora gráfica. Experiencia visual
-                            de
-                            alto impacto.</p>
+                            de alto impacto.</p>
+                        <button onclick="openDemo('design_portfolio')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Explorar Experiencia ▶</button>
                     </div>
 
                     <!-- Duplicated Items for Infinite Scroll -->
@@ -162,26 +174,31 @@
                             style="font-size: 0.8rem; width: 100%;">Ver Terminal en Vivo ▶</button>
                     </div>
 
-                    <div class="card" style="opacity: 0.8;">
-                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                    <div class="card" style="border-color: #3b82f6;">
+                        <span class="badge">Insurtech</span>
                         <h3>Agencia de Seguros</h3>
                         <p style="margin-bottom: 1.5rem;">Plataforma de cotización y gestión de pólizas para aseguradora
                             líder.</p>
+                        <button onclick="openDemo('insurance')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Probar Cotizador ▶</button>
                     </div>
 
-                    <div class="card" style="opacity: 0.8;">
-                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                    <div class="card" style="border-color: #db2777;">
+                        <span class="badge">Health / UX</span>
                         <h3>Clínica Odontopediatría</h3>
                         <p style="margin-bottom: 1.5rem;">Sitio web amigable y sistema de citas para especialista dental
                             infantil.</p>
+                        <button onclick="openDemo('dental')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Ver Sistema de Citas ▶</button>
                     </div>
 
-                    <div class="card" style="opacity: 0.8;">
-                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #fff;">Próximamente</span>
+                    <div class="card" style="border-color: #8b5cf6;">
+                        <span class="badge">Branding</span>
                         <h3>Portafolio Diseño</h3>
                         <p style="margin-bottom: 1.5rem;">Galería inmersiva para diseñadora gráfica. Experiencia visual
-                            de
-                            alto impacto.</p>
+                            de alto impacto.</p>
+                        <button onclick="openDemo('design_portfolio')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Explorar Experiencia ▶</button>
                     </div>
                 </div>
             </div>
@@ -213,7 +230,15 @@
             <div class="footer-top">
                 <div class="footer-brand">
                     <div class="logo" style="margin-bottom: 0.5rem;">
-                        <img src="nexo_logo.jpg" alt="NEXO IA Logo" class="logo-img" style="height: 40px;">
+                        <span
+                            style="color: var(--accent); font-size: 1.8rem; display: flex; align-items: center; gap: 10px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="2" y="8" width="4" height="8" />
+                                <rect x="10" y="4" width="4" height="16" />
+                                <rect x="18" y="8" width="4" height="8" />
+                            </svg>
+                            NEXO AI.
+                        </span>
                     </div>
                     <p class="footer-slogan">Ingeniería de Impacto</p>
                 </div>

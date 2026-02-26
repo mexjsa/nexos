@@ -1,13 +1,20 @@
 :root {
-    --bg-color: #030303;
-    --text-primary: #ffffff;
-    --text-secondary: #a1a1aa;
-    --accent: #3b82f6;
-    /* Electric Blue */
-    --accent-glow: #6366f1;
-    /* Neon Purple */
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --bg-color: #000000;
+    /* Pure Black */
+    --bg-card: #0a0a0a;
+    /* Very dark slate, almost black */
+    --bg-dark: #121212;
+    --text-primary: #f2f2f2;
+    /* Crisp off-white */
+    --text-secondary: #848d97;
+    /* Muted tech gray */
+    --accent: #ff5e14;
+    /* NeuroAI Neon Orange */
+    --accent-glow: #ff7f40;
+    --border-ink: 1px solid rgba(255, 255, 255, 0.05);
+    /* Ultra delicate border */
+    --shadow-ink: 0 8px 24px rgba(0, 0, 0, 0.8);
+    /* Deep shadow */
 }
 
 * {
@@ -19,26 +26,50 @@
 
 body {
     background-color: var(--bg-color);
-    background-image: url('nexo_ia_background.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
     color: var(--text-primary);
     overflow-x: hidden;
     position: relative;
 }
 
+/* The Glowing Dotted Gradient Background (NeuroAI Style) */
 body::before {
-    content: "";
+    content: '';
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    /* Dark overlay for readability */
+    width: 100vw;
+    height: 60vh;
+    background:
+        /* The Dotted Pattern overlay using radial gradients */
+        radial-gradient(rgba(255, 94, 20, 0.3) 1px, transparent 1px) 0 0 / 20px 20px,
+        /* The intense orange glow from the bottom */
+        linear-gradient(to top, rgba(255, 94, 20, 0.25) 0%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+    z-index: -2;
+}
+
+/* Add a subtle second radial glow right in the middle-bottom */
+body::after {
+    content: '';
+    position: fixed;
+    bottom: -10vw;
+    left: 40vw;
+    width: 60vw;
+    height: 40vh;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 94, 20, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
     z-index: -1;
+}
+
+/* Headings use the modern sans font */
+h1,
+h2,
+h3,
+.subtitle,
+.badge,
+.logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* Animations */
@@ -86,26 +117,24 @@ body::before {
 
 /* Typography */
 h1 {
-    font-size: 4rem;
+    font-size: 4.5rem;
     font-weight: 800;
     line-height: 1.1;
-    letter-spacing: -2px;
-    background: linear-gradient(to right, #fff, #94a3b8);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-primary);
+    letter-spacing: -1px;
 }
 
 h2 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
 }
 
 .gradient-text {
-    background: linear-gradient(45deg, var(--accent), var(--accent-glow));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--accent);
+    text-shadow: 0 0 20px rgba(255, 94, 20, 0.3);
 }
 
 /* Layout */
@@ -117,10 +146,11 @@ h2 {
 
 /* Header */
 header {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
     position: absolute;
     width: 100%;
     z-index: 10;
+    background: transparent;
 }
 
 nav {
@@ -130,12 +160,9 @@ nav {
 }
 
 .logo {
-    font-weight: 700;
     font-size: 1.5rem;
-    letter-spacing: -1px;
-    display: flex;
-    /* align image */
-    align-items: center;
+    font-weight: 800;
+    color: var(--text-primary);
 }
 
 .logo-img {
@@ -158,12 +185,12 @@ nav {
 .hero::before {
     content: '';
     position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-    filter: blur(80px);
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255, 107, 0, 0.08) 0%, rgba(0, 0, 0, 0) 60%);
+    pointer-events: none;
     z-index: -1;
 }
 
@@ -176,51 +203,64 @@ nav {
 .subtitle {
     color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+    display: inline-block;
+    background-color: rgba(255, 94, 20, 0.1);
+    /* Subtle orange tint */
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 94, 20, 0.2);
 }
 
 .hero p {
     color: var(--text-secondary);
-    font-size: 1.25rem;
-    margin: 2rem 0;
-    line-height: 1.6;
+    font-size: 1.15rem;
+    margin: 1.5rem 0 2.5rem 0;
+    line-height: 1.7;
     max-width: 600px;
 }
 
 /* Buttons */
 .btn {
     display: inline-block;
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
+    padding: 0.8rem 1.8rem;
+    /* Smaller padding like dashboard buttons */
     font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    /* Slightly rounded edges, not full pills */
+    font-size: 0.95rem;
 }
 
 .btn-primary {
-    background: linear-gradient(45deg, var(--accent), var(--accent-glow));
-    color: white;
-    border: 1px solid transparent;
+    background: var(--accent);
+    color: #ffffff;
+    border: 1px solid var(--accent);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    background: var(--accent-glow);
+    border-color: #ff915a;
+    transform: translateY(-1px);
+    box-shadow: 0 0 20px rgba(255, 94, 20, 0.5);
 }
 
 .btn-outline {
-    border: 1px solid var(--glass-border);
+    background: var(--bg-card);
     color: var(--text-primary);
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
+    border: var(--border-ink);
+    box-shadow: var(--shadow-ink);
 }
 
 .btn-outline:hover {
-    border-color: var(--text-primary);
+    background: rgba(255, 94, 20, 0.05);
+    /* Slight orange glow on hover */
+    border-color: rgba(255, 94, 20, 0.3);
 }
 
 /* Services Grid */
@@ -232,26 +272,27 @@ nav {
 }
 
 .card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 2.5rem;
-    border-radius: 20px;
-    transition: all 0.3s ease;
+    background: rgba(10, 10, 10, 0.6);
+    /* Translucent cards for glow bleeding */
+    backdrop-filter: blur(10px);
+    border: var(--border-ink);
+    padding: 2rem;
+    transition: all 0.2s ease;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .card:hover {
-    border-color: var(--accent);
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 94, 20, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 94, 20, 0.15);
+    /* Orange glow on cards */
 }
 
 .card-icon {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
     display: inline-block;
-    padding: 1rem;
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: 12px;
     color: var(--accent);
 }
 
@@ -297,26 +338,23 @@ nav {
 }
 
 .portfolio-track .card {
-    min-width: 400px;
-    /* Larger cards */
-    max-width: 400px;
+    min-width: 350px;
+    max-width: 350px;
     flex-shrink: 0;
-    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    /* Pop effect */
-    opacity: 0.6;
-    transform-origin: center center;
-    background: rgba(20, 20, 20, 0.6);
-    /* Darker default */
+    transition: all 0.3s ease;
+    opacity: 0.9;
+    border: var(--border-ink);
+    border-radius: 12px;
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(10px);
 }
 
 /* Hover effect for individual cards */
 .portfolio-track .card:hover {
-    transform: scale(1.3) translateY(-10px);
-    /* Big growth + slight lift */
-    z-index: 100;
+    transform: scale(1.02);
     opacity: 1;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 2px var(--accent);
-    background: rgba(10, 10, 10, 1);
+    border-color: var(--accent);
+    box-shadow: 0 8px 30px rgba(255, 94, 20, 0.15);
 }
 
 /* Dim siblings on hover (optional advanced effect) - requires :has or standard sibling selectors which are tricky in CSS for previous siblings usually */
@@ -339,24 +377,24 @@ nav {
 /* Badge */
 .badge {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background: rgba(99, 102, 241, 0.1);
-    color: var(--accent-glow);
-    border-radius: 20px;
-    font-size: 0.8rem;
+    padding: 0.25rem 0.6rem;
+    background: rgba(255, 94, 20, 0.1);
+    /* Transparent orange */
+    color: var(--accent);
+    border: 1px solid rgba(255, 94, 20, 0.3);
+    border-radius: 6px;
+    font-size: 0.75rem;
     margin-bottom: 1rem;
     font-weight: 600;
 }
 
-/* Footer */
-/* Footer (EY Style) */
+/* Footer (Crypto SaaS Style) */
 .ey-footer {
-    border-top: 1px solid var(--glass-border);
+    border-top: var(--border-ink);
     padding: 4rem 0 2rem 0;
-    margin-top: 8rem;
+    margin-top: 6rem;
     color: var(--text-secondary);
-    background: rgba(10, 10, 10, 0.5);
-    backdrop-filter: blur(10px);
+    background: var(--bg-card);
 }
 
 .footer-top {
@@ -366,7 +404,7 @@ nav {
     flex-wrap: wrap;
     gap: 2rem;
     margin-bottom: 3rem;
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: var(--border-ink);
     padding-bottom: 2rem;
 }
 
@@ -388,27 +426,16 @@ nav {
 }
 
 .footer-nav a {
-    color: white;
+    color: var(--text-secondary);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.9rem;
     position: relative;
     padding-bottom: 2px;
 }
 
-.footer-nav a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 1px;
-    bottom: 0;
-    left: 0;
-    background-color: var(--accent);
-    transition: width 0.3s;
-}
-
-.footer-nav a:hover::after {
-    width: 100%;
+.footer-nav a:hover {
+    color: var(--text-primary);
 }
 
 .footer-bottom {
@@ -435,19 +462,20 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--glass-border);
+    width: 36px;
+    height: 36px;
+    border: var(--border-ink);
     border-radius: 50%;
-    color: white;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    background: var(--bg-color);
+    transition: all 0.2s ease;
 }
 
 .social-icon:hover {
-    background: var(--accent);
+    color: #ffffff;
+    background: rgba(255, 94, 20, 0.2);
     border-color: var(--accent);
-    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(255, 94, 20, 0.3);
 }
 
 /* Mobile Adjustments for Footer */
@@ -592,40 +620,30 @@ nav {
 
 .chat-button {
     width: auto;
-    /* Allow growth for text */
-    height: 50px;
-    /* Slightly shorter for pill style */
-    padding: 0 1.5rem;
+    height: 44px;
+    padding: 0 1.2rem;
     position: relative;
-    background: rgba(0, 0, 0, 0.8);
-    /* Dark background */
-    border: 2px solid #22d3ee;
-    /* Cyan border (Tailwind cyan-400) */
-    border-radius: 50px;
-    /* Pill shape */
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    /* Standard dashboard pill */
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    /* Space between icon and text */
     cursor: pointer;
-    box-shadow: 0 0 15px rgba(34, 211, 238, 0.5), inset 0 0 10px rgba(34, 211, 238, 0.2);
-    /* Neon glow */
-    transition: transform 0.3s, box-shadow 0.3s;
-    color: #22d3ee;
-    /* Text color */
+    box-shadow: 0 0 15px rgba(255, 94, 20, 0.3);
+    transition: all 0.2s;
+    color: #ffffff;
     font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.9rem;
-    letter-spacing: 1px;
-    text-transform: none;
-    /* Make it friendlier */
-    font-size: 0.95rem;
 }
 
 .chat-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(34, 211, 238, 0.8), inset 0 0 15px rgba(34, 211, 238, 0.4);
-    background: rgba(34, 211, 238, 0.1);
+    background: var(--accent-glow);
+    border-color: #ff915a;
+    box-shadow: 0 5px 20px rgba(255, 94, 20, 0.6);
 }
 
 .chat-button span {
@@ -638,53 +656,52 @@ nav {
 .chat-button::after {
     content: '';
     position: absolute;
-    top: -2px;
-    right: 5px;
-    width: 12px;
-    height: 12px;
-    background-color: #22c55e;
-    border: 2px solid var(--bg-color);
+    top: -4px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    /* White alert dot */
+    border: 2px solid var(--accent);
     border-radius: 50%;
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-    animation: pulse-green 2s infinite;
     z-index: 10;
 }
 
-@keyframes pulse-green {
+@keyframes pulse-orange {
     0% {
         transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.7);
     }
 
     70% {
         transform: scale(1);
-        box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+        box-shadow: 0 0 0 10px rgba(255, 107, 0, 0);
     }
 
     100% {
         transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0);
     }
 }
 
 .chat-window {
     position: absolute;
-    bottom: 80px;
+    bottom: 60px;
     right: 0;
-    width: 350px;
-    height: 500px;
-    background: rgba(20, 20, 20, 0.95);
-    backdrop-filter: blur(15px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
+    width: 320px;
+    height: 450px;
+    background: var(--bg-card);
+    border: var(--border-ink);
+    border-radius: 12px;
+    /* Standard UI radius */
     display: flex;
     flex-direction: column;
     overflow: hidden;
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
     pointer-events: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s ease;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .chat-window.active {
@@ -694,18 +711,19 @@ nav {
 }
 
 .chat-header {
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.2), transparent);
+    background: var(--bg-card);
     padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: var(--border-ink);
 }
 
 .chat-header h3 {
     margin: 0;
     font-size: 1rem;
-    color: white;
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .chat-header button {
@@ -726,24 +744,25 @@ nav {
 }
 
 .message {
-    max-width: 80%;
+    max-width: 85%;
     padding: 0.8rem 1rem;
-    border-radius: 12px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.4;
+    border-radius: 8px;
 }
 
 .message.bot {
     align-self: flex-start;
-    background: rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
+    background: var(--bg-color);
+    border: var(--border-ink);
     border-bottom-left-radius: 2px;
 }
 
 .message.user {
     align-self: flex-end;
     background: var(--accent);
-    color: white;
+    color: #ffffff;
     border-bottom-right-radius: 2px;
 }
 
@@ -770,29 +789,41 @@ nav {
 }
 
 .chat-input-area {
-    padding: 1rem;
-    border-top: 1px solid var(--glass-border);
+    padding: 0.8rem;
+    border-top: var(--border-ink);
     display: flex;
     gap: 0.5rem;
+    background: var(--bg-card);
 }
 
 .chat-input-area input {
     flex: 1;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--glass-border);
-    padding: 0.8rem;
-    border-radius: 8px;
-    color: white;
+    background: var(--bg-color);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    color: var(--text-primary);
     outline: none;
+    font-size: 0.85rem;
+}
+
+.chat-input-area input:focus {
+    border-color: var(--accent);
 }
 
 .chat-input-area button {
     background: var(--accent);
     border: none;
     color: white;
-    width: 40px;
-    border-radius: 8px;
+    width: 36px;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
+
+.chat-input-area button:hover {
+    background: var(--accent-glow);
 }
 
 /* Typing Indicator */

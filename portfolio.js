@@ -13,6 +13,12 @@ function openDemo(projectId) {
         renderCatimexDemo();
     } else if (projectId === 'betting_bot') {
         renderBettingBotDemo();
+    } else if (projectId === 'insurance') {
+        renderInsuranceDemo();
+    } else if (projectId === 'dental') {
+        renderDentalDemo();
+    } else if (projectId === 'design_portfolio') {
+        renderDesignDemo();
     }
 }
 
@@ -261,4 +267,104 @@ function renderBettingBotDemo() {
         terminal.scrollTop = terminal.scrollHeight;
         i++;
     }, 1500);
+}
+
+function renderInsuranceDemo() {
+    demoContainer.innerHTML = `
+        <h3 style="margin-bottom: 1rem;">Cotizador de Seguros Inteligente</h3>
+        <p style="margin-bottom: 2rem; color: #a1a1aa;">Simulación de cotización en tiempo real para seguros de vida.</p>
+        
+        <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+            <div>
+                <label style="display: block; margin-bottom: 0.5rem;">Edad del Asegurado</label>
+                <input type="number" id="ins-age" value="30" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid #333; color: white; border-radius: 8px;">
+            </div>
+            <div>
+                <label style="display: block; margin-bottom: 0.5rem;">Suma Asegurada ($)</label>
+                <select id="ins-amount" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid #333; color: white; border-radius: 8px;">
+                    <option value="500000">500,000</option>
+                    <option value="1000000" selected>1,000,000</option>
+                    <option value="2000000">2,000,000</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <input type="checkbox" id="ins-smoker" style="width: 20px; height: 20px;">
+                <label>¿Es fumador?</label>
+            </div>
+        </div>
+        
+        <button onclick="calculateInsurance()" class="btn btn-primary" style="width: 100%;">Generar Cotización</button>
+        
+        <div id="ins-result" style="margin-top: 2rem; padding: 1.5rem; background: rgba(59, 130, 246, 0.1); border: 1px solid var(--accent); border-radius: 8px; display: none; text-align: center;">
+            <p style="font-size: 0.9rem; color: #a1a1aa; margin-bottom: 0.5rem;">Prima Mensual Estimada:</p>
+            <h4 id="ins-price" style="font-size: 2rem; color: white;">$0.00</h4>
+            <button class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem;">Descargar Folleto PDF</button>
+        </div>
+    `;
+}
+
+function calculateInsurance() {
+    const age = parseInt(document.getElementById('ins-age').value);
+    const amount = parseInt(document.getElementById('ins-amount').value);
+    const isSmoker = document.getElementById('ins-smoker').checked;
+
+    let base = amount * 0.0005;
+    if (age > 40) base *= 1.5;
+    if (isSmoker) base *= 2.0;
+
+    const resultDiv = document.getElementById('ins-result');
+    const priceDisplay = document.getElementById('ins-price');
+
+    resultDiv.style.display = 'block';
+    priceDisplay.innerText = `$${base.toFixed(2)}`;
+}
+
+function renderDentalDemo() {
+    demoContainer.innerHTML = `
+        <h3 style="margin-bottom: 1rem;">Gestión de Citas Odontológicas</h3>
+        <p style="margin-bottom: 2rem; color: #a1a1aa;">Interfaz simplificada para agenda de pacientes infantiles.</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                <h4 style="font-size: 0.8rem; color: #a1a1aa; margin-bottom: 1rem;">CALENDARIO SEMANAL</h4>
+                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 0.7rem;">
+                    <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+                    <span style="opacity: 0.3;">24</span><span style="opacity: 0.3;">25</span><span style="background: var(--accent); border-radius: 2px;">26</span><span>27</span><span>28</span><span>1</span><span>2</span>
+                </div>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                <h4 style="font-size: 0.8rem; color: #a1a1aa; margin-bottom: 1rem;">PRÓXIMO PACIENTE</h4>
+                <p style="font-weight: bold;">Mateo García</p>
+                <p style="font-size: 0.7rem; color: #10b981;">10:30 AM - Profilaxis</p>
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
+             <h4 style="font-size: 0.8rem; color: #a1a1aa; margin-bottom: 1rem;">NUEVA CITA RÁPIDA</h4>
+             <div style="display: flex; gap: 0.5rem;">
+                <input type="text" placeholder="Nombre del niño/a" style="flex: 1; padding: 0.5rem; background: #000; border: 1px solid #333; color: white; border-radius: 4px;">
+                <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Agendar</button>
+             </div>
+        </div>
+    `;
+}
+
+function renderDesignDemo() {
+    demoContainer.innerHTML = `
+        <h3 style="margin-bottom: 1rem;">Portfolio Inmersivo v1.0</h3>
+        <p style="margin-bottom: 2rem; color: #a1a1aa;">Concepto de galería interactiva para marcas de lujo.</p>
+        
+        <div style="display: flex; gap: 1rem; height: 300px; overflow: hidden;">
+            <div style="flex: 1; background: linear-gradient(45deg, #1a1a1a, #333); display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                <span style="font-size: 3rem; opacity: 0.2;">✦</span>
+                <p style="position: absolute; bottom: 1rem; font-size: 0.7rem; letter-spacing: 2px;">BRANDING 2024</p>
+            </div>
+            <div style="flex: 1; background: linear-gradient(-45deg, #222, #444); display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                 <span style="font-size: 3rem; opacity: 0.2;">⬤</span>
+                 <p style="position: absolute; bottom: 1rem; font-size: 0.7rem; letter-spacing: 2px;">EDITORIAL</p>
+            </div>
+        </div>
+        
+        <p style="margin-top: 1.5rem; font-size: 0.8rem; text-align: center; color: var(--accent);">Arrastra para navegar la experiencia inmersiva</p>
+    `;
 }
