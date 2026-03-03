@@ -15,10 +15,12 @@ function openDemo(projectId) {
         renderBettingBotDemo();
     } else if (projectId === 'insurance') {
         renderInsuranceDemo();
-    } else if (projectId === 'dental') {
-        renderDentalDemo();
     } else if (projectId === 'design_portfolio') {
         renderDesignDemo();
+    } else if (projectId === 'real_estate') {
+        renderRealEstateDemo();
+    } else if (projectId === 'manson_tours') {
+        renderMansonToursDemo();
     }
 }
 
@@ -368,3 +370,302 @@ function renderDesignDemo() {
         <p style="margin-top: 1.5rem; font-size: 0.8rem; text-align: center; color: var(--accent);">Arrastra para navegar la experiencia inmersiva</p>
     `;
 }
+
+// --- REAL ESTATE DEMO STATE ---
+
+const realEstateTranslations = {
+    es: {
+        title: "Residencia Calle 9",
+        subtitle: "Lujo minimalista al sur de la ciudad",
+        agentTitle: "Asistente Virtual",
+        agentStatus: "En línea",
+        chatPlaceholder: "Escribe tu pregunta (ej. ¿Aceptan mascotas?)...",
+        formTitle: "Agendar Visita",
+        namePlaceholder: "Nombre completo",
+        phonePlaceholder: "Teléfono celular",
+        emailPlaceholder: "Correo electrónico",
+        datePlaceholder: "Fecha sugerida para visita",
+        submitBtn: "Solicitar Cita",
+        mapTitle: "Ubicación",
+        langSelector: "EN/FR"
+    },
+    en: {
+        title: "Calle 9 Residence",
+        subtitle: "Minimalist luxury south of the city",
+        agentTitle: "Virtual Assistant",
+        agentStatus: "Online",
+        chatPlaceholder: "Type your question (e.g. Do you accept pets?)...",
+        formTitle: "Schedule a Tour",
+        namePlaceholder: "Full Name",
+        phonePlaceholder: "Mobile Phone",
+        emailPlaceholder: "Email address",
+        datePlaceholder: "Suggested date for tour",
+        submitBtn: "Request Appointment",
+        mapTitle: "Location",
+        langSelector: "ES/FR"
+    },
+    fr: {
+        title: "Résidence Calle 9",
+        subtitle: "Luxe minimaliste au sud de la ville",
+        agentTitle: "Assistant Virtuel",
+        agentStatus: "En ligne",
+        chatPlaceholder: "Posez votre question (ex. Acceptez-vous les animaux ?)...",
+        formTitle: "Planifier une Visite",
+        namePlaceholder: "Nom complet",
+        phonePlaceholder: "Téléphone portable",
+        emailPlaceholder: "Adresse e-mail",
+        datePlaceholder: "Date suggérée pour la visite",
+        submitBtn: "Demander le Rendez-vous",
+        mapTitle: "Emplacement",
+        langSelector: "ES/EN"
+    }
+};
+
+let reLang = 'es';
+let reImages = [
+    'assets/calle9/Fachada.JPG',
+    'assets/calle9/Entrada.jpg',
+    'assets/calle9/Sala 1.jpg',
+    'assets/calle9/Cocina 1.jpg',
+    'assets/calle9/Dormitorio 1.jpg',
+    'assets/calle9/Baño 1.jpg',
+    'assets/calle9/Patio 1.jpg'
+];
+let currentImageIndex = 0;
+
+function setReLanguage(lang) {
+    reLang = lang;
+    renderRealEstateDemo();
+}
+
+function nextReImage() {
+    currentImageIndex = (currentImageIndex + 1) % reImages.length;
+    document.getElementById('re-carousel-img').src = reImages[currentImageIndex];
+}
+
+function prevReImage() {
+    currentImageIndex = (currentImageIndex - 1 + reImages.length) % reImages.length;
+    document.getElementById('re-carousel-img').src = reImages[currentImageIndex];
+}
+
+function renderRealEstateDemo() {
+    const t = realEstateTranslations[reLang];
+
+    // Custom Ajusco colors
+    const primaryColor = '#2b3a2f'; // Deep green
+    const secondaryColor = '#e2e0d8'; // Stone white
+    const accentColor = '#8c9c8a'; // Sage green
+
+    demoContainer.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div>
+                <h3 style="color: ${secondaryColor}; font-family: 'Plus Jakarta Sans', sans-serif;">${t.title}</h3>
+                <p style="color: ${accentColor}; font-size: 0.9rem;">${t.subtitle}</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; background: rgba(0,0,0,0.5); padding: 0.5rem; border-radius: 8px;">
+                <button onclick="setReLanguage('es')" style="background: ${reLang === 'es' ? primaryColor : 'transparent'}; border: none; color: white; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">ES</button>
+                <button onclick="setReLanguage('en')" style="background: ${reLang === 'en' ? primaryColor : 'transparent'}; border: none; color: white; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">EN</button>
+                <button onclick="setReLanguage('fr')" style="background: ${reLang === 'fr' ? primaryColor : 'transparent'}; border: none; color: white; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">FR</button>
+            </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.5rem; height: 450px;">
+            <!-- Left Column: Carousel & Map -->
+            <div style="display: flex; flex-direction: column; gap: 1rem; overflow-y: auto; padding-right: 0.5rem;">
+                
+                <!-- Image Carousel -->
+                <div style="position: relative; width: 100%; height: 250px; border-radius: 8px; overflow: hidden; background: #000;">
+                    <img id="re-carousel-img" src="${reImages[currentImageIndex]}" style="width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s;" alt="Property Image">
+                    <button onclick="prevReImage()" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;">❮</button>
+                    <button onclick="nextReImage()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;">❯</button>
+                </div>
+                
+                <!-- Map -->
+                <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px;">
+                     <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem; color: ${accentColor};">${t.mapTitle}</h4>
+                     <iframe 
+                        width="100%" 
+                        height="120" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        marginheight="0" 
+                        marginwidth="0" 
+                        src="https://maps.google.com/maps?q=19.27529071339462,-99.21026948011156&hl=es&z=15&amp;output=embed"
+                        style="border-radius: 4px; filter: invert(90%) hue-rotate(180deg) brightness(80%) contrast(80%);">
+                     </iframe>
+                </div>
+            </div>
+            
+            <!-- Right Column: AI Chat & Form -->
+            <div style="display: flex; flex-direction: column; background: rgba(0,0,0,0.3); border: 1px solid ${primaryColor}; border-radius: 8px; overflow: hidden;">
+                
+                <!-- Chat Header -->
+                <div style="background: ${primaryColor}; padding: 0.8rem; display: flex; align-items: center; gap: 0.8rem;">
+                    <div style="width: 35px; height: 35px; background: ${secondaryColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🤖</div>
+                    <div>
+                        <div style="font-weight: bold; font-size: 0.9rem; color: ${secondaryColor};">${t.agentTitle}</div>
+                        <div style="font-size: 0.7rem; color: #10b981;">● ${t.agentStatus}</div>
+                    </div>
+                </div>
+                
+                <!-- Chat Messages -->
+                <div id="re-chat-history" style="flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.85rem;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 0.8rem; border-radius: 8px 8px 8px 0; max-width: 85%; align-self: flex-start;">
+                        ${reLang === 'es' ? '¡Hola! Soy el asistente virtual de Juan. ¿Qué información te gustaría saber sobre el departamento?' : (reLang === 'en' ? "Hello! I am Juan's virtual assistant. What would you like to know about the apartment?" : "Bonjour! Je suis l'assistant virtuel de Juan. Que souhaitez-vous savoir sur l'appartement?")}
+                    </div>
+                </div>
+                
+                <!-- Chat Input -->
+                <div style="padding: 0.8rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 0.5rem;">
+                    <input type="text" id="re-chat-input" placeholder="${t.chatPlaceholder}" style="flex: 1; padding: 0.6rem; background: rgba(255,255,255,0.05); border: 1px solid #333; color: white; border-radius: 4px; font-size: 0.8rem;" onkeypress="if(event.key === 'Enter') handleReChat()">
+                    <button onclick="handleReChat()" style="background: ${primaryColor}; border: none; color: ${secondaryColor}; padding: 0 1rem; border-radius: 4px; cursor: pointer;">➤</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Supabase Form Trigger -->
+        <div style="margin-top: 1.5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
+            <p style="font-size: 0.85rem; color: #a1a1aa; margin-bottom: 1rem;">¿Listo para conocerlo?</p>
+            <button onclick="showReForm()" style="background: ${secondaryColor}; color: #000; border: none; padding: 0.8rem 2rem; border-radius: 4px; font-weight: bold; cursor: pointer; transition: transform 0.2s;">${t.submitBtn}</button>
+        </div>
+        
+        <!--Hidden Form Overlay-- >
+        <div id="re-form-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); justify-content: center; align-items: center; border-radius: 8px;">
+            <div style="background: #111; padding: 2rem; border-radius: 8px; width: 80%; max-width: 400px; border: 1px solid ${primaryColor}; position: relative;">
+                <span onclick="hideReForm()" style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 1.2rem; color: #a1a1aa;">&times;</span>
+                <h4 style="margin-bottom: 1.5rem; color: ${secondaryColor};">${t.formTitle}</h4>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <input type="text" id="re-form-name" placeholder="${t.namePlaceholder}" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid #333; color: white; border-radius: 4px;">
+                        <input type="tel" id="re-form-phone" placeholder="${t.phonePlaceholder}" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid #333; color: white; border-radius: 4px;">
+                            <input type="email" id="re-form-email" placeholder="${t.emailPlaceholder}" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid #333; color: white; border-radius: 4px;">
+                                <input type="text" id="re-form-date" placeholder="${t.datePlaceholder}" style="width: 100%; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid #333; color: white; border-radius: 4px;">
+                                    <button onclick="submitReLead()" style="background: ${primaryColor}; color: white; border: none; padding: 1rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 0.5rem;">${t.submitBtn}</button>
+                                </div>
+                                <div id="re-form-feedback" style="margin-top: 1rem; font-size: 0.8rem; text-align: center; color: #10b981; display: none;">✅ Datos enviados de forma segura. Te contactaremos pronto.</div>
+                            </div>
+                        </div>
+                        `;
+}
+
+function showReForm() {
+    document.getElementById('re-form-overlay').style.display = 'flex';
+}
+
+function hideReForm() {
+    document.getElementById('re-form-overlay').style.display = 'none';
+}
+
+// Simple rule-based chatbot for the demo
+function handleReChat() {
+    const inputEl = document.getElementById('re-chat-input');
+    const msg = inputEl.value.trim();
+    if (!msg) return;
+
+    appendReMessage(msg, 'user');
+    inputEl.value = '';
+
+    // Simulate thinking time
+    setTimeout(() => {
+        const response = getReBotResponse(msg.toLowerCase());
+        appendReMessage(response, 'bot');
+    }, 800);
+}
+
+function appendReMessage(text, sender) {
+    const history = document.getElementById('re-chat-history');
+    const primaryColor = '#2b3a2f';
+    const isBot = sender === 'bot';
+
+    const div = document.createElement('div');
+    div.style.padding = '0.8rem';
+    div.style.maxWidth = '85%';
+    div.style.borderRadius = isBot ? '8px 8px 8px 0' : '8px 8px 0 8px';
+    div.style.alignSelf = isBot ? 'flex-start' : 'flex-end';
+    div.style.background = isBot ? 'rgba(255,255,255,0.1)' : primaryColor;
+    div.innerText = text;
+
+    history.appendChild(div);
+    history.scrollTop = history.scrollHeight;
+}
+
+function getReBotResponse(msg) {
+    // English rules
+    if (reLang === 'en') {
+        if (msg.includes('pet') || msg.includes('dog') || msg.includes('cat')) return "Yes, we accept small pets. We are open to friendly negotiation for any situation. Would you like to schedule an appointment?";
+        if (msg.includes('location') || msg.includes('where')) return "Calle 9, in the Miguel Hidalgo 4a Sección neighborhood, Tlalpan Municipality. Very close to the Ajusco Medio hospital. The map is updated on this screen!";
+        if (msg.includes('furniture') || msg.includes('furnished')) return "It is possible to rent it furnished, but this will understandably increase the rent and deposit. We can discuss this in a personalized appointment.";
+        if (msg.includes('parking')) return "There is no parking in the building, but there are pensions around that cost between $500 and $800 MXN per month. Would you like to set up an appointment?";
+        if (msg.includes('room') || msg.includes('size')) return "It has one bedroom. The property is approximately 80m2, of which about 30m2 is a private garden space.";
+        if (msg.includes('garden')) return "No, the garden terrace is completely private, very beautiful and quiet.";
+        if (msg.includes('include') || msg.includes('what')) return "The rent includes: solid wood bed base, stove with hood, artisanal kitchen rack, electric fireplace, high-capacity programmable boiler, energy regulator, and a no-break for internet during outages.";
+
+        return "You can leave your details using the button below, and I will gladly have Juan contact you specifically for this request!";
+    }
+
+    // French rules
+    if (reLang === 'fr') {
+        if (msg.includes('animal') || msg.includes('chien') || msg.includes('chat')) return "Oui, nous acceptons les petits animaux. Nous sommes ouverts à la négociation. Souhaitez-vous prendre rendez-vous ?";
+        if (msg.includes('où') || msg.includes('emplacement') || msg.includes('lieu')) return "Calle 9, dans le quartier Miguel Hidalgo 4a Sección, municipalité de Tlalpan. Très proche de l'hôpital Ajusco Medio. La carte est sur cet écran !";
+        if (msg.includes('meuble') || msg.includes('meublé')) return "Il est possible de louer meublé, mais cela augmentera le loyer et la caution. Nous pouvons en discuter lors d'un rendez-vous.";
+        if (msg.includes('parking') || msg.includes('garage')) return "Il n'y a pas de parking dans l'immeuble, mais il y a des pensions autour (500-800 MXN / mois).";
+        if (msg.includes('chambre') || msg.includes('taille')) return "Il a une chambre. La propriété fait environ 80m2, dont environ 30m2 de jardin privé.";
+        if (msg.includes('jardin')) return "Non, la terrasse de jardin est entièrement privée, très belle et calme.";
+
+        return "Vous pouvez laisser vos coordonnées via le bouton ci-dessous, et Juan vous contactera personnellement !";
+    }
+
+    // Default Spanish rules (based on provided FAQ text)
+    if (msg.includes('hola') || msg.includes('info')) return "Claro que si... Remito requisitos y ubicación. Puedes hacerme preguntas precisas, o dejar tus datos.";
+    if (msg.includes('foto')) return "Todas las fotos se encuentran en el carrusel interactivo que ves en esta pantalla.";
+    if (msg.includes('ubicacion') || msg.includes('donde') || msg.includes('queda')) return "Calle 9, en la Colonia Miguel Hidalgo 4a Sección, Alcaldía de Tlalpan. Para mayor referencia, se encuentra cerca del hospital Ajusco Medio. Tienes el mapa al lado.";
+    if (msg.includes('amueblado') || msg.includes('mueble')) return "Si es posible, pero esto te incrementará necesariamente la renta y el deposito en consecuencia. Podemos tratar ese tema en una cita personalizada. ¿Te queda el próximo miércoles?";
+    if (msg.includes('estacionamiento')) return "No tiene estacionamiento en el edificio, la buena noticia es que existen pensiones alrededor y cuestan entre $500 y $800 mensuales. ¿Te gustaría que agendáramos una cita?";
+    if (msg.includes('cuartos') || msg.includes('habitacion')) return "Solo un cuarto, es el espacio ideal para una pareja joven o personas que trabajan de forma remota.";
+    if (msg.includes('jardin') || msg.includes('compartido')) return "No, la terraza jardín es completamente privada, es muy bella y silenciosa.";
+    if (msg.includes('mascota') || msg.includes('perro') || msg.includes('gato')) return "Si, aceptamos mascotas pequeñas. No obstante estamos abiertos a la negociación amistosa de cualquier situación, ¿quieres agendar una cita para platicar de las particularidades de tu caso?";
+    if (msg.includes('tamaño') || msg.includes('medida') || msg.includes('metros')) return "El tamaño es de aproximadamente 80m2, de estos alrededor de 30m2 son de jardín.";
+    if (msg.includes('meses') || msg.includes('tiempo') || msg.includes('año')) return "Si claro, pero se mantiene el requisito del deposito, además la póliza es el único requisito que no podemos realizar por un tiempo menor a un año.";
+    if (msg.includes('incluye') || msg.includes('dotacion')) return "La renta de 8400 incluye: base de cama de madera sólida, separaciones de madera, estufa con campana, rack artesanal, chimenea eléctrica, boiler programable, regulador, un no break y muebles de almacenamiento en la azotea.";
+    if (msg.includes('cita') || msg.includes('ver')) return "Actualmente se está mostrando los días miércoles en horario corrido de 8 a 16 hrs. Por favor haz clic en 'Solicitar Cita' abajo para agendar.";
+
+    return "No entendí del todo tu pregunta, pero si haces clic en el botón 'Solicitar Cita' Juan se pondrá en contacto contigo de inmediato.";
+}
+
+// Mock Supabase insertion function
+function submitReLead() {
+    // In a real scenario, you would use:
+    // const {data, error} = await supabase.from('real_estate_leads').insert([{name, phone, email, date}])
+
+    const btn = document.querySelector('#re-form-overlay button');
+    btn.innerText = "Enviando...";
+    btn.style.opacity = "0.7";
+
+    setTimeout(() => {
+        btn.innerText = "Listo";
+        document.getElementById('re-form-feedback').style.display = 'block';
+        setTimeout(() => hideReForm(), 2000);
+    }, 1000);
+}
+
+function renderMansonToursDemo() {
+    demoContainer.innerHTML = `
+        <h3 style="margin-bottom: 1rem;">Manson Tours Landing Page</h3>
+        <p style="margin-bottom: 1rem; color: #a1a1aa;">Sitio web productivo e interactivo, actualmente alojado en GitHub Pages.</p>
+        
+        <div style="width: 100%; height: 500px; border-radius: 8px; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,0.1);">
+            <iframe 
+                src="https://mexjsa.github.io/manson_tours/" 
+                width="100%" 
+                height="100%" 
+                frameborder="0"
+                loading="lazy"
+                title="Manson Tours Demo">
+            </iframe>
+        </div>
+        
+        <div style="margin-top: 1rem; text-align: center;">
+            <a href="https://mexjsa.github.io/manson_tours/" target="_blank" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">Abrir en Pestaña Completa</a>
+        </div>
+    `;
+}
+

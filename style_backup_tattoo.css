@@ -1,0 +1,886 @@
+:root {
+    --bg-color: #eaddcb;
+    /* Vintage Cream Paper */
+    --bg-card: #e5d4bc;
+    --bg-dark: #121212;
+    --text-primary: #111111;
+    /* Off-black ink */
+    --text-secondary: #333333;
+    --accent: #cd3d20;
+    /* Vintage Flash Red/Orange */
+    --accent-glow: #1c5234;
+    /* Vintage leaf green */
+    --border-ink: 3px solid #111111;
+    /* Bold tattoo outline */
+    --shadow-ink: 5px 5px 0px #111111;
+    /* Solid retro shadow */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Special Elite', monospace;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    position: relative;
+    /* Subtle paper texture effect using repeating linear gradient */
+    background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.02)), repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, var(--bg-color) 25%, var(--bg-color) 75%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.02));
+    background-position: 0 0, 10px 10px;
+    background-size: 20px 20px;
+}
+
+/* Headings use the vintage font */
+h1,
+h2,
+h3,
+.subtitle,
+.badge,
+.logo {
+    font-family: 'Rye', cursive;
+}
+
+/* Animations */
+/* Video Background */
+#video-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -2;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+    }
+
+    100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Typography */
+h1 {
+    font-size: 4rem;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--accent);
+    /* Solid red/orange for main title */
+    text-shadow: 2px 2px 0px #111111;
+}
+
+h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    color: var(--text-primary);
+}
+
+.gradient-text {
+    /* Bold green for contrast in headings */
+    color: var(--accent-glow);
+    -webkit-text-fill-color: var(--accent-glow);
+}
+
+/* Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Header */
+header {
+    padding: 2rem 0;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    border-bottom: var(--border-ink);
+    background-color: var(--bg-color);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    display: flex;
+    /* align image */
+    align-items: center;
+}
+
+.logo-img {
+    height: 60px;
+    /* Adjust as needed */
+    width: auto;
+    object-fit: contain;
+    /* transform: rotate(-5deg); */
+    /* filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5)); */
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-bottom: var(--border-ink);
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255, 107, 0, 0.08) 0%, rgba(0, 0, 0, 0) 60%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin-top: 8rem;
+    /* Added spacing from header/logo */
+}
+
+.subtitle {
+    color: var(--text-primary);
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    display: block;
+    background-color: var(--accent);
+    color: white;
+    padding: 5px 15px;
+    display: inline-block;
+    border: var(--border-ink);
+    box-shadow: 3px 3px 0px #111111;
+}
+
+.hero p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin: 2rem 0;
+    line-height: 1.8;
+    max-width: 600px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-weight: bold;
+    font-family: 'Special Elite', monospace;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: var(--border-ink);
+    box-shadow: var(--shadow-ink);
+    background: white;
+    /* Default fill */
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #eaddcb;
+}
+
+.btn-primary:hover,
+.btn-outline:hover {
+    transform: translate(2px, 2px);
+    /* Click pressed effect */
+    box-shadow: 3px 3px 0px #111111;
+}
+
+.btn-outline {
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+/* Services Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.card {
+    background: var(--bg-card);
+    border: var(--border-ink);
+    padding: 2.5rem;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-ink);
+    position: relative;
+}
+
+.card:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0px #111111;
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    color: var(--text-primary);
+}
+
+.card h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+
+
+/* --- Portfolio Marquee (Reel) --- */
+/* --- Portfolio Marquee (Reel) --- */
+.portfolio-marquee {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow-x: hidden;
+    overflow-y: visible;
+    /* Allow scaling vertical overflow */
+    padding: 4rem 0;
+    /* More breathing room for large scaling */
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.portfolio-track {
+    display: flex;
+    gap: 2rem;
+    width: max-content;
+    /* Ensure it doesn't wrap */
+    animation: scroll 30s linear infinite;
+    /* Slightly faster to be noticeable */
+    padding-left: 2rem;
+    will-change: transform;
+}
+
+/* Pause on hover over the track */
+.portfolio-track:hover {
+    animation-play-state: paused;
+}
+
+.portfolio-track .card {
+    min-width: 400px;
+    /* Larger cards */
+    max-width: 400px;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    opacity: 0.9;
+    transform-origin: center center;
+    background: var(--bg-card);
+    border: var(--border-ink);
+    box-shadow: var(--shadow-ink);
+}
+
+/* Hover effect for individual cards */
+.portfolio-track .card:hover {
+    transform: scale(1.05) translateY(-5px);
+    z-index: 100;
+    opacity: 1;
+}
+
+/* Dim siblings on hover (optional advanced effect) - requires :has or standard sibling selectors which are tricky in CSS for previous siblings usually */
+.portfolio-track:hover .card:not(:hover) {
+    opacity: 0.3;
+    filter: blur(2px);
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-50% - 1rem));
+        /* Adjust logic if needed */
+    }
+}
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: white;
+    color: var(--text-primary);
+    border: 2px solid #111111;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0px #111111;
+}
+
+/* Footer */
+/* Footer (EY Style) */
+.ey-footer {
+    border-top: var(--border-ink);
+    padding: 4rem 0 2rem 0;
+    margin-top: 8rem;
+    color: var(--text-primary);
+    background: var(--bg-card);
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    border-bottom: var(--border-ink);
+    padding-bottom: 2rem;
+}
+
+.footer-brand {
+    max-width: 300px;
+}
+
+.footer-slogan {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    margin-top: 0.5rem;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-nav a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    position: relative;
+    padding-bottom: 2px;
+}
+
+.footer-nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent);
+    transition: width 0.3s;
+}
+
+.footer-nav a:hover::after {
+    width: 100%;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-legal {
+    max-width: 600px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #71717a;
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #111111;
+    color: var(--text-primary);
+    background: white;
+    box-shadow: 2px 2px 0px #111;
+    transition: all 0.2s ease;
+}
+
+.social-icon:hover {
+    background: var(--text-primary);
+    color: white;
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px #111;
+}
+
+/* Mobile Adjustments for Footer */
+@media (max-width: 768px) {
+    .footer-top {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .footer-nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    header {
+        position: relative;
+        padding: 1.5rem 0;
+        width: 100%;
+        top: 0;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+
+    h2 {
+        font-size: 2rem;
+        line-height: 1.2;
+        /* Adjusted for better spacing */
+    }
+
+    .hero {
+        height: auto;
+        padding: 4rem 0;
+        text-align: center;
+        display: block;
+    }
+
+    .hero-content {
+        margin: 0 auto;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+        margin: 1.5rem auto;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        /* Force single column */
+        gap: 1.5rem;
+        margin-top: 3rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    /* Stack buttons on mobile */
+    .hero-content div {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        margin: 0 !important;
+    }
+
+    footer {
+        padding: 3rem 0;
+        margin-top: 4rem;
+    }
+}
+
+/* --- CHATBOT WIDGET --- */
+#chat-widget {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Custom Speech Bubble Icon */
+.chat-bubble-icon {
+    width: 24px;
+    height: 24px;
+    background: currentColor;
+    border-radius: 50% 50% 0 50%;
+    position: relative;
+    transform: rotate(45deg);
+    margin-bottom: 4px;
+    /* Adjust alignment */
+    /* animation: float-bubble 3s ease-in-out infinite; */
+}
+
+.chat-bubble-icon::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--bg-color);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes float-bubble {
+
+    0%,
+    100% {
+        transform: rotate(45deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(45deg) translateY(-3px);
+    }
+}
+
+.chat-button {
+    width: auto;
+    height: 50px;
+    padding: 0 1.5rem;
+    position: relative;
+    background: var(--bg-card);
+    border: var(--border-ink);
+    box-shadow: var(--shadow-ink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-primary);
+    font-weight: bold;
+    font-family: 'Special Elite', monospace;
+    font-size: 1rem;
+}
+
+.chat-button:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #111111;
+}
+
+.chat-button span {
+    /* Ensure icon and text are aligned */
+    display: flex;
+    align-items: center;
+}
+
+/* Online Status Indicator */
+.chat-button::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--accent);
+    border: 2px solid var(--bg-color);
+    border-radius: 50%;
+    animation: pulse-orange 2s infinite;
+    z-index: 10;
+}
+
+@keyframes pulse-orange {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(255, 107, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 107, 0, 0);
+    }
+}
+
+.chat-window {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 350px;
+    height: 500px;
+    background: var(--bg-card);
+    border: var(--border-ink);
+    box-shadow: var(--shadow-ink);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.chat-window.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.chat-header {
+    background: var(--accent);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: var(--border-ink);
+}
+
+.chat-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.chat-header button {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.message {
+    max-width: 80%;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    border: var(--border-ink);
+    box-shadow: 2px 2px 0px #111111;
+    background: white;
+}
+
+.message.bot {
+    align-self: flex-start;
+    color: var(--text-primary);
+}
+
+.message.user {
+    align-self: flex-end;
+    background: var(--accent);
+    color: white;
+}
+
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.chat-option-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.chat-option-btn:hover {
+    background: var(--accent);
+    color: white;
+}
+
+.chat-input-area {
+    padding: 1rem;
+    border-top: var(--border-ink);
+    display: flex;
+    gap: 0.5rem;
+    background: white;
+}
+
+.chat-input-area input {
+    flex: 1;
+    background: transparent;
+    border: var(--border-ink);
+    padding: 0.8rem;
+    color: var(--text-primary);
+    outline: none;
+    font-family: 'Special Elite', monospace;
+}
+
+.chat-input-area button {
+    background: var(--text-primary);
+    border: var(--border-ink);
+    color: white;
+    width: 40px;
+    cursor: pointer;
+}
+
+/* Typing Indicator */
+#typing-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 1rem;
+    width: fit-content;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+}
+
+/* --- PORTFOLIO MODAL --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background: rgba(20, 20, 20, 0.95);
+    margin: auto;
+    padding: 2.5rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s;
+}
+
+.close-modal {
+    color: var(--text-secondary);
+    float: right;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 20px;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: white;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
