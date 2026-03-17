@@ -21,7 +21,7 @@ function openDemo(projectId) {
         renderRealEstateDemo();
     } else if (projectId === 'manson_tours') {
         renderMansonToursDemo();
-    } else if (projectId === 'conasama') {
+    } else if (projectId === 'salud') {
         renderSaludDemo();
     }
 }
@@ -673,12 +673,12 @@ function renderMansonToursDemo() {
 
 function renderSaludDemo() {
     demoContainer.innerHTML = `
-        <h3 style="margin-bottom: 1rem;">SECRETARIA DE SALUD | Asistente de Apoyo</h3>
-        <p style="margin-bottom: 1rem; color: #a1a1aa;">Prototipo funcional de tamizaje psicológico para jóvenes de la SECRETARIA DE SALUD.</p>
+        <h3 style="margin-bottom: 0.5rem;">SECRETARIA DE SALUD | Asistente de Apoyo</h3>
+        <p style="margin-bottom: 1.5rem; color: #a1a1aa; font-size: 0.9rem;">Prototipo funcional de tamizaje psicológico para la SECRETARIA DE SALUD.</p>
         
-        <div style="width: 100%; height: 550px; border-radius: 12px; overflow: hidden; background: #0a0e14; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <div style="width: 100%; height: 500px; border-radius: 12px; overflow: hidden; background: #0a0e14; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
             <iframe 
-                src="http://localhost:3001" 
+                src="https://mexjsa.github.io/saludmental/" 
                 width="100%" 
                 height="100%" 
                 frameborder="0"
@@ -686,9 +686,12 @@ function renderSaludDemo() {
             </iframe>
         </div>
         
-        <div style="margin-top: 1.5rem; text-align: center; display: flex; gap: 1rem; justify-content: center;">
-            <button onclick="window.open('http://localhost:3001', '_blank')" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.6rem 1.2rem;">Abrir en Pantalla Completa</button>
-            <p style="font-size: 0.75rem; color: #94a3b8; align-self: center;">⚠️ Asegúrate de que el servidor local esté corriendo en el puerto 3001.</p>
+        <div style="margin-top: 1.5rem; text-align: center; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button onclick="window.open('https://mexjsa.github.io/saludmental/', '_blank')" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.6rem 1.2rem;">Abrir Chatbot Full 🚀</button>
+                <button onclick="window.open('https://mexjsa.github.io/saludmental/dashboard/', '_blank')" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.6rem 1.2rem; border-color: var(--accent);">Ver Dashboard 📊</button>
+            </div>
+            <p style="font-size: 0.75rem; color: #94a3b8; max-width: 400px;">✅ Demo publicada en GitHub Pages. La información se sincroniza en tiempo real con Supabase.</p>
         </div>
     `;
 }
