@@ -1,0 +1,444 @@
+PRD — Chatbot de Apoyo Psicológico CONASAMA
+
+Versión: 1.0
+Proyecto: Chatbot de detección temprana de salud mental para jóvenes
+Público objetivo: 12 a 29 años
+Implementación: Web / WhatsApp / plataformas institucionales
+Equipo de desarrollo: Antigravity + IA
+
+1. Propósito del producto
+
+Desarrollar un chatbot conversacional que permita:
+
+Detectar tempranamente malestar psicológico en jóvenes.
+
+Evaluar síntomas de ansiedad y depresión mediante escalas validadas.
+
+Detectar ideación suicida.
+
+Identificar consumo de sustancias.
+
+Clasificar automáticamente el nivel de riesgo psicológico.
+
+Canalizar al usuario hacia apoyo humano cuando sea necesario.
+
+El chatbot NO sustituye atención profesional.
+Su función es tamizaje, apoyo inicial y canalización.
+
+2. Público objetivo
+
+Usuarios entre 12 y 29 años.
+
+Segmentación interna:
+
+Segmento	Edad	Adaptación de lenguaje
+Adolescente temprano	12–14	lenguaje simple
+Adolescente	15–17	lenguaje cercano
+Joven adulto	18–21	lenguaje neutral
+Adulto joven	22–29	lenguaje más directo
+
+El sistema deberá adaptar automáticamente el tono del chatbot según el rango de edad seleccionado.
+
+3. Principios de conversación
+
+El chatbot debe seguir tres principios:
+
+1 Empatía
+
+El usuario debe sentirse escuchado.
+
+Ejemplo:
+
+"Gracias por contarme esto. Sé que a veces no es fácil hablar de cómo nos sentimos."
+
+2 Lenguaje juvenil
+
+Evitar lenguaje clínico.
+
+Ejemplos:
+
+Evitar	Usar
+síntomas depresivos	sentirte muy bajoneado
+trastornos de ansiedad	sentirte muy nervioso
+ideación suicida	pensar que sería mejor no estar aquí
+3 Mensajes cortos
+
+Máximo:
+
+1 idea por mensaje
+
+2 líneas máximo
+
+4. Simulación de escritura humana
+
+Para evitar que el chatbot parezca una máquina fría, se implementará delay dinámico de escritura.
+
+Reglas de delay
+mensaje corto → delay 1.2 segundos
+mensaje medio → delay 1.8 segundos
+mensaje largo → delay 2.5 segundos
+
+Opcional:
+
+mostrar indicador:
+
+"Escribiendo..."
+
+Esto mejora la percepción de empatía y naturalidad.
+
+5. Flujo general de conversación
+
+Flujo principal del chatbot:
+
+Inicio
+↓
+Consentimiento
+↓
+Datos básicos
+↓
+Escala K10 (malestar psicológico)
+↓
+Escala PHQ-9 (depresión)
+↓
+Evaluación ideación suicida
+↓
+Evaluación consumo de sustancias
+↓
+Scoring automático
+↓
+Clasificación de riesgo
+↓
+Intervención o canalización
+6. Fase 0 — Consentimiento
+
+El chatbot debe identificarse como sistema automatizado.
+
+Ejemplo:
+
+"Hola 👋
+Soy un asistente virtual que puede ayudarte a revisar cómo te estás sintiendo.
+No soy un psicólogo, pero puedo orientarte y conectarte con ayuda si lo necesitas."
+
+Luego:
+
+"Para continuar necesito que aceptes nuestro aviso de privacidad."
+
+Opciones:
+
+Aceptar
+No aceptar
+
+Si el usuario no acepta → terminar conversación.
+
+7. Fase 1 — Identificación básica
+
+Se solicitarán solo datos mínimos.
+
+Preguntas:
+
+1 Nombre o apodo
+2 Rango de edad
+
+Opciones:
+
+12–14
+15–17
+18–21
+22–25
+26–29
+
+3 Género (opcional)
+
+Opciones:
+
+Mujer
+Hombre
+No binario
+Otro
+Prefiero no decirlo
+
+4 Contacto de emergencia (opcional)
+
+8. Fase 2 — Evaluación de malestar psicológico
+
+Se utiliza la escala K10.
+
+Periodo de referencia:
+
+últimos 30 días
+
+Opciones de respuesta:
+
+Nunca
+Pocas veces
+A veces
+Muchas veces
+Siempre
+
+Las preguntas evaluarán:
+
+cansancio sin razón
+
+nerviosismo
+
+ansiedad intensa
+
+desesperanza
+
+esfuerzo excesivo
+
+sensación de inutilidad
+
+9. Fase 3 — Evaluación de depresión
+
+Se utiliza PHQ-9 adaptado.
+
+Periodo de referencia:
+
+últimas 2 semanas
+
+Opciones de respuesta:
+
+Ningún día
+Varios días
+Más de la mitad de los días
+Casi todos los días
+
+Se evaluarán síntomas como:
+
+falta de interés
+
+tristeza
+
+problemas de sueño
+
+fatiga
+
+apetito
+
+concentración
+
+autoestima
+
+lentitud o agitación
+
+pensamientos de muerte
+
+10. Fase 4 — Evaluación de ideación suicida
+
+Se activa cuando:
+
+PHQ-9 pregunta 9 > 0
+
+El chatbot realiza preguntas adicionales basadas en protocolo clínico.
+
+Preguntas clave:
+
+1 Deseo de morir
+2 Pensamiento suicida
+3 Plan suicida
+4 Acceso a medios
+
+11. Fase 5 — Consumo de sustancias
+
+Se evalúa frecuencia de consumo de:
+
+tabaco o vape
+
+alcohol
+
+drogas
+
+Opciones:
+
+Nunca
+1 o 2 veces
+Mensualmente
+Semanalmente o más
+12. Sistema de Scoring (OBLIGATORIO)
+
+El chatbot debe implementar un motor de scoring determinístico.
+
+El LLM NO debe calcular el riesgo.
+
+El scoring se realizará mediante código.
+
+Variables calculadas:
+
+score_k10
+score_phq9
+suicide_flag
+substance_flag
+13. Interpretación del scoring
+K10
+Puntaje	Nivel
+10–19	leve
+20–24	moderado
+25–29	severo
+30–50	muy severo
+PHQ-9
+Puntaje	Nivel
+0–4	mínimo
+5–9	leve
+10–14	moderado
+15–19	moderado severo
+20–27	severo
+14. Clasificación automática de riesgo
+
+El sistema debe generar un nivel de riesgo final.
+
+Riesgo leve
+
+Condición:
+
+K10 < 20
+PHQ9 < 5
+sin ideación suicida
+
+Acción:
+
+recomendaciones de autocuidado
+
+cierre positivo
+
+Riesgo moderado
+
+Condición:
+
+PHQ9 5–9
+K10 20–24
+
+Acción:
+
+sugerir apoyo psicológico
+
+ofrecer recursos
+
+Riesgo alto
+
+Condición:
+
+PHQ9 ≥ 10
+K10 ≥ 25
+
+Acción:
+
+recomendar contacto profesional
+
+ofrecer conexión con línea de ayuda
+
+ALERTA ROJA
+
+Condición:
+
+ideación suicida activa
+plan suicida
+
+Acción obligatoria:
+
+detener flujo automático
+
+ofrecer contacto inmediato con humano
+
+mostrar teléfonos de emergencia
+
+Ejemplo:
+
+"Lo que me cuentas es muy importante.
+No tienes que pasar por esto solo.
+Te recomiendo hablar ahora mismo con alguien que pueda ayudarte."
+
+Mostrar:
+
+Línea de la Vida
+800 911 2000
+15. Detección semántica adicional
+
+El chatbot debe activar protocolo de riesgo si detecta frases como:
+
+"quiero desaparecer"
+
+"no quiero vivir"
+
+"todo estaría mejor sin mí"
+
+"quiero morirme"
+
+Incluso si el usuario no ha completado el cuestionario.
+
+16. Experiencia de usuario
+
+Requisitos UX:
+
+interfaz simple
+
+botones grandes
+
+mensajes cortos
+
+emojis moderados
+
+barra de progreso
+
+Duración ideal de interacción:
+
+3 a 6 minutos
+17. Reglas de seguridad
+
+El chatbot debe:
+
+declarar que es un sistema automatizado
+
+no prometer confidencialidad absoluta
+
+recomendar ayuda profesional en casos graves
+
+registrar logs de seguridad
+
+18. Arquitectura técnica sugerida
+Frontend
+Chat UI
+
+↓
+
+Orquestador Python
+
+↓
+
+Motor conversacional (LLM)
+
+↓
+
+Motor de scoring clínico
+
+↓
+
+Base de datos
+
+↓
+
+Sistema de alertas
+19. Reglas para Antigravity
+
+El sistema debe implementar:
+
+1 Motor conversacional
+2 Motor de scoring clínico
+3 Clasificación de riesgo
+4 Canalización automática
+5 Delay de escritura
+6 Detección semántica de crisis
+
+El scoring debe ejecutarse fuera del LLM.
+
+20. Resultado esperado
+
+El chatbot debe ser capaz de:
+
+evaluar salud mental en menos de 5 minutos
+
+detectar ideación suicida
+
+clasificar riesgo
+
+canalizar usuarios a ayuda profesional

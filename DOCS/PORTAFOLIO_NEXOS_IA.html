@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio NEXOS IA 2026</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #38bdf8;
+            --text: #334155;
+            --light: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            background: #e2e8f0;
+            color: var(--text);
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background: var(--white);
+            margin: 20px auto;
+            padding: 20mm;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Cover & Branding */
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+        }
+
+        .header-logo svg {
+            color: var(--accent);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .accent {
+            color: var(--accent);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        /* Grid & Cards */
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            padding: 25px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Footer Info */
+        .footer {
+            margin-top: auto;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* Specialty Sections */
+        .highlight-box {
+            background: var(--primary);
+            color: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .highlight-box h2 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PAGE 1: COVER & DIAGNOSIS -->
+    <div class="page" id="page1">
+        <div class="header-logo">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="2" y="8" width="4" height="8" />
+                <rect x="10" y="4" width="4" height="16" />
+                <rect x="18" y="8" width="4" height="8" />
+            </svg>
+            NEXOS IA.
+        </div>
+
+        <div style="margin-top: 40px;">
+            <span class="subtitle">Boutique de Ingeniería de Impacto</span>
+            <h1>Arquitectura de <br><span class="accent">Negocios Autónomos</span></h1>
+            <p style="font-size: 1.2rem; max-width: 80%; margin-top: 20px;">
+                No fabricamos software, orquestamos poder. Ayudamos a empresas a escalar eliminando la fricción humana
+                en procesos críticos.
+            </p>
+        </div>
+
+        <div class="highlight-box">
+            <h2>¿Dónde está perdiendo tiempo tu negocio hoy?</h2>
+            <p>La mayoría de las empresas operan con "fugas de energía" invisibles:</p>
+            <ul style="margin-top: 15px; margin-left: 20px; line-height: 2;">
+                <li>Carga manual de datos de facturas y formularios.</li>
+                <li>Atención al cliente repetitiva que no cierra ventas.</li>
+                <li>Sistemas que no se hablan entre sí (Excel, WhatsApp, CRM).</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <span>PORTAFOLIO DE SOLUCIONES 2026</span>
+            <span>nexoia.com</span>
+        </div>
+    </div>
+
+    <!-- PAGE 2: SERVICES -->
+    <div class="page" id="page2">
+        <div class="header-logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="2" y="8" width="4" height="8" />
+                <rect x="10" y="4" width="4" height="16" />
+                <rect x="18" y="8" width="4" height="8" />
+            </svg>
+            NEXOS IA.
+        </div>
+
+        <h2>Nuestro <span class="accent">Catálogo Core</span></h2>
+        <p>Soluciones diseñadas para ser el sistema nervioso de tu organización.</p>
+
+        <div class="service-grid">
+            <div class="card">
+                <h3>⚡ Automatización (BPA)</h3>
+                <p>Conectamos tus herramientas. WhatsApp, correos y bases de datos trabajando en un solo flujo
+                    automático sin errores humanos.</p>
+            </div>
+            <div class="card">
+                <h3>🧠 Sistemas a Medida</h3>
+                <p>Paneles administrativos exclusivos. Control total de inventarios, expedientes y KPIs en tiempo real
+                    con interfaces premium.</p>
+            </div>
+            <div class="card">
+                <h3>👁️ OCR Inteligente</h3>
+                <p>Tus documentos ahora son datos. Extracción masiva y estructurada de información de facturas,
+                    contratos y formularios PDF.</p>
+            </div>
+            <div class="card">
+                <h3>💬 Bots Inteligentes</h3>
+                <p>Asistentes con LLMs (IA avanzada). Entrenados con tu know-how para vender, agendar y dar soporte
+                    técnico 24/7.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; border-left: 4px solid var(--accent); background: #f0f9ff;">
+            <h4 style="color: var(--primary);">La Ventaja NEXOS</h4>
+            <p style="font-style: italic; margin-top: 10px;">
+                Mientras agencias tradicionales tardan meses, nuestra metodología <b>AI-First</b> nos permite entregar
+                prototipos funcionales en periodos de 2 a 5 días.
+            </p>
+        </div>
+
+        <div class="footer">
+            <span>PAQUETES Y CAPACIDADES</span>
+            <span>Página 02</span>
+        </div>
+    </div>
+
+    <!-- PAGE 3: SUCCESS STORIES -->
+    <div class="page" id="page3">
+        <div class="header-logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="2" y="8" width="4" height="8" />
+                <rect x="10" y="4" width="4" height="16" />
+                <rect x="18" y="8" width="4" height="8" />
+            </svg>
+            NEXOS IA.
+        </div>
+
+        <h2>Casos de <span class="accent">Ingeniería Aplicada</span></h2>
+
+        <div style="margin-top: 30px;">
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: var(--primary);">Sistema CATIMEX</h3>
+                <p style="margin-top: 5px;">Plataforma integral para gestión deportiva. Automatización de trámites
+                    SEDENA, control de socios e inventario en tiempo real.</p>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: var(--primary);">Residencia Calle 9</h3>
+                <p style="margin-top: 5px;">Captura inteligente de leads en Real Estate de lujo. Integración de agentes
+                    conversacionales que filtran clientes de alta calidad automáticamente.</p>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: var(--primary);">Modelado Liga MX</h3>
+                <p style="margin-top: 5px;">Análisis estadístico avanzado basado en modelos de Poisson para predicción y
+                    minería de datos en tiempo real.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>CASOS DE ÉXITO 2026</span>
+            <span>Página 03</span>
+        </div>
+    </div>
+
+    <!-- PAGE 4: ENGAGEMENT -->
+    <div class="page" id="page4" style="text-align: center; justify-content: center;">
+        <div class="header-logo" style="justify-content: center;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="2" y="8" width="4" height="8" />
+                <rect x="10" y="4" width="4" height="16" />
+                <rect x="18" y="8" width="4" height="8" />
+            </svg>
+            NEXOS IA.
+        </div>
+
+        <h1 style="font-size: 2.5rem; margin-top: 20px;">¿Listo para <span class="accent">Escalar?</span></h1>
+        <p style="font-size: 1.1rem; margin-top: 20px; max-width: 500px; margin-left: auto; margin-right: auto;">
+            Trabajamos con un número limitado de socios al año para garantizar la exclusividad y calidad técnica que tu
+            negocio merece.
+        </p>
+
+        <div style="margin-top: 50px;">
+            <div style="margin-bottom: 20px; font-weight: 700; color: var(--primary); font-size: 1.5rem;">
+                juan@nexoia.com
+            </div>
+            <p>Agéndemos una <b>Auditoría de Procesos Gratuita</b></p>
+        </div>
+
+        <div class="footer" style="position: absolute; bottom: 20mm; width: calc(100% - 40mm);">
+            <span>NEXOS IA &copy; 2026</span>
+            <span>México | Latam</span>
+        </div>
+    </div>
+
+</body>
+
+</html>
