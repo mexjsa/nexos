@@ -74,3 +74,33 @@ En dashboards de alta densidad de datos, cada pixel vertical cuenta:
 - **Proporción del Mapa:** El mapa debe ocupar la mayor proporción posible de la vista principal (ej. ~68vh) para permitir una exploración cómoda.
 - **Compactación de Cabeceras:** Minimizar márgenes entre el título institucional y los contenedores de visualización.
 - **Consistencia de Datos en Tablas:** Asegurar que los nombres de las pruebas diagnósticas sean precisos (ej. PHQ9 en lugar de PHQ3) y que los estados (Badges) tengan un ancho fijo para evitar saltos de línea.
+
+## 🚀 Estrategia de Migración: Firebase a Supabase (Pattern)
+
+Para escalar dashboards y chatbots sin límites de cuota, se debe seguir este patrón de migración de base de datos.
+
+### 1. Centralización del Catálogo Geográfico
+En lugar de depender de miles de archivos JSON estáticos (ej. códigos postales), se deben migrar a una tabla relacional en Supabase para:
+- **Performance:** Consultas relacionales instantáneas `select * from codes where cp = '04330'`.
+- **Confiabilidad:** Eliminar errores 404 por rutas de archivos en hosting estáticos (GitHub Pages).
+- **Mantenimiento:** Actualizar un solo punto para cambios de coordenadas o nombres de municipios.
+
+### 2. Mapeo de Colecciones (Mapping)
+- **Documentos/Nodos:** Se transforman en filas de tabla.
+- **Campos Dinámicos:** Usar tipos `jsonb` para coordenadas o metadatos complejos.
+- **Timestamp:** Cambiar `serverTimestamp()` de Firebase por `default: now()` o `timestamp with time zone`.
+
+### 3. Estrategia de Coexistencia (Hybrid Fallback)
+Durante la transición, el código cliente debe implementar un "Safe Resolver":
+1. Intentar consulta a Supabase (Primary).
+2. Si falla (RLS, Red, Tabla no encontrada), caer a un archivo local de emergencia (Secondary).
+3. Asegura que el usuario final nunca vea un error de "Costo" o "No encontrado".
+
+### 4. Real-Time Sync
+Sustituir `onSnapshot()` de Firebase por canales de Postgres en Supabase:
+```javascript
+supabase.channel('main-channel')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'responses' }, 
+  payload => refreshDashboard())
+  .subscribe();
+```
