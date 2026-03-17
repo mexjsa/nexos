@@ -22,7 +22,7 @@ function openDemo(projectId) {
     } else if (projectId === 'manson_tours') {
         renderMansonToursDemo();
     } else if (projectId === 'conasama') {
-        renderConasamaDemo();
+        renderSaludDemo();
     }
 }
 
@@ -671,24 +671,24 @@ function renderMansonToursDemo() {
     `;
 }
 
-function renderConasamaDemo() {
+function renderSaludDemo() {
     demoContainer.innerHTML = `
-        <h3 style="margin-bottom: 1rem;">CONASAMA | Asistente de Apoyo</h3>
-        <p style="margin-bottom: 1rem; color: #a1a1aa;">Prototipo funcional de tamizaje psicológico para jóvenes.</p>
+        <h3 style="margin-bottom: 1rem;">SECRETARIA DE SALUD | Asistente de Apoyo</h3>
+        <p style="margin-bottom: 1rem; color: #a1a1aa;">Prototipo funcional de tamizaje psicológico para jóvenes de la SECRETARIA DE SALUD.</p>
         
         <div style="width: 100%; height: 550px; border-radius: 12px; overflow: hidden; background: #0a0e14; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
             <iframe 
-                src="http://localhost:3000" 
+                src="http://localhost:3001" 
                 width="100%" 
                 height="100%" 
                 frameborder="0"
-                title="CONASAMA Chatbot Demo">
+                title="Salud Chatbot Demo">
             </iframe>
         </div>
         
         <div style="margin-top: 1.5rem; text-align: center; display: flex; gap: 1rem; justify-content: center;">
-            <button onclick="window.open('http://localhost:3000', '_blank')" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.6rem 1.2rem;">Abrir en Pantalla Completa</button>
-            <p style="font-size: 0.75rem; color: #94a3b8; align-self: center;">⚠️ Asegúrate de que el servidor local esté corriendo en el puerto 3000.</p>
+            <button onclick="window.open('http://localhost:3001', '_blank')" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.6rem 1.2rem;">Abrir en Pantalla Completa</button>
+            <p style="font-size: 0.75rem; color: #94a3b8; align-self: center;">⚠️ Asegúrate de que el servidor local esté corriendo en el puerto 3001.</p>
         </div>
     `;
 }

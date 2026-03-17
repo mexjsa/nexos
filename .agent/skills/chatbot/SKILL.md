@@ -121,3 +121,32 @@ Para presentaciones con clientes, nunca usar puntos al azar en el océano.
 2. **Dashboard de Visualización:** Página protegida con Leaflet.js para monitoreo geográfico nacional. Ver patrones avanzados en [Advanced Dashboard Skill](file:///c:/Users/Juan/.gemini/antigravity/scratch/agency_web/.agent/skills/dashboard/SKILL.md).
 3. **Procesador de CP:** Script `process_cp.js` que convierta archivos de texto SEPOMEX a la estructura JSON fragmentada.
 4. **Guía de Configuración:** Documentar las credenciales y cómo rotar las API Keys si es necesario.
+
+## 🔒 Protocolo de Cierre Temporal y Despliegue Seguro (Kill Switch)
+
+En fases de desarrollo, revisión con clientes o por privacidad, se debe poder "apagar" el acceso público de forma inmediata sin comprometer el código.
+
+### 1. El "Kill Switch" de Archivos (Offline Mode)
+Para hostings estáticos (como GitHub Pages), el método más rápido es renombrar el punto de entrada.
+- **Acción:** Renombrar `index.html` a `index.html.OFF`.
+- **Resultado:** El servidor responderá con un error 404, haciendo que el bot o dashboard sea inaccessible aunque la URL sea correcta.
+- **Ventaja:** Es reversible instantáneamente y no requiere borrar archivos ni configuraciones.
+
+### 2. Privacidad de Repositorio (Escalamiento de Seguridad)
+Si el proyecto contiene datos sensibles de clientes (ej. Salud Mental, Leads reales):
+1. **GitHub Settings:** Cambiar la visibilidad del repositorio de *Public* a *Private*.
+2. **Impacto:** GitHub Pages se desactiva automáticamente y el código fuente queda oculto.
+3. **Reactivación:** Al volver a *Public*, se debe entrar a `Settings > Pages` para confirmar el despliegue de nuevo.
+
+### 3. Procedimiento de Mantenimiento / Emergencia
+- **Script rápido (PowerShell):**
+  ```powershell
+  # Apagar
+  ren index.html index.html.OFF; git add .; git commit -m "SECURITY: Cierre temporal"; git push
+  # Prender
+  ren index.html.OFF index.html; git add .; git commit -m "REVERT: Reactivando sitio"; git push
+  ```
+
+### 4. Protección de Credenciales (Sensitive Information)
+- **Supabase/Firebase:** Aunque el sitio esté "apagado", las API Keys en el código siguen activas.
+- **Mandatario:** Si se sospecha de un leak durante el cierre, rotar las API Keys y actualizar las reglas de seguridad (RLS) en la consola de la base de datos para denegar todo acceso (`select: false`).
