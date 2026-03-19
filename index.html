@@ -55,6 +55,24 @@
             </div>
         </section>
 
+        <!-- Trust / Pulse Section -->
+        <section class="trust-banner" style="background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 2rem 0;">
+            <div class="container" style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 2rem; opacity: 0.6;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <span style="font-size: 1.5rem; font-weight: 800; color: white;">+1M</span>
+                    <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;">Interacciones de IA</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <span style="font-size: 1.5rem; font-weight: 800; color: #10b981;">100%</span>
+                    <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;">Entregas Exitosas</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <span style="font-size: 1.5rem; font-weight: 800; color: white;">24/7</span>
+                    <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;">Soporte Boutique</span>
+                </div>
+            </div>
+        </section>
+
         <!-- Services Section -->
         <section id="servicios" class="container" style="padding: 6rem 2rem;">
             <span class="subtitle" style="text-align: center;">Capacidades</span>
@@ -101,21 +119,24 @@
                             style="font-size: 0.8rem; width: 100%;">Probar Demo Interactiva ▶</button>
                     </div>
 
-                    <div class="card" style="border-color: var(--accent-glow);">
+                    <div class="card" style="border-color: var(--accent-glow); position: relative;">
+                        <span class="badge" style="background: #10b981; color: white; border: none; position: absolute; top: -10px; right: 10px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);">IMPLEMENTACIÓN EXITOSA ✓</span>
                         <span class="badge">Gestión Deportiva</span>
-                        <h3>Sistema CATIMEX</h3>
+                        <h3>Sistema de Gestión</h3>
                         <p style="margin-bottom: 1.5rem;">Plataforma integral para gestión de clubes de tiro. Control de
-                            socios, inventario y trámites SEDENA automatizados.</p>
-                        <button onclick="window.open('https://mexjsa.github.io/catimex_system/', '_blank')"
-                            class="btn btn-outline" style="font-size: 0.8rem; width: 100%;">Visitar Sitio Oficial
+                            socios, inventario y trámites SEDENA automatizados con alto cumplimiento normativo.</p>
+                        <button onclick="window.open('https://mexjsa.github.io/guns_system/', '_blank')"
+                            class="btn btn-primary" style="font-size: 0.8rem; width: 100%; margin-bottom: 0.5rem;">Visitar Sitio Oficial
                             ▶</button>
+                        <button onclick="openDemo('guns_system')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Explorar Panel Admin ▶</button>
                     </div>
 
                     <div class="card" style="border-color: #10b981;">
                         <span class="badge">AI / Betting</span>
                         <h3>Bot de Arbitraje</h3>
-                        <p style="margin-bottom: 1.5rem;">Agente autónomo que analiza momios en tiempo real. Usa visión
-                            computacional para leer líneas y ejecutar apuestas.</p>
+                        <p style="margin-bottom: 1.5rem;">Agente autónomo en Telegram con funcionamiento continuo. Analiza
+                            momios en tiempo real y usa visión computacional para ejecutar apuestas.</p>
                         <button onclick="openDemo('betting_bot')" class="btn btn-outline"
                             style="font-size: 0.8rem; width: 100%;">Ver Terminal en Vivo ▶</button>
                     </div>
@@ -158,11 +179,19 @@
                     </div>
 
                     <div class="card" style="border-color: #00897b;">
-                        <span class="badge">Salud Mental</span>
-                        <h3>Chatbot SECRETARIA DE SALUD</h3>
-                        <p style="margin-bottom: 1.5rem;">Asistente conversacional de detección temprana para la SECRETARIA DE SALUD. Evalúa niveles de malestar y riesgo con protocolos validados.</p>
+                        <span class="badge" style="background: #00897b; color: white; border: none;">Impacto Social</span>
+                        <h3>Bot de Apoyo Psicológico</h3>
+                        <p style="margin-bottom: 1.5rem;">Asistente conversacional de detección temprana para la SECRETARIA DE SALUD. Evalúa niveles de malestar y riesgo con protocolos validados en tiempo real.</p>
                         <button onclick="openDemo('salud')" class="btn btn-outline"
-                            style="font-size: 0.8rem; width: 100%;">Probar Chatbot ▶</button>
+                            style="font-size: 0.8rem; width: 100%;">Ver Protocolo y Demo ▶</button>
+                    </div>
+
+                    <div class="card" style="border-color: #6366f1;">
+                        <span class="badge" style="background: #6366f1; color: white; border: none;">Empresarial</span>
+                        <h3>YRDocs: Gestión Documental</h3>
+                        <p style="margin-bottom: 1.5rem;">Ecosistema DMS para control de expedientes, auditoría de documentos y cálculo automático de divisas. Diseñado para alta operatividad local.</p>
+                        <button onclick="openDemo('yr_docs')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Ver Sistema YRDocs ▶</button>
                     </div>
 
                     <div class="card" style="border-color: #9A6F8E;">
@@ -185,21 +214,24 @@
                             style="font-size: 0.8rem; width: 100%;">Probar Demo Interactiva ▶</button>
                     </div>
 
-                    <div class="card" style="border-color: var(--accent-glow);">
+                    <div class="card" style="border-color: var(--accent-glow); position: relative;">
+                        <span class="badge" style="background: #10b981; color: white; border: none; position: absolute; top: -10px; right: 10px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);">IMPLEMENTACIÓN EXITOSA ✓</span>
                         <span class="badge">Gestión Deportiva</span>
-                        <h3>Sistema CATIMEX</h3>
+                        <h3>Sistema de Gestión</h3>
                         <p style="margin-bottom: 1.5rem;">Plataforma integral para gestión de clubes de tiro. Control de
-                            socios, inventario y trámites SEDENA automatizados.</p>
-                        <button onclick="window.open('https://mexjsa.github.io/catimex_system/', '_blank')"
-                            class="btn btn-outline" style="font-size: 0.8rem; width: 100%;">Visitar Sitio Oficial
+                            socios, inventario y trámites SEDENA automatizados con alto cumplimiento normativo.</p>
+                        <button onclick="window.open('https://mexjsa.github.io/guns_system/', '_blank')"
+                            class="btn btn-primary" style="font-size: 0.8rem; width: 100%; margin-bottom: 0.5rem;">Visitar Sitio Oficial
                             ▶</button>
+                        <button onclick="openDemo('guns_system')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Explorar Panel Admin ▶</button>
                     </div>
 
                     <div class="card" style="border-color: #10b981;">
                         <span class="badge">AI / Betting</span>
                         <h3>Bot de Arbitraje</h3>
-                        <p style="margin-bottom: 1.5rem;">Agente autónomo que analiza momios en tiempo real. Usa visión
-                            computacional para leer líneas y ejecutar apuestas.</p>
+                        <p style="margin-bottom: 1.5rem;">Agente autónomo en Telegram con funcionamiento continuo. Analiza
+                            momios en tiempo real y usa visión computacional para ejecutar apuestas.</p>
                         <button onclick="openDemo('betting_bot')" class="btn btn-outline"
                             style="font-size: 0.8rem; width: 100%;">Ver Terminal en Vivo ▶</button>
                     </div>
@@ -239,6 +271,22 @@
                         <button onclick="window.open('https://mexjsa.github.io/calle9_web/', '_blank')"
                             class="btn btn-outline" style="font-size: 0.8rem; width: 100%;">Visitar Sitio Oficial
                             ▶</button>
+                    </div>
+
+                    <div class="card" style="border-color: #00897b;">
+                        <span class="badge" style="background: #00897b; color: white; border: none;">Impacto Social</span>
+                        <h3>Bot de Apoyo Psicológico</h3>
+                        <p style="margin-bottom: 1.5rem;">Asistente conversacional de detección temprana para la SECRETARIA DE SALUD. Evalúa niveles de malestar y riesgo con protocolos validados en tiempo real.</p>
+                        <button onclick="openDemo('salud')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Ver Protocolo y Demo ▶</button>
+                    </div>
+
+                    <div class="card" style="border-color: #6366f1;">
+                        <span class="badge" style="background: #6366f1; color: white; border: none;">Empresarial</span>
+                        <h3>YRDocs: Gestión Documental</h3>
+                        <p style="margin-bottom: 1.5rem;">Ecosistema DMS para control de expedientes, auditoría de documentos y cálculo automático de divisas. Diseñado para alta operatividad local.</p>
+                        <button onclick="openDemo('yr_docs')" class="btn btn-outline"
+                            style="font-size: 0.8rem; width: 100%;">Ver Sistema YRDocs ▶</button>
                     </div>
 
                     <div class="card" style="border-color: #9A6F8E;">

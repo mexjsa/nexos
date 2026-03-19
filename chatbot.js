@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         welcome: {
             message: "Hola 👋 Soy el asistente de Nexo IA. ¿Qué te gustaría mejorar hoy?",
             options: [
+                { label: "Captación de Leads", next: "business_size", save_as: { interest_type: "leads_bot" } },
                 { label: "Automatizar procesos", next: "business_size", save_as: { interest_type: "automation" } },
                 { label: "Sistema de gestión", next: "business_size", save_as: { interest_type: "management_system" } },
                 { label: "Solución personalizada", next: "business_size", save_as: { interest_type: "custom_solution" } },

@@ -9,8 +9,8 @@ function openDemo(projectId) {
 
     if (projectId === 'credit_risk') {
         renderCreditRiskDemo();
-    } else if (projectId === 'catimex') {
-        renderCatimexDemo();
+    } else if (projectId === 'guns_system') {
+        renderGunsDemo();
     } else if (projectId === 'betting_bot') {
         renderBettingBotDemo();
     } else if (projectId === 'insurance') {
@@ -23,6 +23,8 @@ function openDemo(projectId) {
         renderMansonToursDemo();
     } else if (projectId === 'salud') {
         renderSaludDemo();
+    } else if (projectId === 'yr_docs') {
+        renderYRDocsDemo();
     }
 }
 
@@ -126,8 +128,8 @@ function calculateRisk() {
     }, 100);
 }
 
-// --- CATIMEX DEMO STATE ---
-let catimexView = 'dashboard';
+// --- GUNS SYSTEM DEMO STATE ---
+let gunsView = 'dashboard';
 const fakeUsers = [
     { name: "Agustín L.", status: "Activo", weapon: "Glock 25 (.380)" },
     { name: "Valeria M.", status: "En Proceso", weapon: "Beretta 84FS" },
@@ -135,19 +137,19 @@ const fakeUsers = [
     { name: "Sofia H.", status: "Pendiente", weapon: "Cezka P07" }
 ];
 
-function renderCatimexDemo() {
-    const content = getCatimexContent();
+function renderGunsDemo() {
+    const content = getGunsContent();
 
     demoContainer.innerHTML = `
         <div style="display: flex; height: 400px; gap: 1rem;">
             <!-- Sidebar -->
             <div style="width: 150px; border-right: 1px solid #333; padding-right: 1rem;">
-                <h4 style="color: var(--accent); margin-bottom: 2rem;">CATIMEX <span style="font-size: 0.6rem;">v2.0</span></h4>
+                <h4 style="color: var(--accent); margin-bottom: 2rem;">SISTEMA ARMAMENTA <span style="font-size: 0.6rem;">v2.0</span></h4>
                 <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                    <button onclick="setCatimexView('dashboard')" style="text-align: left; background: ${catimexView === 'dashboard' ? 'rgba(255,255,255,0.1)' : 'transparent'}; border: none; color: ${catimexView === 'dashboard' ? 'white' : '#a1a1aa'}; padding: 0.5rem; cursor: pointer; border-radius: 5px;">📊 Resumen</button>
-                    <button onclick="setCatimexView('users')" style="text-align: left; background: ${catimexView === 'users' ? 'rgba(255,255,255,0.1)' : 'transparent'}; border: none; color: ${catimexView === 'users' ? 'white' : '#a1a1aa'}; padding: 0.5rem; cursor: pointer; border-radius: 5px;">👥 Socios</button>
-                    <button onclick="setCatimexView('inventory')" style="text-align: left; background: ${catimexView === 'inventory' ? 'rgba(255,255,255,0.1)' : 'transparent'}; border: none; color: ${catimexView === 'inventory' ? 'white' : '#a1a1aa'}; padding: 0.5rem; cursor: pointer; border-radius: 5px;">🔫 Armamento</button>
-                    <button onclick="setCatimexView('sedena')" style="text-align: left; background: ${catimexView === 'sedena' ? 'rgba(255,255,255,0.1)' : 'transparent'}; border: none; color: ${catimexView === 'sedena' ? 'white' : '#a1a1aa'}; padding: 0.5rem; cursor: pointer; border-radius: 5px;">📄 Tramites SEDENA</button>
+                    <button onclick="setGunsView('dashboard')" style="text-align: left; background: ${gunsView === 'dashboard' ? 'rgba(255,255,255,0.1)' : 'transparent'}; border: none; color: ${gunsView === 'dashboard' ? 'white' : '#a1a1aa'}; padding: 0.5rem; cursor: pointer; border-radius: 5px;">📊 Resumen</button>
+                    <button onclick="setGunsView('users')" style="text-align: left; background: ${gunsView === 'users' ? 'rgba(255,255,255,0.1)' : 'transparent'}; border: none; color: ${gunsView === 'users' ? 'white' : '#a1a1aa'}; padding: 0.5rem; cursor: pointer; border-radius: 5px;">👥 Socios</button>
+                    <button onclick="setGunsView('inventory')" style="text-align: left; background: ${gunsView === 'inventory' ? 'rgba(255,255,255,0.1)' : 'transparent'}; border: none; color: ${gunsView === 'inventory' ? 'white' : '#a1a1aa'}; padding: 0.5rem; cursor: pointer; border-radius: 5px;">🔫 Armamento</button>
+                    <button onclick="setGunsView('sedena')" style="text-align: left; background: ${gunsView === 'sedena' ? 'rgba(255,255,255,0.1)' : 'transparent'}; border: none; color: ${gunsView === 'sedena' ? 'white' : '#a1a1aa'}; padding: 0.5rem; cursor: pointer; border-radius: 5px;">📄 Tramites SEDENA</button>
                 </div>
             </div>
             
@@ -159,13 +161,13 @@ function renderCatimexDemo() {
     `;
 }
 
-function setCatimexView(view) {
-    catimexView = view;
-    renderCatimexDemo();
+function setGunsView(view) {
+    gunsView = view;
+    renderGunsDemo();
 }
 
-function getCatimexContent() {
-    if (catimexView === 'dashboard') {
+function getGunsContent() {
+    if (gunsView === 'dashboard') {
         return `
             <h3>Panel General</h3>
             <p style="color: #a1a1aa; margin-bottom: 1.5rem;">Bienvenido, Administrador.</p>
@@ -185,7 +187,7 @@ function getCatimexContent() {
                 <p>✅ Inventario mensual verificado.</p>
             </div>
         `;
-    } else if (catimexView === 'users') {
+    } else if (gunsView === 'users') {
         return `
             <h3>Directorio de Socios</h3>
             <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.8rem;">Datos anonimizados para demostración.</p>
@@ -204,19 +206,19 @@ function getCatimexContent() {
                 `).join('')}
             </table>
         `;
-    } else if (catimexView === 'inventory') {
+    } else if (gunsView === 'inventory') {
         return `
-             <h3>Inventario de Club</h3>
-             <ul style="list-style: none; margin-top: 1rem;">
+            <h3>Inventario de Club</h3>
+            <ul style="list-style: none; margin-top: 1rem;">
                 ${fakeUsers.map(u => `
                     <li style="display: flex; justify-content: space-between; padding: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05);">
                         <span>🔫 ${u.weapon}</span>
                         <span style="color: #a1a1aa; font-size: 0.8rem;">Asignada a: ${u.name}</span>
                     </li>
                 `).join('')}
-             </ul>
+            </ul>
         `;
-    } else if (catimexView === 'sedena') {
+    } else if (gunsView === 'sedena') {
         return `
             <h3>Generador de Formatos</h3>
             <div style="background: #fff; color: #000; padding: 2rem; margin-top: 1rem; border-radius: 4px; opacity: 0.9; text-align: center;">
@@ -669,6 +671,138 @@ function renderMansonToursDemo() {
             <a href="https://mexjsa.github.io/manson_tours/" target="_blank" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.5rem 1rem;">Abrir en Pestaña Completa</a>
         </div>
     `;
+}
+
+function renderYRDocsDemo() {
+    demoContainer.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 style="margin-bottom: 0.2rem;">YRDocs | Gestión Documental</h3>
+                    <p style="font-size: 0.85rem; color: #a1a1aa;">Sistema de control de expedientes y auditoría financiera.</p>
+                </div>
+                <div style="background: rgba(99, 102, 241, 0.1); padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid rgba(99, 102, 241, 0.3);">
+                    <span style="color: #818cf8; font-size: 0.8rem; font-weight: bold;">MODO DEMO INTERACTIVO</span>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 250px 1fr; gap: 1.5rem; height: 450px;">
+                <!-- Sidebar -->
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.8rem;">
+                    <div style="font-size: 0.75rem; color: #71717a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">Navegación</div>
+                    <button class="btn btn-outline" style="text-align: left; padding: 0.6rem; font-size: 0.8rem; background: rgba(99, 102, 241, 0.1); border-color: #6366f1;">📊 Dashboard</button>
+                    <button class="btn btn-outline" style="text-align: left; padding: 0.6rem; font-size: 0.8rem; border-color: transparent;">📁 Expedientes</button>
+                    <button class="btn btn-outline" style="text-align: left; padding: 0.6rem; font-size: 0.8rem; border-color: transparent;">🧾 Facturación</button>
+                    <button class="btn btn-outline" style="text-align: left; padding: 0.6rem; font-size: 0.8rem; border-color: transparent;">⚙️ Configuración</button>
+                    
+                    <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05);">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 30px; height: 30px; background: #6366f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">A</div>
+                            <div>
+                                <div style="font-size: 0.75rem; font-weight: bold;">Admin Maestro</div>
+                                <div style="font-size: 0.65rem; color: #10b981;">Conectado</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div style="display: flex; flex-direction: column; gap: 1rem; overflow-y: auto; padding-right: 0.5rem;">
+                    <!-- Stats Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                            <div style="font-size: 0.7rem; color: #a1a1aa;">Expedientes</div>
+                            <div style="font-size: 1.5rem; font-weight: bold;">1,284</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                            <div style="font-size: 0.7rem; color: #a1a1aa;">Pendientes</div>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #f59e0b;">12</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                            <div style="font-size: 0.7rem; color: #a1a1aa;">Total Auditory</div>
+                            <div style="font-size: 1.2rem; font-weight: bold; color: #10b981;">$4.2M MXN</div>
+                        </div>
+                    </div>
+
+                    <!-- Calculator Mockup (YRDoc Feature) -->
+                    <div style="background: rgba(99, 102, 241, 0.05); padding: 1.5rem; border-radius: 12px; border: 1px dashed rgba(99, 102, 241, 0.3);">
+                        <h4 style="font-size: 0.9rem; margin-bottom: 1rem; color: #818cf8;">💱 Conversor de Divisas Automático</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <label style="display: block; font-size: 0.7rem; color: #a1a1aa; margin-bottom: 0.3rem;">Importe Original</label>
+                                <input type="number" id="yr-amount" value="1500" style="width: 100%; background: #000; border: 1px solid #333; color: white; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem;" oninput="updateYRConversion()">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 0.7rem; color: #a1a1aa; margin-bottom: 0.3rem;">Moneda</label>
+                                <select id="yr-currency" style="width: 100%; background: #000; border: 1px solid #333; color: white; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem;" onchange="updateYRConversion()">
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="MXN">MXN</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 0.7rem; color: #a1a1aa; margin-bottom: 0.3rem;">Total (MXN)</label>
+                                <div id="yr-total-mxn" style="width: 100%; background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; color: #10b981; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">$28,500.00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Docs Table -->
+                    <div style="background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); padding: 1rem;">
+                        <h4 style="font-size: 0.9rem; margin-bottom: 1rem;">Documentos Recientes</h4>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.75rem;">
+                            <thead style="color: #71717a; text-align: left;">
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <th style="padding: 0.5rem;">Archivo</th>
+                                    <th style="padding: 0.5rem;">Categoría</th>
+                                    <th style="padding: 0.5rem;">Fecha</th>
+                                    <th style="padding: 0.5rem; text-align: right;">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                                    <td style="padding: 0.8rem 0.5rem;">📄 factura_servicios_marzo.pdf</td>
+                                    <td style="padding: 0.8rem 0.5rem;">Gastos Op.</td>
+                                    <td style="padding: 0.8rem 0.5rem;">18/03/2026</td>
+                                    <td style="padding: 0.8rem 0.5rem; text-align: right;"><button style="background:none; border:1px solid #333; color:white; padding: 2px 8px; border-radius:4px; font-size: 0.6rem;">Ver</button></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                                    <td style="padding: 0.8rem 0.5rem;">📄 contrato_proveedor_a.pdf</td>
+                                    <td style="padding: 0.8rem 0.5rem;">Legales</td>
+                                    <td style="padding: 0.8rem 0.5rem;">15/03/2026</td>
+                                    <td style="padding: 0.8rem 0.5rem; text-align: right;"><button style="background:none; border:1px solid #333; color:white; padding: 2px 8px; border-radius:4px; font-size: 0.6rem;">Ver</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function updateYRConversion() {
+    const amount = parseFloat(document.getElementById('yr-amount').value) || 0;
+    const currency = document.getElementById('yr-currency').value;
+    const display = document.getElementById('yr-total-mxn');
+    
+    let rate = 1;
+    if (currency === 'USD') rate = 19.00;
+    if (currency === 'EUR') rate = 20.50;
+    if (currency === 'MXN') rate = 1.00;
+    
+    const total = amount * rate;
+    display.innerText = `$${total.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2})} MXN`;
+    
+    if (currency === 'MXN') {
+        display.style.background = 'rgba(255,255,255,0.05)';
+        display.style.borderColor = '#333';
+        display.style.color = '#fff';
+    } else {
+        display.style.background = 'rgba(16, 185, 129, 0.1)';
+        display.style.borderColor = '#10b981';
+        display.style.color = '#10b981';
+    }
 }
 
 function renderSaludDemo() {
