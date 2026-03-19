@@ -1,0 +1,3 @@
+[submodule "conasama-chatbot"]
+	path = conasama-chatbot
+	url = https://github.com/mexjsa/saludmental.git
