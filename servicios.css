@@ -1,0 +1,245 @@
+/* Specific styles for the Services Page (servicios.html) */
+
+/* Hero Section Adjustments */
+.services-hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 6rem;
+}
+
+.hero-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-text {
+    max-width: 600px;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    /* Slightly smaller than main hero */
+    margin-bottom: 1rem;
+}
+
+.hero-image-container {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    transform: perspective(1000px) rotateY(-5deg);
+    transition: transform 0.5s ease;
+}
+
+.hero-image-container:hover {
+    transform: perspective(1000px) rotateY(0deg) scale(1.02);
+}
+
+.hero-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 94, 20, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    position: relative;
+    z-index: 2;
+}
+
+.glow-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, var(--accent) 0%, transparent 60%);
+    opacity: 0.15;
+    z-index: 1;
+    filter: blur(40px);
+}
+
+/* Services Detailed Grid */
+.services-detailed-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+.service-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Value Prop Banner */
+.value-prop-banner {
+    margin-top: 5rem;
+    background: linear-gradient(135deg, rgba(20, 20, 20, 0.8) 0%, rgba(255, 94, 20, 0.1) 100%);
+    border: var(--border-ink);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.banner-content {
+    flex: 1;
+    padding: 3rem;
+}
+
+.banner-content h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.banner-content p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.banner-image {
+    flex: 1;
+    max-width: 400px;
+    height: 100%;
+    min-height: 250px;
+    position: relative;
+}
+
+.banner-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    mask-image: linear-gradient(to right, transparent, black 20%);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 20%);
+}
+
+/* Modern Pricing Table */
+.pricing-table-container {
+    overflow-x: auto;
+    background: var(--bg-card);
+    border: var(--border-ink);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+}
+
+.modern-pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+    /* Ensure horizontal scroll on mobile */
+}
+
+.modern-pricing-table th,
+.modern-pricing-table td {
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modern-pricing-table th {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    padding-top: 2rem;
+}
+
+.modern-pricing-table th span {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+    margin-top: 0.5rem;
+}
+
+.modern-pricing-table td.feature-name {
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    padding-left: 2rem;
+}
+
+.modern-pricing-table tbody td {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Highlight the median/popular column */
+.modern-pricing-table th:nth-child(3),
+.modern-pricing-table th:nth-child(4),
+.modern-pricing-table td:nth-child(3),
+.modern-pricing-table td:nth-child(4) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.modern-pricing-table tbody tr:hover td {
+    background: rgba(255, 94, 20, 0.03);
+    color: var(--text-primary);
+}
+
+.modern-pricing-table tfoot td {
+    border-bottom: none;
+    padding-bottom: 2rem;
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+/* Mobile Adjustments for Services Page */
+@media (max-width: 900px) {
+    .hero-split {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .hero-text {
+        margin: 0 auto;
+    }
+
+    .hero-text div {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .hero-text .btn {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+
+    .value-prop-banner {
+        flex-direction: column;
+    }
+
+    .banner-content {
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .banner-image {
+        max-width: 100%;
+        width: 100%;
+        height: 200px;
+    }
+
+    .banner-image img {
+        mask-image: linear-gradient(to top, transparent, black 20%);
+        -webkit-mask-image: linear-gradient(to top, transparent, black 20%);
+    }
+}
