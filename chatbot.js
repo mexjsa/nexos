@@ -1,21 +1,7 @@
 // ============================================================
-// NEXO IA CHATBOT — Leads → Firebase calle9-2ca66 / nexos_leads
+// NEXO IA CHATBOT — Leads → WhatsApp 5514803488
 // ============================================================
-import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
-const _nexoFirebaseConfig = {
-  apiKey: "AIzaSyBAXpmSLVVadvgVYPwLS1D2FtrI_IrQaQs",
-  authDomain: "calle9-2ca66.firebaseapp.com",
-  projectId: "calle9-2ca66",
-  storageBucket: "calle9-2ca66.firebasestorage.app",
-  messagingSenderId: "1064897799867",
-  appId: "1:1064897799867:web:740a957d9d742e63f1ab9e"
-};
-
-// Reutiliza app si ya fue inicializada (en caso de cargar junto a portfolio.js)
-const _nexoApp = getApps().length ? getApps()[0] : initializeApp(_nexoFirebaseConfig);
-const _nexoDB = getFirestore(_nexoApp);
+const NEXO_WA_NUMBER = '525514803488';
 
 document.addEventListener('DOMContentLoaded', function () {
     const config = {
@@ -52,11 +38,22 @@ document.addEventListener('DOMContentLoaded', function () {
             ]
         },
         offer_session: {
-            message: "Podemos ayudarte a organizar y escalar tu operación. ¿Te gustaría una revisión breve sin costo?",
+            message: "Podemos ayudarte. ¿Cómo prefieres continuar?",
             options: [
-                { label: "Sí, me interesa", next: "capture_name", save_as: { session_interest: "yes" } },
-                { label: "Más información primero", next: "capture_name", save_as: { session_interest: "info_first" } }
+                { label: "💬 Quiero que me contacten (chat)", next: "capture_name", save_as: { session_interest: "chatbot" } },
+                { label: "📄 Llenar formulario completo", next: "goto_form", save_as: { session_interest: "form" } },
+                { label: "👋 WhatsApp directo", next: "direct_wa", save_as: { session_interest: "direct_wa" } }
             ]
+        },
+        goto_form: {
+            message: "¡Perfecto! Te llevo al formulario donde podrás dejarnos todos tus datos y recibir una propuesta personalizada. 📝",
+            action: "scroll_to_form",
+            options: []
+        },
+        direct_wa: {
+            message: "Haz clic abajo para abrir WhatsApp y platicar directamente con nuestro equipo. ¡Te esperamos! 👋",
+            action: "open_whatsapp",
+            options: [{ label: "🔙 Volver al inicio", next: "welcome" }]
         },
         capture_name: {
             message: "Perfecto 😊 ¿Cuál es tu nombre?",
@@ -107,9 +104,9 @@ document.addEventListener('DOMContentLoaded', function () {
             ]
         },
         confirmation: {
-            message: "Perfecto 🙌 Hemos registrado tu información. Te contactaremos pronto.",
+            message: "Perfecto 🙌 Abriremos WhatsApp con tus datos para que nuestro equipo los reciba de inmediato. ¡Te contactamos pronto!",
             action: "submit_data",
-            options: []
+            options: [{ label: "🔙 Volver al inicio", next: "welcome" }]
         },
         default: {
             message: "No estoy seguro de entender. ¿Podrías reformularlo o elegir una opción?",
@@ -183,6 +180,26 @@ document.addEventListener('DOMContentLoaded', function () {
             addMessage('bot', msg);
             if (node.action === 'scroll_to_projects') {
                 document.querySelector('#proyectos')?.scrollIntoView({ behavior: 'smooth' });
+            } else if (node.action === 'scroll_to_form') {
+                setTimeout(() => {
+                    const formToggle = document.getElementById('nexos-form-toggle');
+                    if (formToggle) { formToggle.click(); }
+                    document.querySelector('#contacto')?.scrollIntoView({ behavior: 'smooth' });
+                }, 500);
+            } else if (node.action === 'open_whatsapp') {
+                const waUrl = `https://wa.me/${NEXO_WA_NUMBER}?text=${encodeURIComponent('👋 Hola! Me interesó NEXOS IA y quiero conocer más sobre sus soluciones.')`;
+                setTimeout(() => window.open(waUrl, '_blank'), 500);
+                // Inject clickable WA button inside chat
+                setTimeout(() => {
+                    const waLink = document.createElement('a');
+                    waLink.href = waUrl;
+                    waLink.target = '_blank';
+                    waLink.rel = 'noopener';
+                    waLink.style.cssText = 'display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:10px 16px;background:linear-gradient(135deg,#16a34a,#22c55e);color:white;border-radius:8px;font-weight:600;font-size:0.85rem;text-decoration:none;';
+                    waLink.innerHTML = '💬 Abrir WhatsApp';
+                    chatMessages.appendChild(waLink);
+                    scrollToBottom();
+                }, config.typingDelay + 100);
             } else if (node.action === 'submit_data') {
                 submitLeadData(state.userData);
             }
@@ -257,18 +274,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function scrollToBottom() { chatMessages.scrollTop = chatMessages.scrollHeight; }
 
-    // ✅ FIREBASE REAL — Guarda lead NEXOS en calle9-2ca66 / nexos_leads
-    async function submitLeadData(data) {
-        try {
-            await addDoc(collection(_nexoDB, 'nexos_leads'), {
-                ...data,
-                project: 'NEXOS',
-                source: 'chatbot_website',
-                created_at: serverTimestamp()
-            });
-            console.log('✅ Lead NEXOS guardado en Firebase');
-        } catch (err) {
-            console.error('❌ Error guardando lead NEXOS:', err);
-        }
+    // ✅ WHATSAPP — Envía lead vía wa.me con todos los datos recolectados
+    function submitLeadData(data) {
+        const scheduleLabels = { morning: 'Mañana (9–12h)', midday: 'Medio día (12–3h)', afternoon: 'Tarde (3–6h)', flexible: 'Flexible' };
+        const interestLabels = { leads_bot: 'Captación de Leads', automation: 'Automatización de procesos', management_system: 'Sistema de gestión', custom_solution: 'Solución personalizada', demo: 'Ver demostración' };
+        const sizeLabels   = { '1': 'Solo yo', '2_5': '2–5 personas', '6_20': '6–20 personas', '20_plus': '20+ personas' };
+
+        const lines = [
+            '📌 *Nuevo lead — Nexo Assistant*',
+            '',
+            data.name         ? `👤 *Nombre:* ${data.name}`                                       : null,
+            data.company_name ? `🏢 *Empresa:* ${data.company_name}`                              : null,
+            data.interest_type? `🎯 *Interés:* ${interestLabels[data.interest_type] || data.interest_type}` : null,
+            data.business_size? `👥 *Tamaño:* ${sizeLabels[data.business_size] || data.business_size}`       : null,
+            data.whatsapp     ? `📱 *WhatsApp:* ${data.whatsapp}`                                : null,
+            data.phone        ? `📞 *Teléfono:* ${data.phone}`                                   : null,
+            data.email        ? `📧 *Email:* ${data.email}`                                      : null,
+            data.preferred_schedule ? `⏰ *Horario:* ${scheduleLabels[data.preferred_schedule] || data.preferred_schedule}` : null,
+            data.preferred_contact  ? `📡 *Contacto preferido:* ${data.preferred_contact}`        : null,
+        ].filter(Boolean).join('\n');
+
+        const waUrl = `https://wa.me/${NEXO_WA_NUMBER}?text=${encodeURIComponent(lines)}`;
+
+        // Auto-open WhatsApp
+        setTimeout(() => window.open(waUrl, '_blank'), 400);
+
+        // Inject green button inside chat for manual fallback
+        setTimeout(() => {
+            const waLink = document.createElement('a');
+            waLink.href = waUrl;
+            waLink.target = '_blank';
+            waLink.rel = 'noopener';
+            waLink.style.cssText = 'display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:12px 18px;background:linear-gradient(135deg,#16a34a,#22c55e);color:white;border-radius:10px;font-weight:700;font-size:0.9rem;text-decoration:none;box-shadow:0 4px 15px rgba(34,197,94,0.35);';
+            waLink.innerHTML = '💬 Enviar mis datos a NEXOS ▶';
+            chatMessages.appendChild(waLink);
+            scrollToBottom();
+        }, config.typingDelay + 200);
     }
 });

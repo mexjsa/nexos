@@ -1071,34 +1071,47 @@ async function submitNexosLead() {
     if (services.length === 0) { errorDiv.innerText = '⚠ Selecciona al menos una solución que necesitas.'; errorDiv.style.display = 'block'; return; }
 
     const btn = document.getElementById('nx-submit-btn');
-    btn.innerText = 'Enviando...';
+    btn.innerText = 'Abriendo WhatsApp...';
     btn.disabled = true;
     btn.style.opacity = '0.7';
 
-    try {
-        await addDoc(collection(_db, 'nexos_leads'), {
-            name,
-            company,
-            email,
-            phone,
-            services,
-            budget,
-            description: desc,
-            source: 'nexos_intake_form',
-            created_at: serverTimestamp()
-        });
+    // Build WhatsApp message with all form data
+    const waNumber = '525514803488';
+    const lines = [
+        '📌 *Nuevo lead desde nexosIA.com*',
+        '',
+        `👤 *Nombre:* ${name}`,
+        company ? `🏢 *Empresa/Giro:* ${company}` : null,
+        `📧 *Email:* ${email}`,
+        phone  ? `📱 *WhatsApp/Tel:* ${phone}` : null,
+        `🛠 *Soluciones de interés:* ${services.join(', ')}`,
+        budget ? `💰 *Presupuesto:* ${budget}` : null,
+        desc   ? `💬 *Comentarios:* ${desc}` : null,
+    ].filter(Boolean).join('\n');
 
-        // Show success
-        document.getElementById('nexos-form-fields').style.display = 'none';
-        document.getElementById('nx-form-success').style.display = 'block';
-        document.getElementById('nexos-form-toggle').style.display = 'none';
+    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(lines)}`;
 
-    } catch (err) {
-        console.error('Error guardando lead Nexos:', err);
-        errorDiv.innerText = '❌ Ocurrió un error. Intenta de nuevo o escríbenos directamente.';
-        errorDiv.style.display = 'block';
-        btn.innerText = 'Enviar y recibir presupuesto →';
-        btn.disabled = false;
-        btn.style.opacity = '1';
+    // Show success state
+    document.getElementById('nexos-form-fields').style.display = 'none';
+    document.getElementById('nx-form-success').style.display = 'block';
+    document.getElementById('nexos-form-toggle').style.display = 'none';
+
+    // Inject WhatsApp CTA into success panel
+    const successDiv = document.getElementById('nx-form-success');
+    if (!document.getElementById('nx-wa-cta')) {
+        const waBtn = document.createElement('a');
+        waBtn.id = 'nx-wa-cta';
+        waBtn.href = waUrl;
+        waBtn.target = '_blank';
+        waBtn.rel = 'noopener';
+        waBtn.className = 'btn btn-primary';
+        waBtn.style.cssText = 'margin-top:1.5rem;display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,#16a34a,#22c55e);font-size:0.95rem;padding:0.9rem 1.5rem;border-radius:10px;text-decoration:none;color:white;';
+        waBtn.innerHTML = '💬 Enviar datos a WhatsApp ▶';
+        successDiv.appendChild(waBtn);
+    } else {
+        document.getElementById('nx-wa-cta').href = waUrl;
     }
+
+    // Auto-open WhatsApp after short delay
+    setTimeout(() => { window.open(waUrl, '_blank'); }, 600);
 }
