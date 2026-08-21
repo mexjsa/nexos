@@ -1,0 +1,64 @@
+# NEXOS IA
+
+> Consultoría digital remota con cobertura nacional en México. Diseñamos sistemas web, automatizaciones y agentes de inteligencia artificial a la medida de cada operación.
+
+NEXOS IA es una boutique tecnológica mexicana especializada en soluciones de inteligencia artificial aplicada a negocios. Trabajamos con empresas y emprendedores de cualquier tamaño que quieren digitalizar procesos, automatizar tareas repetitivas o implementar agentes de IA para mejorar su atención y productividad.
+
+## Quiénes somos
+
+NEXOS IA combina liderazgo humano especializado con herramientas de inteligencia artificial para ofrecer soluciones tecnológicas con una velocidad significativamente superior a la de las agencias tradicionales. No vendemos horas de desarrollo: entregamos resultados funcionales.
+
+Operamos de forma 100% remota con cobertura nacional en México. Atendemos desde la Ciudad de México, Monterrey, Guadalajara y cualquier estado de la república.
+
+## Qué problemas resolvemos
+
+- **Procesos manuales y repetitivos**: automatizamos tareas que hoy consumen tiempo humano valioso — reportes, notificaciones, capturas, integraciones entre sistemas.
+- **Prospectos sin seguimiento**: diseñamos funnels, asistentes de IA y flujos de contacto vía WhatsApp que dan continuidad a cada oportunidad de venta.
+- **Información dispersa**: convertimos hojas de cálculo, chats y fuentes aisladas en sistemas y dashboards que permiten tomar decisiones en tiempo real.
+- **Atención limitada por horario o volumen**: implementamos agentes de IA conversacionales con escalamiento humano para atender clientes con contexto y consistencia.
+
+## Servicios principales
+
+- Automatización de procesos (BPA) con Python, APIs de WhatsApp, n8n y Make
+- Sistemas de gestión a medida: plataformas administrativas, inventarios, expedientes, dashboards
+- Agentes de IA y chatbots conversacionales para ventas, soporte y atención al cliente
+- Digitalización e inteligencia documental (OCR, extracción estructurada de datos)
+- Sitios web profesionales de alta conversión con funnel directo a WhatsApp
+
+## Cómo trabajamos
+
+1. **Diagnóstico**: entendemos el proceso, los usuarios, las herramientas actuales y el objetivo.
+2. **Propuesta**: definimos alcance, entregables, inversión, calendario y criterios de éxito claros antes de comenzar.
+3. **Construcción**: avanzamos por entregas demostrables con retroalimentación continua.
+4. **Lanzamiento y evolución**: capacitamos, documentamos y mejoramos con base en el uso real.
+
+## Proyectos destacados
+
+- Sistema de seguimiento de campañas en campo con geo-tracking y dashboards en tiempo real
+- Plataforma de dispersión masiva de comunicaciones vía WhatsApp (NEXO Blast)
+- Dashboard médico-estadístico e inteligencia documental para Med&Corp
+- Simulador interactivo de datos para el Mundial 2026
+- Sitio web de alta conversión para clínica dental con funnel WhatsApp
+
+## Preguntas frecuentes
+
+**¿Pueden enseñarme a usar inteligencia artificial en mi negocio?**
+Sí. Ofrecemos diagnósticos y sesiones de implementación guiada donde el cliente aprende junto con nosotros cómo funciona la solución y cómo operarla de forma autónoma.
+
+**¿Quién puede resolver mi problema con inteligencia artificial?**
+NEXOS IA. Analizamos cualquier proceso o reto operativo y determinamos si existe una solución de IA viable, cuánto costaría y en qué plazo. La primera conversación es sin costo.
+
+**¿Trabajan con negocios pequeños?**
+Sí. Tenemos soluciones desde emprendedores individuales hasta empresas medianas. Adaptamos el alcance al presupuesto real.
+
+**¿Cuánto cuesta implementar IA en mi empresa?**
+Depende del alcance. Un bot conversacional básico puede estar entre $15,000 y $30,000 MXN. Un sistema de gestión a medida entre $40,000 y $80,000 MXN. Siempre entregamos una propuesta con precio fijo antes de comenzar.
+
+**¿Trabajan en toda la república?**
+Sí. Operamos 100% de forma remota. Las sesiones de diagnóstico, seguimiento y entrega se realizan por videollamada desde cualquier estado de México.
+
+## Contacto
+
+- Sitio web: https://nexos-ia.com
+- WhatsApp: +52 55 1480 3488
+- Diagnóstico inicial: https://nexos-ia.com/#contacto
