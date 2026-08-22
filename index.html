@@ -29,11 +29,38 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": ["Organization", "ProfessionalService"],
+        "@type": ["Organization", "ProfessionalService", "LocalBusiness"],
         "@id": "https://nexos-ia.com/#organization",
         "name": "NEXOS IA",
         "url": "https://nexos-ia.com",
-        "logo": "https://nexos-ia.com/nexo_ia_neon_logo.png",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://nexos-ia.com/nexo_ia_neon_logo.png"
+        },
+        "image": "https://nexos-ia.com/nexo_ia_neon_logo.png",
+        "priceRange": "$$",
+        "currenciesAccepted": "MXN",
+        "paymentAccepted": "Transferencia bancaria, tarjeta de crédito",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Ciudad de México",
+          "addressRegion": "CDMX",
+          "addressCountry": "MX"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 19.4326,
+          "longitude": -99.1332
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        ],
+        "hasMap": "https://maps.google.com/?q=Ciudad+de+Mexico",
         "description": "Consultoría digital remota con cobertura nacional en México. Diseñamos sistemas web, automatizaciones y agentes de inteligencia artificial para operaciones que quieren crecer con orden.",
         "slogan": "Tu operación puede crecer sin volverse más compleja.",
         "foundingLocation": {
@@ -163,6 +190,18 @@
         "url": "https://nexos-ia.com",
         "name": "NEXOS IA",
         "publisher": { "@id": "https://nexos-ia.com/#organization" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://nexos-ia.com/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://nexos-ia.com/"
+          }
+        ]
       }
     ]
   }
