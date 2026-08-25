@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soporte e Incidencias | NEXOS IA</title>
+  <meta name="description" content="Portal de soporte a clientes de NEXOS IA. Sube tus incidencias para mantener un control centralizado de tu proyecto o sistema.">
+  <meta name="robots" content="noindex, nofollow"> <!-- Generalmente los portales de clientes no se indexan, pero puedes cambiarlo -->
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Ir al contenido</a>
+  <header class="site-header">
+    <div class="shell nav-wrap">
+      <a class="brand" href="index.html" aria-label="NEXOS IA, inicio"><span class="brand-mark" aria-hidden="true"></span>NEXOS IA</a>
+      <nav aria-label="Principal">
+        <a href="index.html#servicios">Servicios</a>
+        <a href="index.html#casos">Casos</a>
+        <a href="incidencias.html" style="color: var(--accent);">Soporte a Clientes</a>
+      </nav>
+      <a class="button button-small" href="index.html#contacto">Solicitar diagnóstico</a>
+    </div>
+  </header>
+
+  <main id="contenido" style="padding-top: 100px;">
+    <section class="contact-section" id="soporte-incidencias">
+      <div class="shell contact-grid">
+        <div>
+          <div class="eyebrow">Portal de Clientes</div>
+          <h2>Levantamiento de Incidencias</h2>
+          <p>Utiliza este formulario para reportar cualquier incidencia en tu sistema web, automatización o agente de IA. Esto nos permitirá tener un <b>control centralizado</b> y brindarte una solución ágil.</p>
+        </div>
+        
+        <form id="incidencias-form" class="contact-form">
+          <label>¿A qué área corresponde tu proyecto?
+            <select id="inc-area" name="area" required>
+              <option value="">Selecciona una opción</option>
+              <option value="NEXOS IA">NEXOS IA (Sistemas y automatización)</option>
+              <option value="REXBOT">REXBOT (Programas educativos infantiles)</option>
+            </select>
+          </label>
+
+          <label>Nombre del proyecto o sistema
+            <input id="inc-project" name="project" required placeholder="Ej: Dashboard Médico o Portal Rexbot">
+          </label>
+          
+          <label>Tu nombre completo
+            <input id="inc-name" name="name" autocomplete="name" required placeholder="Tu nombre">
+          </label>
+          
+          <div class="form-row">
+            <label>Correo electrónico
+              <input type="email" id="inc-email" name="email" autocomplete="email" required placeholder="tu@correo.com">
+            </label>
+            <label>WhatsApp de contacto
+              <input type="tel" id="inc-phone" name="tel" autocomplete="tel" inputmode="tel" placeholder="55 1234 5678" required>
+            </label>
+          </div>
+
+          <label>Nivel de Urgencia
+            <select id="inc-urgency" name="urgency" required>
+              <option value="">Selecciona la urgencia</option>
+              <option value="Baja">Baja - Duda o ajuste menor</option>
+              <option value="Media">Media - Falla parcial, el sistema opera</option>
+              <option value="Alta">Alta - Falla crítica, el sistema no opera</option>
+            </select>
+          </label>
+          
+          <label>Descripción detallada de la incidencia
+            <textarea id="inc-desc" name="description" rows="5" required placeholder="¿Qué acción intentabas realizar y cuál fue el error? (Si es posible, copia y pega el error exacto)"></textarea>
+          </label>
+
+          <!-- 
+          El comportamiento del formulario puede adaptarse a tu backend (ej. enviar correo, 
+          guardar en base de datos o preparar un mensaje de WhatsApp). 
+          Por ahora prepararemos un mensaje por WhatsApp igual que en el index.
+          -->
+          <p id="inc-form-error" class="form-error" role="alert"></p>
+          <button class="button" id="inc-submit-btn" type="submit">Reportar Incidencia por WhatsApp</button>
+          <p class="form-note">Serás redirigido a WhatsApp con la información estructurada para el equipo de soporte.</p>
+          
+          <div id="inc-form-success" class="form-success" hidden>
+            <strong>Incidencia lista para enviar.</strong>
+            <p>Abre el siguiente enlace para notificar al equipo técnico en WhatsApp.</p>
+            <a id="inc-wa-cta" class="button button-whatsapp" target="_blank" rel="noopener noreferrer">Abrir WhatsApp de Soporte</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>NEXOS IA</a>
+      <p>Consultoría digital remota con cobertura nacional en México.</p>
+    </div>
+    <div class="shell footer-bottom">© 2026 NEXOS IA. Todos los derechos reservados.</div>
+  </footer>
+
+  <script>
+    // JS para manejar el formulario y abrir WhatsApp
+    document.getElementById('incidencias-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const form = e.target;
+      const area = document.getElementById('inc-area').value;
+      const project = document.getElementById('inc-project').value;
+      const name = document.getElementById('inc-name').value;
+      const phone = document.getElementById('inc-phone').value;
+      const urgency = document.getElementById('inc-urgency').value;
+      const desc = document.getElementById('inc-desc').value;
+      
+      // Construir el mensaje de WhatsApp
+      let mensaje = `*🎫 NUEVA INCIDENCIA - ${area}*\n`;
+      mensaje += `*Proyecto:* ${project}\n`;
+      mensaje += `*Reporta:* ${name}\n`;
+      mensaje += `*Urgencia:* ${urgency}\n\n`;
+      mensaje += `*Detalles de la incidencia:*\n${desc}\n\n`;
+      mensaje += `*Contacto:* ${phone}`;
+
+      // Configura el número de soporte de NEXOS IA
+      const nexosPhone = "525514803488"; // Usa el mismo del index
+      const waUrl = `https://wa.me/${nexosPhone}?text=${encodeURIComponent(mensaje)}`;
+      
+      const successDiv = document.getElementById('inc-form-success');
+      const waBtn = document.getElementById('inc-wa-cta');
+      const submitBtn = document.getElementById('inc-submit-btn');
+      
+      waBtn.href = waUrl;
+      successDiv.hidden = false;
+      submitBtn.style.display = 'none';
+      
+      // Opcionalmente redirigir de inmediato:
+      // window.open(waUrl, '_blank');
+    });
+  </script>
+</body>
+</html>
