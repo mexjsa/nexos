@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexos IA | Consultoría digital con cobertura nacional</title>
+  <meta name="description" content="Diseñamos sistemas web, automatizaciones y soluciones con IA para que tu equipo deje de perseguir procesos y se concentre en lo que mueve el negocio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text-primary: #0f0f0f;
+      --text-secondary: #525252;
+      --text-tertiary: #737373;
+      --text-quaternary: #a3a3a3;
+      --surface: #ffffff;
+      --surface-strong: #f5f5f5;
+      --border: #e5e5e5;
+      --positive: #16a34a;
+      --radius-sm: 8px;
+      --radius-md: 10px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --t-fast: 150ms;
+      --t-normal: 250ms;
+      --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text-primary: #f5f5f5;
+        --text-secondary: #a3a3a3;
+        --text-tertiary: #737373;
+        --text-quaternary: #525252;
+        --surface: #0f0f0f;
+        --surface-strong: #1a1a1a;
+        --border: #262626;
+        --positive: #22c55e;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text-primary);
+      background: var(--surface);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .nx-wrapper {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .nx-section { padding: 72px 0; }
+    .nx-section-title {
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.15;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .nx-section-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      max-width: 580px;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    .nx-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .nx-logo {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .nx-logo span { color: var(--text-quaternary); font-weight: 400; }
+    .nx-nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+    .nx-nav-links a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--t-fast) var(--ease-out);
+    }
+    .nx-nav-links a:hover { color: var(--text-primary); }
+    .nx-nav-cta {
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      background: var(--text-primary);
+      color: var(--surface);
+      border: none;
+      cursor: pointer;
+      transition: opacity var(--t-fast) var(--ease-out);
+      font-family: inherit;
+    }
+    .nx-nav-cta:hover { opacity: 0.85; }
+
+    /* HERO */
+    .nx-hero {
+      padding: 80px 0 56px;
+      text-align: center;
+    }
+    .nx-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      margin-bottom: 32px;
+    }
+    .nx-hero-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--positive);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    .nx-hero h1 {
+      font-size: 48px;
+      font-weight: 500;
+      line-height: 1.08;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .nx-hero h1 span { color: var(--text-quaternary); }
+    .nx-hero-desc {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto 32px;
+      line-height: 1.65;
+    }
+    .nx-hero-cta-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .nx-hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--text-primary);
+      color: var(--surface);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity var(--t-fast) var(--ease-out);
+      text-decoration: none;
+      font-family: inherit;
+    }
+    .nx-hero-cta:hover { opacity: 0.85; }
+    .nx-hero-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--t-fast) var(--ease-out);
+      text-decoration: none;
+      font-family: inherit;
+    }
+    .nx-hero-cta-secondary:hover { border-color: var(--text-primary); }
+    .nx-hero-metrics {
+      display: flex;
+      justify-content: center;
+      gap: 64px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .nx-metric { text-align: center; }
+    .nx-metric-value {
+      font-size: 34px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    .nx-metric-label {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+    }
+
+    /* SERVICIOS */
+    .nx-services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .nx-service-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: border-color var(--t-fast) var(--ease-out), transform var(--t-fast) var(--ease-out);
+    }
+    .nx-service-card:hover {
+      border-color: var(--text-quaternary);
+      transform: translateY(-2px);
+    }
+    .nx-service-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .nx-service-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+      color: var(--text-primary);
+      flex-shrink: 0;
+    }
+    .nx-service-icon svg { width: 22px; height: 22px; }
+    .nx-service-num {
+      font-size: 12px;
+      color: var(--text-quaternary);
+      font-weight: 500;
+      margin-left: auto;
+    }
+    .nx-service-title {
+      font-size: 17px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .nx-service-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* PROCESO */
+    .nx-process-steps {
+      display: flex;
+      gap: 16px;
+    }
+    .nx-step {
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: border-color var(--t-fast) var(--ease-out);
+    }
+    .nx-step:hover { border-color: var(--text-quaternary); }
+    .nx-step-num {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-quaternary);
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nx-step-num::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      margin-left: 4px;
+    }
+    .nx-step:last-child .nx-step-num::after { display: none; }
+    .nx-step-title {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .nx-step-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* DIFERENCIADORES */
+    .nx-diff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .nx-diff-card {
+      text-align: center;
+      padding: 36px 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      transition: border-color var(--t-fast) var(--ease-out);
+    }
+    .nx-diff-card:hover { border-color: var(--text-quaternary); }
+    .nx-diff-icon {
+      width: 48px; height: 48px;
+      margin: 0 auto 16px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+      color: var(--text-primary);
+    }
+    .nx-diff-icon svg { width: 24px; height: 24px; }
+    .nx-diff-title {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .nx-diff-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* TECNOLOGÍAS */
+    .nx-tech-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .nx-tech-tag {
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: all var(--t-fast) var(--ease-out);
+      background: transparent;
+      cursor: default;
+    }
+    .nx-tech-tag:hover {
+      border-color: var(--text-primary);
+      color: var(--text-primary);
+    }
+
+    /* CASOS */
+    .nx-cases-filter {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .nx-filter-btn {
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all var(--t-fast) var(--ease-out);
+      font-family: inherit;
+    }
+    .nx-filter-btn:hover {
+      border-color: var(--text-primary);
+      color: var(--text-primary);
+    }
+    .nx-filter-btn.active {
+      background: var(--text-primary);
+      color: var(--surface);
+      border-color: var(--text-primary);
+    }
+    .nx-cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .nx-case-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: border-color var(--t-fast) var(--ease-out);
+    }
+    .nx-case-card:hover { border-color: var(--text-quaternary); }
+    .nx-case-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+    }
+    .nx-case-title {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .nx-case-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+    .nx-case-link {
+      font-size: 14px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: opacity var(--t-fast) var(--ease-out);
+    }
+    .nx-case-link:hover { opacity: 0.7; }
+    .nx-case-link svg { width: 14px; height: 14px; }
+
+    /* FAQ */
+    .nx-faq-list { max-width: 720px; }
+    .nx-faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .nx-faq-q {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-primary);
+      transition: color var(--t-fast) var(--ease-out);
+      user-select: none;
+    }
+    .nx-faq-q:hover { color: var(--text-secondary); }
+    .nx-faq-q svg {
+      width: 18px; height: 18px;
+      color: var(--text-quaternary);
+      transition: transform var(--t-fast) var(--ease-out);
+      flex-shrink: 0;
+    }
+    .nx-faq-item.open .nx-faq-q svg { transform: rotate(180deg); }
+    .nx-faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--t-normal) var(--ease-out), padding var(--t-normal) var(--ease-out);
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .nx-faq-item.open .nx-faq-a {
+      max-height: 200px;
+      padding-bottom: 22px;
+    }
+
+    /* CTA FINAL */
+    .nx-cta-box {
+      background: var(--surface-strong);
+      border-radius: var(--radius-xl);
+      padding: 56px 48px;
+      text-align: center;
+    }
+    .nx-cta-box h2 {
+      font-size: 30px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .nx-cta-box p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .nx-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--text-primary);
+      color: var(--surface);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity var(--t-fast) var(--ease-out);
+      text-decoration: none;
+      font-family: inherit;
+    }
+    .nx-cta-btn:hover { opacity: 0.85; }
+
+    /* FOOTER */
+    .nx-footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .nx-footer-left {
+      font-size: 14px;
+      color: var(--text-tertiary);
+    }
+    .nx-footer-right {
+      display: flex;
+      gap: 24px;
+    }
+    .nx-footer-right a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--t-fast) var(--ease-out);
+    }
+    .nx-footer-right a:hover { color: var(--text-primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .nx-nav-links { display: none; }
+      .nx-hero { padding: 56px 0 40px; }
+      .nx-hero h1 { font-size: 34px; }
+      .nx-hero-metrics { gap: 32px; flex-wrap: wrap; }
+      .nx-metric-value { font-size: 28px; }
+      .nx-section { padding: 48px 0; }
+      .nx-section-title { font-size: 24px; }
+      .nx-services-grid { grid-template-columns: 1fr; }
+      .nx-process-steps { flex-direction: column; }
+      .nx-diff-grid { grid-template-columns: 1fr; }
+      .nx-cases-grid { grid-template-columns: 1fr; }
+      .nx-cta-box { padding: 40px 24px; }
+      .nx-footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nx-nav">
+    <a href="#" class="nx-logo">NEXOS <span>IA</span></a>
+    <div class="nx-nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#casos">Casos</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacto" class="nx-nav-cta">Contactar</a>
+    </div>
+  </nav>
+
+  <div class="nx-wrapper">
+
+    <!-- HERO -->
+    <section class="nx-hero">
+      <div class="nx-hero-badge">
+        <span class="nx-hero-badge-dot"></span>
+        Consultoría digital remota · Cobertura nacional
+      </div>
+      <h1>Tu operación puede crecer<br><span>sin volverse más compleja.</span></h1>
+      <p class="nx-hero-desc">
+        Diseñamos sistemas web, automatizaciones y soluciones con IA para que tu equipo deje de perseguir procesos y se concentre en lo que mueve el negocio.
+      </p>
+      <div class="nx-hero-cta-row">
+        <a href="#contacto" class="nx-hero-cta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Primera conversación sin compromiso
+        </a>
+        <a href="#casos" class="nx-hero-cta-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          Ver casos de éxito
+        </a>
+      </div>
+      <div class="nx-hero-metrics">
+        <div class="nx-metric">
+          <div class="nx-metric-value">50+</div>
+          <div class="nx-metric-label">Proyectos entregados</div>
+        </div>
+        <div class="nx-metric">
+          <div class="nx-metric-value">32</div>
+          <div class="nx-metric-label">Estados de México</div>
+        </div>
+        <div class="nx-metric">
+          <div class="nx-metric-value">100%</div>
+          <div class="nx-metric-label">Remoto</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="nx-section" id="servicios">
+      <h2 class="nx-section-title">Menos fricción operativa. Más visibilidad.</h2>
+      <p class="nx-section-subtitle">Trabajamos donde una buena solución digital evita tareas repetitivas, ordena información y mejora la respuesta a clientes o equipos.</p>
+      <div class="nx-services-grid">
+        <div class="nx-service-card">
+          <div class="nx-service-header">
+            <div class="nx-service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            </div>
+            <span class="nx-service-num">01</span>
+          </div>
+          <div class="nx-service-title">Procesos manuales</div>
+          <div class="nx-service-desc">Automatizamos tareas repetitivas e integramos las herramientas que hoy viven separadas.</div>
+        </div>
+        <div class="nx-service-card">
+          <div class="nx-service-header">
+            <div class="nx-service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <span class="nx-service-num">02</span>
+          </div>
+          <div class="nx-service-title">Prospectos sin seguimiento</div>
+          <div class="nx-service-desc">Diseñamos funnels, asistentes y flujos de contacto que dan continuidad a cada oportunidad.</div>
+        </div>
+        <div class="nx-service-card">
+          <div class="nx-service-header">
+            <div class="nx-service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <span class="nx-service-num">03</span>
+          </div>
+          <div class="nx-service-title">Información dispersa</div>
+          <div class="nx-service-desc">Convertimos hojas, chats y fuentes aisladas en sistemas y dashboards que sí se pueden consultar.</div>
+        </div>
+        <div class="nx-service-card">
+          <div class="nx-service-header">
+            <div class="nx-service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <span class="nx-service-num">04</span>
+          </div>
+          <div class="nx-service-title">Atención limitada</div>
+          <div class="nx-service-desc">Implementamos agentes de IA con escalamiento humano para atender con contexto y consistencia.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section class="nx-section" id="proceso">
+      <h2 class="nx-section-title">Un proceso claro antes de escribir código.</h2>
+      <p class="nx-section-subtitle">Cada proyecto sigue una secuencia definida para reducir riesgos y mantener visibilidad en todo momento.</p>
+      <div class="nx-process-steps">
+        <div class="nx-step">
+          <div class="nx-step-num">Paso 01</div>
+          <div class="nx-step-title">Diagnóstico</div>
+          <div class="nx-step-desc">Entendemos proceso, usuarios, herramientas actuales y objetivo.</div>
+        </div>
+        <div class="nx-step">
+          <div class="nx-step-num">Paso 02</div>
+          <div class="nx-step-title">Propuesta</div>
+          <div class="nx-step-desc">Definimos alcance, entregables, inversión, calendario y criterios de éxito.</div>
+        </div>
+        <div class="nx-step">
+          <div class="nx-step-num">Paso 03</div>
+          <div class="nx-step-title">Construcción</div>
+          <div class="nx-step-desc">Avanzamos por entregas demostrables con retroalimentación continua.</div>
+        </div>
+        <div class="nx-step">
+          <div class="nx-step-num">Paso 04</div>
+          <div class="nx-step-title">Lanzamiento</div>
+          <div class="nx-step-desc">Capacitamos, documentamos y mejoramos con base en el uso real.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIFERENCIADORES -->
+    <section class="nx-section">
+      <h2 class="nx-section-title">Por qué trabajar con nosotros.</h2>
+      <p class="nx-section-subtitle">No solo entregamos código. Entregamos soluciones que tu equipo puede usar y mantener.</p>
+      <div class="nx-diff-grid">
+        <div class="nx-diff-card">
+          <div class="nx-diff-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="nx-diff-title">Sin vendor lock-in</div>
+          <div class="nx-diff-desc">Documentamos todo para que puedas migrar o escalar sin depender de nosotros.</div>
+        </div>
+        <div class="nx-diff-card">
+          <div class="nx-diff-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="nx-diff-title">Entregas por etapas</div>
+          <div class="nx-diff-desc">Ves avances funcionales desde la primera semana, no al final del proyecto.</div>
+        </div>
+        <div class="nx-diff-card">
+          <div class="nx-diff-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="nx-diff-title">Cobertura nacional</div>
+          <div class="nx-diff-desc">Trabajamos con equipos en cualquier estado de México, 100% remoto.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECNOLOGÍAS -->
+    <section class="nx-section">
+      <h2 class="nx-section-title">Tecnologías que usamos.</h2>
+      <p class="nx-section-subtitle">Elegimos herramientas según tu contexto, no al revés.</p>
+      <div class="nx-tech-grid">
+        <span class="nx-tech-tag">Python</span>
+        <span class="nx-tech-tag">Node.js</span>
+        <span class="nx-tech-tag">React</span>
+        <span class="nx-tech-tag">Next.js</span>
+        <span class="nx-tech-tag">PostgreSQL</span>
+        <span class="nx-tech-tag">MongoDB</span>
+        <span class="nx-tech-tag">OpenAI API</span>
+        <span class="nx-tech-tag">LangChain</span>
+        <span class="nx-tech-tag">n8n</span>
+        <span class="nx-tech-tag">Make</span>
+        <span class="nx-tech-tag">Zapier</span>
+        <span class="nx-tech-tag">AWS</span>
+        <span class="nx-tech-tag">Google Cloud</span>
+        <span class="nx-tech-tag">Docker</span>
+        <span class="nx-tech-tag">Supabase</span>
+        <span class="nx-tech-tag">Figma</span>
+      </div>
+    </section>
+
+    <!-- CASOS -->
+    <section class="nx-section" id="casos">
+      <h2 class="nx-section-title">Tecnología aplicada a operaciones reales.</h2>
+      <p class="nx-section-subtitle">Una selección de soluciones desarrolladas para necesidades específicas.</p>
+      <div class="nx-cases-filter">
+        <button class="nx-filter-btn active" data-filter="all">Todos</button>
+        <button class="nx-filter-btn" data-filter="gestion">Gestión</button>
+        <button class="nx-filter-btn" data-filter="salud">Salud</button>
+        <button class="nx-filter-btn" data-filter="web">Web</button>
+        <button class="nx-filter-btn" data-filter="analytics">Analytics</button>
+      </div>
+      <div class="nx-cases-grid" id="casesGrid">
+        <div class="nx-case-card" data-category="gestion">
+          <div class="nx-case-tag">Operación / Gestión</div>
+          <div class="nx-case-title">Sistemas internos a medida</div>
+          <div class="nx-case-desc">Centralización de procesos, control operativo y seguimiento de información crítica para equipos especializados.</div>
+          <a href="#" class="nx-case-link" onclick="event.preventDefault()">
+            Ver referencia pública
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+        <div class="nx-case-card" data-category="salud">
+          <div class="nx-case-tag">Healthtech / Datos</div>
+          <div class="nx-case-title">Inteligencia documental y dashboards</div>
+          <div class="nx-case-desc">Herramientas para estructurar información, detectar tendencias y presentar datos complejos con mayor claridad.</div>
+          <a href="#" class="nx-case-link" onclick="event.preventDefault()">
+            Caso mostrado bajo alcance controlado
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+        <div class="nx-case-card" data-category="web">
+          <div class="nx-case-tag">Web / Conversión</div>
+          <div class="nx-case-title">Experiencias web que captan oportunidades</div>
+          <div class="nx-case-desc">Sitios de alta intención con estructura de contenido, llamadas a la acción y contacto directo por WhatsApp.</div>
+          <a href="#" class="nx-case-link" onclick="event.preventDefault()">
+            Ver referencia pública
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+        <div class="nx-case-card" data-category="analytics">
+          <div class="nx-case-tag">Analytics / Simulación</div>
+          <div class="nx-case-title">Simuladores y visualización de datos</div>
+          <div class="nx-case-desc">Interfaces interactivas para explorar escenarios, comunicar resultados y convertir datos en decisiones.</div>
+          <a href="#" class="nx-case-link" onclick="event.preventDefault()">
+            Ver referencia pública
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="nx-section" id="faq">
+      <h2 class="nx-section-title">Trabajamos contigo sin importar dónde estés.</h2>
+      <p class="nx-section-subtitle">Respuestas a las dudas más comunes antes de iniciar un proyecto.</p>
+      <div class="nx-faq-list">
+        <div class="nx-faq-item">
+          <div class="nx-faq-q">
+            ¿Trabajan presencialmente?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="nx-faq-a">Operamos de forma remota con cobertura nacional. Las sesiones de diagnóstico, seguimiento y demostración se realizan por videollamada.</div>
+        </div>
+        <div class="nx-faq-item">
+          <div class="nx-faq-q">
+            ¿Cómo definen el costo de un proyecto?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="nx-faq-a">Después del diagnóstico entregamos una propuesta con alcance, entregables, etapas e inversión definidos antes de comenzar.</div>
+        </div>
+        <div class="nx-faq-item">
+          <div class="nx-faq-q">
+            ¿Cuánto tarda una implementación?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="nx-faq-a">Depende del alcance. Priorizamos entregas por etapas para que puedas revisar avances funcionales y tomar decisiones a tiempo.</div>
+        </div>
+        <div class="nx-faq-item">
+          <div class="nx-faq-q">
+            ¿Ofrecen soporte?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="nx-faq-a">Cada propuesta define su fase de estabilización, capacitación y acompañamiento. Así el soporte responde a lo que realmente necesita la solución.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="nx-section" id="contacto">
+      <div class="nx-cta-box">
+        <h2>¿Listo para simplificar tu operación?</h2>
+        <p>Agenda una primera conversación sin compromiso. Analizamos tu contexto y te proponemos el siguiente paso.</p>
+        <a href="mailto:hola@nexos-ia.com" class="nx-cta-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Agendar conversación
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="nx-footer">
+      <div class="nx-footer-left">© 2026 Nexos IA. Consultoría digital con cobertura nacional.</div>
+      <div class="nx-footer-right">
+        <a href="#">Privacidad</a>
+        <a href="mailto:hola@nexos-ia.com">Contacto</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Filtrado de casos
+    document.querySelectorAll('.nx-filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const category = this.dataset.filter;
+        document.querySelectorAll('.nx-filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelectorAll('.nx-case-card').forEach(card => {
+          card.style.display = (category === 'all' || card.dataset.category === category) ? '' : 'none';
+        });
+      });
+    });
+
+    // FAQ acordeón
+    document.querySelectorAll('.nx-faq-q').forEach(q => {
+      q.addEventListener('click', function() {
+        const item = this.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.nx-faq-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
