@@ -3,287 +3,418 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Dashboard | NEXOS IA</title>
+  <title>Admin Panel | NEXOS IA</title>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #f3f4f6;
-      --sidebar-bg: #101319; /* Dark sidebar for admin */
-      --text-dark: #101319;
-      --text-muted: #6b7280;
-      --accent: #ec5a28;
-      --accent-light: #fff3ed;
-      --border: #e5e7eb;
+      --bg-main: #f0eee7; /* Light beige from reference */
+      --sidebar-bg: #ffffff;
       --card-bg: #ffffff;
+      --text-dark: #1b211f;
+      --text-muted: #7b837e;
+      --accent-green: #597c64; /* Dark muted green */
+      --accent-dark: #242927; /* Near black for active states */
+      --accent-orange: #ec5a28; /* Keeping Nexos identity for small details */
+      --border: #e3e1da;
     }
     
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Manrope', sans-serif; background-color: var(--bg-main); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; }
+    body { margin: 0; font-family: 'Manrope', sans-serif; background-color: var(--bg-main); color: var(--text-dark); display: flex; min-height: 100vh; overflow-x: hidden; padding: 24px; gap: 32px; }
     
-    /* Login View */
-    #auth-view { position: fixed; inset: 0; background: #fff; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .auth-card { border: 1px solid var(--border); padding: 3rem; border-radius: 16px; width: 100%; max-width: 420px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); text-align: center; }
-    .auth-input { width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid var(--border); border-radius: 8px; font-family: 'Manrope'; }
-    .btn-auth { width: 100%; background: var(--accent); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; margin-bottom: 1rem; }
-    .btn-auth:hover { background: #d64a1e; }
-    .btn-google { width: 100%; background: #fff; color: #333; border: 1px solid #ccc; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .btn-google:hover { background: #f9f9f9; }
+    /* Icon-only Floating Sidebar */
+    .sidebar { 
+      width: 72px; 
+      background: var(--sidebar-bg); 
+      border-radius: 40px; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      padding: 30px 0; 
+      flex-shrink: 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      position: sticky;
+      top: 24px;
+      height: calc(100vh - 48px);
+    }
+    
+    .nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: all 0.2s ease;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    
+    .nav-btn:hover { color: var(--accent-dark); background: rgba(0,0,0,0.03); }
+    
+    .nav-btn.active {
+      background: var(--accent-dark);
+      color: white;
+    }
+    
+    .nav-btn.active svg { stroke: white; }
+    .nav-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; width: 100%; gap: 16px; }
+    
+    .user-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--accent-dark);
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
 
-    /* Admin Dashboard */
-    #admin-view { display: none; width: 100%; display: flex; }
+    /* Main Content Area */
+    .main-wrapper { flex: 1; max-width: 1400px; display: flex; flex-direction: column; }
     
-    /* Sidebar */
-    .sidebar { width: 260px; background: var(--sidebar-bg); display: flex; flex-direction: column; padding: 1.5rem; flex-shrink: 0; color: white; }
-    .brand { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; margin-bottom: 2.5rem; color: white; text-decoration: none; }
-    .brand-mark { width: 12px; height: 12px; background: var(--accent); border-radius: 2px; }
-    .nav-link { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #a1a1aa; font-weight: 600; font-size: 0.9rem; padding: 0.8rem; border-radius: 8px; transition: all 0.2s; margin-bottom: 0.2rem; cursor: pointer; }
-    .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.1); color: white; }
+    /* Top Header */
+    .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+    .header-text h1 { margin: 0; font-size: 2.2rem; font-weight: 700; color: var(--text-dark); letter-spacing: -0.02em; }
+    .header-text p { margin: 6px 0 0; color: var(--text-muted); font-size: 1rem; }
     
-    /* Main Layout */
-    .main-wrapper { flex: 1; overflow-y: auto; padding: 2.5rem; }
-    .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+    .header-actions { display: flex; align-items: center; gap: 16px; }
+    .search-box {
+      background: white;
+      border-radius: 30px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      width: 280px;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+    .search-box input { border: none; outline: none; width: 100%; font-family: 'Manrope'; font-size: 0.95rem; color: var(--text-dark); background: transparent; }
+    .search-box input::placeholder { color: var(--text-muted); }
+    .search-btn {
+      width: 40px; height: 40px; border-radius: 50%; background: var(--accent-dark); color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; margin-right: -12px;
+    }
     
-    /* Content Sections */
-    .section-view { display: none; }
-    .section-view.active { display: block; }
-    
-    .panel { background: #fff; border-radius: 12px; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-    .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 1rem; margin-bottom: 1rem; }
-    .panel-header h3 { margin: 0; font-size: 1.1rem; }
-    
-    /* Tables */
-    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
-    th { color: var(--text-muted); font-weight: 600; padding: 1rem 0.5rem; border-bottom: 2px solid #eee; }
-    td { padding: 1rem 0.5rem; border-bottom: 1px solid #eee; vertical-align: middle; }
-    tr:hover td { background: #f9fafb; }
-    
-    .badge { padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
-    .badge-alta { background: #fee2e2; color: #991b1b; }
-    .badge-media { background: #fef3c7; color: #92400e; }
-    .badge-baja { background: #dcfce7; color: #166534; }
-    
-    .btn-small { padding: 0.4rem 0.8rem; font-size: 0.8rem; border: 1px solid var(--border); background: white; border-radius: 4px; cursor: pointer; font-weight: 600; }
-    .btn-small:hover { border-color: var(--accent); color: var(--accent); }
+    .icon-action {
+      width: 48px; height: 48px; border-radius: 50%; background: white; color: var(--text-dark); display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: transform 0.2s;
+    }
+    .icon-action:hover { transform: translateY(-2px); }
 
-    .link-input { width: 100%; padding: 0.4rem; font-size: 0.8rem; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 4px; }
+    /* Dashboard Grid Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: minmax(140px, auto);
+      gap: 24px;
+    }
+    
+    .card { background: var(--card-bg); border-radius: 24px; padding: 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
+    .card-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 16px; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; }
+    
+    /* Specific Cards */
+    /* 1. Resumen Finanzas (Small cards top) */
+    .card-stats { grid-column: span 3; justify-content: center; }
+    .card-stats .label { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+    .card-stats .value { font-size: 2rem; font-weight: 800; margin: 0; color: var(--text-dark); }
+    
+    .card-stats.green-card { background: var(--accent-green); color: white; }
+    .card-stats.green-card .label, .card-stats.green-card .value { color: white; }
+    
+    /* 2. Clientes y Proyectos (Wide card) */
+    .card-projects { grid-column: span 8; grid-row: span 2; }
+    .project-list { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; overflow-y: auto; }
+    .project-item { display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .project-item:last-child { border-bottom: none; }
+    .client-info { display: flex; align-items: center; gap: 12px; }
+    .client-avatar { width: 36px; height: 36px; border-radius: 50%; background: #f0eee7; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--accent-green); font-size: 0.8rem; }
+    .client-name { font-weight: 700; font-size: 0.95rem; }
+    .project-name { color: var(--text-muted); font-size: 0.9rem; }
+    .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; text-align: center; }
+    .status-dev { background: #e0f2fe; color: #0284c7; }
+    .status-done { background: #dcfce7; color: #166534; }
+    .action-link { color: var(--accent-green); font-size: 0.85rem; font-weight: 700; text-decoration: none; text-align: right; }
+
+    /* 3. Pagos por Validar (Medium card) */
+    .card-payments { grid-column: span 4; grid-row: span 2; }
+    .payment-item { padding: 16px; border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 12px; }
+    .payment-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .payment-amount { font-size: 1.2rem; font-weight: 800; color: var(--text-dark); }
+    .payment-method { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; font-weight: 600; }
+    .payment-client { font-size: 0.9rem; font-weight: 600; }
+    .btn-validate { background: var(--accent-green); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-family: 'Manrope'; cursor: pointer; width: 100%; transition: background 0.2s; }
+    .btn-validate:hover { background: #4a6853; }
+    .payment-status { font-size: 0.75rem; color: #b45309; background: #fef3c7; padding: 4px 8px; border-radius: 6px; font-weight: 700; align-self: flex-start; }
+
+    /* 4. Próximas Tareas / Calendario (Wide lower card) */
+    .card-tasks { grid-column: span 6; grid-row: span 2; }
+    .task-list { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+    .task-item { display: flex; align-items: flex-start; gap: 16px; padding: 12px; border-radius: 12px; transition: background 0.2s; }
+    .task-item:hover { background: var(--bg-main); }
+    .task-date { width: 50px; height: 50px; background: var(--text-dark); color: white; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+    .task-date span:first-child { font-size: 0.7rem; text-transform: uppercase; font-weight: 600; opacity: 0.8; }
+    .task-date span:last-child { font-size: 1.1rem; font-weight: 800; line-height: 1; margin-top: 2px; }
+    .task-info h4 { margin: 0 0 4px; font-size: 1rem; }
+    .task-info p { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
+
+    /* 5. Accesos Rápidos (Medium lower card) */
+    .card-access { grid-column: span 6; grid-row: span 2; background: var(--accent-green); color: white; }
+    .card-access .card-title { color: white; }
+    .access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+    .access-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 20px; border-radius: 16px; color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; transition: background 0.2s; }
+    .access-btn:hover { background: rgba(255,255,255,0.2); }
+    .access-btn svg { width: 32px; height: 32px; stroke: white; }
+    .access-btn span { font-weight: 600; font-size: 0.95rem; }
+
+    /* Hide section functionality */
+    .view-section { display: none; }
+    .view-section.active { display: block; }
   </style>
 </head>
 <body>
 
-  <!-- AUTHENTICATION VIEW (Firebase/Cloud Auth Simulation) -->
-  <div id="auth-view">
-    <div class="auth-card">
-      <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
-        <div class="brand-mark" style="width: 24px; height: 24px;"></div>
-      </div>
-      <h2 style="margin: 0 0 0.5rem;">Administración</h2>
-      <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem;">Acceso restringido al equipo interno.</p>
-      
-      <input type="email" id="admin-email" class="auth-input" placeholder="admin@nexos-ia.com" value="admin@nexos-ia.com">
-      <input type="password" id="admin-pass" class="auth-input" placeholder="Contraseña" value="123456">
-      
-      <button class="btn-auth" onclick="loginCloud()">Iniciar Sesión</button>
-      
-      <div style="margin: 1.5rem 0; color: #ccc; font-size: 0.8rem; display: flex; align-items: center;">
-        <span style="flex: 1; height: 1px; background: #eee;"></span>
-        <span style="padding: 0 10px;">O ingresa con Cloud Auth</span>
-        <span style="flex: 1; height: 1px; background: #eee;"></span>
-      </div>
-      
-      <button class="btn-google" onclick="loginCloud()">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Sign in with Google
+  <!-- Floating Icon Sidebar -->
+  <aside class="sidebar">
+    <!-- Brand / Menu Icon -->
+    <button class="nav-btn" style="color: var(--accent-green);">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+    </button>
+
+    <!-- Nav Icons -->
+    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 8px;">
+      <button class="nav-btn active" title="Dashboard">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
       </button>
-      <p style="font-size: 0.75rem; color: #999; margin-top: 1rem;">*Módulo de Firebase Authentication integrado (Modo Demo).</p>
+      <button class="nav-btn" title="Pagos">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      </button>
+      <button class="nav-btn" title="Proyectos">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      </button>
+      <button class="nav-btn" title="Calendario">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </button>
+      <button class="nav-btn" title="Tickets">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </button>
     </div>
-  </div>
 
-  <!-- ADMIN DASHBOARD -->
-  <div id="admin-view" style="display: none;">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <a class="brand" href="index.html">
-        <span class="brand-mark"></span>NEXOS ADMIN
-      </a>
-      <a class="nav-link active" onclick="showTab('tab-proyectos')">Proyectos y Accesos</a>
-      <a class="nav-link" onclick="showTab('tab-tickets')">Tickets por Cliente</a>
-      <a class="nav-link" onclick="showTab('tab-facturacion')">Facturación</a>
-      
-      <div style="margin-top: auto;">
-        <div style="font-size: 0.8rem; color: #888; margin-bottom: 0.5rem;">Administrador:</div>
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
-          <div style="width: 32px; height: 32px; background: var(--accent); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700;">A</div>
-          <div style="font-size: 0.9rem;">Juan Admin</div>
-        </div>
-        <a class="nav-link" style="color: #ef4444;" onclick="logout()">Cerrar Sesión</a>
+    <!-- Bottom Actions -->
+    <div class="sidebar-bottom">
+      <button class="nav-btn" title="Ajustes">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+      <button class="nav-btn" title="Cerrar sesión" style="transform: rotate(180deg);">
+        <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      </button>
+      <div class="user-avatar" title="Administrador">N</div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-wrapper">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-text">
+        <h1>Hola, Nexos Admin!</h1>
+        <p>Monitoreo de ingresos, validaciones y avance de proyectos.</p>
       </div>
-    </aside>
+      <div class="header-actions">
+        <div class="search-box">
+          <input type="text" placeholder="Buscar clientes o proyectos...">
+          <button class="search-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+        </div>
+        <a href="#" class="icon-action">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </a>
+        <a href="#" class="icon-action">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        </a>
+      </div>
+    </header>
 
-    <!-- Main -->
-    <main class="main-wrapper">
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
       
-      <!-- TAB PROYECTOS -->
-      <section id="tab-proyectos" class="section-view active">
-        <div class="header-bar">
-          <h1 style="margin: 0; font-size: 1.8rem;">Proyectos Globales</h1>
-          <button class="btn-auth" style="width: auto; margin: 0;">+ Nuevo Proyecto</button>
-        </div>
+      <!-- Stats Top -->
+      <div class="card card-stats">
+        <div class="label">Ingresos del Mes</div>
+        <div class="value">$124,500<span style="font-size: 1rem; color: var(--accent-green); margin-left: 8px;">MXN</span></div>
+      </div>
+      <div class="card card-stats">
+        <div class="label">Nuevos Leads</div>
+        <div class="value">42 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">(Agosto)</span></div>
+      </div>
+      <div class="card card-stats green-card">
+        <div class="label">Tickets Resueltos</div>
+        <div class="value">18 <span style="font-size: 1rem; font-weight: 500; opacity: 0.8;">esta semana</span></div>
+      </div>
+      <div class="card card-stats" style="background: var(--accent-dark); color: white;">
+        <div class="label" style="color: #a1a1aa;">Proyectos Activos</div>
+        <div class="value" style="color: white;">8 <span style="font-size: 1rem; color: #a1a1aa; font-weight: 500;">(2 REXBOT)</span></div>
+      </div>
 
-        <div class="panel">
-          <div class="panel-header">
-            <h3>Gestión de Enlaces (Drive, Calendario, Figma)</h3>
+      <!-- Clients and Projects (Left wide) -->
+      <div class="card card-projects">
+        <h3 class="card-title">Clientes y Proyectos Activos <a href="#" style="font-size: 0.85rem; color: var(--accent-green); text-decoration: none;">Ver todos</a></h3>
+        
+        <div class="project-list">
+          <!-- Item 1 -->
+          <div class="project-item">
+            <div class="client-info">
+              <div class="client-avatar">CS</div>
+              <div>
+                <div class="client-name">Consultoría Santos Santillanes</div>
+                <div class="project-name">Sistema Eval (NEXOS)</div>
+              </div>
+            </div>
+            <div>
+              <span class="status-badge status-dev">En Desarrollo</span>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Etapa 2/4</div>
+            <a href="#" class="action-link">Administrar Enlaces</a>
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Cliente / Socio</th>
-                <th>Proyecto</th>
-                <th>Estado</th>
-                <th style="width: 40%;">Enlaces de Integración (G-Workspace)</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Consultoría Santos</strong><br><span style="font-size: 0.8rem; color: #666;">santos@empresa.com</span></td>
-                <td>Portal Operativo (NEXOS)</td>
-                <td><span class="badge badge-baja">En Desarrollo</span></td>
-                <td>
-                  <input type="text" class="link-input" placeholder="Google Drive URL..." value="https://drive.google.com/drive/folders/xyz">
-                  <input type="text" class="link-input" placeholder="Google Meet URL..." value="https://meet.google.com/abc-defg-hij">
-                </td>
-                <td><button class="btn-small" onclick="alert('Enlaces guardados en Cloud Firestore')">Guardar</button></td>
-              </tr>
-              <tr>
-                <td><strong>Escuela Patria</strong><br><span style="font-size: 0.8rem; color: #666;">contacto@patria.edu.mx</span></td>
-                <td>Chatbot Educativo (REXBOT)</td>
-                <td><span class="badge badge-baja">Entregado</span></td>
-                <td>
-                  <input type="text" class="link-input" placeholder="Google Drive URL...">
-                  <input type="text" class="link-input" placeholder="Google Meet URL...">
-                </td>
-                <td><button class="btn-small">Guardar</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- TAB TICKETS -->
-      <section id="tab-tickets" class="section-view">
-        <div class="header-bar">
-          <h1 style="margin: 0; font-size: 1.8rem;">Bandeja de Incidencias</h1>
-        </div>
-
-        <div class="panel">
-          <div class="panel-header">
-            <h3>Tickets Reportados por Clientes</h3>
-            <select style="padding: 0.4rem; border-radius: 4px; border: 1px solid #ccc;">
-              <option>Todos los clientes</option>
-              <option>Consultoría Santos</option>
-              <option>Escuela Patria</option>
-            </select>
+          <!-- Item 2 -->
+          <div class="project-item">
+            <div class="client-info">
+              <div class="client-avatar">EP</div>
+              <div>
+                <div class="client-name">Escuela Patria</div>
+                <div class="project-name">Chatbot Infantil (REXBOT)</div>
+              </div>
+            </div>
+            <div>
+              <span class="status-badge status-done">Entregado</span>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Soporte (Alta)</div>
+            <a href="#" class="action-link">Administrar Enlaces</a>
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Ticket ID</th>
-                <th>Cliente</th>
-                <th>Proyecto (Área)</th>
-                <th>Urgencia</th>
-                <th>Descripción & Evidencia</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>#TK-104</td>
-                <td>Consultoría Santos</td>
-                <td>Portal (NEXOS IA)</td>
-                <td><span class="badge badge-alta">Alta</span></td>
-                <td>
-                  No carga el reporte de métricas.<br>
-                  <a href="#" style="font-size: 0.8rem; color: var(--accent);">📎 Ver 2 imágenes adjuntas</a>
-                </td>
-                <td>
-                  <select class="link-input">
-                    <option>Nuevo</option>
-                    <option selected>En Revisión</option>
-                    <option>Resuelto</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>#TK-103</td>
-                <td>Escuela Patria</td>
-                <td>Chatbot (REXBOT)</td>
-                <td><span class="badge badge-baja">Baja</span></td>
-                <td>
-                  Cambiar el saludo inicial del robot.
-                </td>
-                <td>
-                  <select class="link-input">
-                    <option>Nuevo</option>
-                    <option>En Revisión</option>
-                    <option selected>Resuelto</option>
-                  </select>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <!-- Item 3 -->
+          <div class="project-item">
+            <div class="client-info">
+              <div class="client-avatar" style="background: #fee2e2; color: #b91c1c;">MV</div>
+              <div>
+                <div class="client-name">MedikVentas</div>
+                <div class="project-name">Landing Page & Bot (NEXOS)</div>
+              </div>
+            </div>
+            <div>
+              <span class="status-badge status-dev">En Desarrollo</span>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Etapa 1/4</div>
+            <a href="#" class="action-link">Administrar Enlaces</a>
+          </div>
         </div>
-      </section>
-      
-      <!-- TAB FACTURACIÓN -->
-      <section id="tab-facturacion" class="section-view">
-        <div class="header-bar">
-          <h1 style="margin: 0; font-size: 1.8rem;">Control de Facturación</h1>
-        </div>
-        <div class="panel">
-          <p>Módulo en construcción. Aquí podrás subir los PDFs de facturas para que los clientes los vean en sus portales.</p>
-        </div>
-      </section>
+      </div>
 
-    </main>
-  </div>
+      <!-- Pagos / Validaciones Bancarias (Right narrow) -->
+      <div class="card card-payments">
+        <h3 class="card-title">Validación de Pagos <span style="background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;">2 Pendientes</span></h3>
+        
+        <div class="payment-item">
+          <div class="payment-header">
+            <div>
+              <div class="payment-client">Escuela Patria</div>
+              <div class="payment-method">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg> Depósito / Transferencia
+              </div>
+            </div>
+            <div class="payment-status">Sujeto a validación</div>
+          </div>
+          <div class="payment-amount">$18,500.00 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">MXN</span></div>
+          <button class="btn-validate" onclick="alert('Abriendo comprobante para cotejar en App Bancaria...')">Confirmar en App Bancaria</button>
+        </div>
 
-  <!-- Simulated Cloud Auth Logic -->
-  <!-- 
-  En producción, aquí inicializaríamos Firebase:
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    const firebaseConfig = { apiKey: "...", authDomain: "nexos.firebaseapp.com" };
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-  </script>
-  -->
+        <div class="payment-item">
+          <div class="payment-header">
+            <div>
+              <div class="payment-client">Consultoría Santos</div>
+              <div class="payment-method">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg> Efectivo (Depósito)
+              </div>
+            </div>
+            <div class="payment-status">Sujeto a validación</div>
+          </div>
+          <div class="payment-amount">$5,000.00 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">MXN</span></div>
+          <button class="btn-validate" style="background: white; color: var(--text-dark); border: 1px solid var(--border);" onclick="alert('Abriendo comprobante...')">Revisar Comprobante</button>
+        </div>
+      </div>
+
+      <!-- Próximas Tareas (Left Bottom) -->
+      <div class="card card-tasks">
+        <h3 class="card-title">Calendario de Entregas y Reuniones <select style="border: none; outline: none; font-weight: 700; color: var(--text-muted); cursor: pointer;"><option>Próximos 7 días</option><option>Este mes</option></select></h3>
+        
+        <div class="task-list">
+          <div class="task-item">
+            <div class="task-date">
+              <span>Ago</span>
+              <span>28</span>
+            </div>
+            <div class="task-info">
+              <h4>Llamada de Revisión (Wireframes)</h4>
+              <p>Consultoría Santos Santillanes • 11:00 AM</p>
+            </div>
+          </div>
+          <div class="task-item">
+            <div class="task-date" style="background: var(--accent-green);">
+              <span>Ago</span>
+              <span>30</span>
+            </div>
+            <div class="task-info">
+              <h4>Entrega Fase 1 (Landing Page)</h4>
+              <p>MedikVentas • Subida a servidor de pruebas</p>
+            </div>
+          </div>
+          <div class="task-item">
+            <div class="task-date" style="background: var(--border); color: var(--text-dark);">
+              <span>Sep</span>
+              <span>02</span>
+            </div>
+            <div class="task-info">
+              <h4>Cierre de Ticket Técnico (REXBOT)</h4>
+              <p>Escuela Patria • Modificación del saludo inicial del Bot</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accesos Rápidos (Right Bottom) -->
+      <div class="card card-access">
+        <h3 class="card-title">Gestión Operativa</h3>
+        <p style="margin: 0 0 16px; font-size: 0.9rem; opacity: 0.9;">Atajos para el equipo interno de Nexos IA</p>
+        
+        <div class="access-grid">
+          <a href="#" class="access-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+            <span>Nueva Propuesta</span>
+          </a>
+          <a href="#" class="access-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Google Agenda</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
   <script>
-    function loginCloud() {
-      // Simulación visual de autenticación Cloud (Firebase / Auth0 / Supabase)
-      const btn = document.querySelector('.btn-auth');
-      const originalText = btn.innerText;
-      btn.innerText = "Autenticando con Cloud...";
-      
-      setTimeout(() => {
-        document.getElementById('auth-view').style.display = 'none';
-        document.getElementById('admin-view').style.display = 'flex';
-        btn.innerText = originalText;
-      }, 800);
-    }
-
-    function logout() {
-      document.getElementById('admin-view').style.display = 'none';
-      document.getElementById('auth-view').style.display = 'flex';
-    }
-
-    function showTab(tabId) {
-      document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      
-      document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-    }
+    // Navegación del sidebar interactiva (Visual)
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        if(!this.hasAttribute('title') || this.getAttribute('title') === 'Cerrar sesión' || this.getAttribute('title') === 'Ajustes') return;
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        // Simulate loading state
+        document.querySelector('.dashboard-grid').style.opacity = '0.5';
+        setTimeout(() => { document.querySelector('.dashboard-grid').style.opacity = '1'; }, 300);
+      });
+    });
   </script>
 </body>
 </html>
