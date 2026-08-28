@@ -7,414 +7,428 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #f0eee7; /* Light beige from reference */
-      --sidebar-bg: #ffffff;
+      /* NEXOS IA PALETTE */
+      --bg-main: #f4f2ec;
+      --sidebar-bg: #101319;
       --card-bg: #ffffff;
-      --text-dark: #1b211f;
-      --text-muted: #7b837e;
-      --accent-green: #597c64; /* Dark muted green */
-      --accent-dark: #242927; /* Near black for active states */
-      --accent-orange: #ec5a28; /* Keeping Nexos identity for small details */
-      --border: #e3e1da;
+      --text-dark: #101319;
+      --text-muted: #60676f;
+      --accent: #ec5a28;
+      --accent-light: #fef0eb;
+      --border: #d9d7cf;
+      --success: #22c55e;
+      --success-light: #dcfce7;
     }
     
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Manrope', sans-serif; background-color: var(--bg-main); color: var(--text-dark); display: flex; min-height: 100vh; overflow-x: hidden; padding: 24px; gap: 32px; }
+    body { margin: 0; font-family: 'Manrope', sans-serif; background-color: var(--bg-main); color: var(--text-dark); display: flex; min-height: 100vh; overflow-x: hidden; }
     
-    /* Icon-only Floating Sidebar */
+    /* Sidebar (Nexos Dark) */
     .sidebar { 
-      width: 72px; 
+      width: 80px; 
       background: var(--sidebar-bg); 
-      border-radius: 40px; 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
-      padding: 30px 0; 
+      padding: 24px 0; 
       flex-shrink: 0;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
       position: sticky;
-      top: 24px;
-      height: calc(100vh - 48px);
+      top: 0;
+      height: 100vh;
     }
     
+    .brand-mark { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    
     .nav-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-muted);
-      text-decoration: none;
-      margin-bottom: 20px;
+      color: #8c939b;
+      margin-bottom: 12px;
       transition: all 0.2s ease;
       border: none;
       background: transparent;
       cursor: pointer;
+      position: relative;
     }
     
-    .nav-btn:hover { color: var(--accent-dark); background: rgba(0,0,0,0.03); }
-    
-    .nav-btn.active {
-      background: var(--accent-dark);
-      color: white;
-    }
-    
-    .nav-btn.active svg { stroke: white; }
+    .nav-btn:hover { color: white; background: rgba(255,255,255,0.05); }
+    .nav-btn.active { background: var(--accent); color: white; }
     .nav-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     
-    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; width: 100%; gap: 16px; }
-    
-    .user-avatar {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: var(--accent-dark);
-      color: white;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    /* Main Content Area */
-    .main-wrapper { flex: 1; max-width: 1400px; display: flex; flex-direction: column; }
+    /* Main Content */
+    .main-wrapper { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
     
     /* Top Header */
-    .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
-    .header-text h1 { margin: 0; font-size: 2.2rem; font-weight: 700; color: var(--text-dark); letter-spacing: -0.02em; }
-    .header-text p { margin: 6px 0 0; color: var(--text-muted); font-size: 1rem; }
+    .header { padding: 24px 40px; background: white; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+    .header-breadcrumb { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    .header-breadcrumb span { color: var(--text-dark); }
     
-    .header-actions { display: flex; align-items: center; gap: 16px; }
-    .search-box {
-      background: white;
-      border-radius: 30px;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      width: 280px;
-      gap: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-    }
-    .search-box input { border: none; outline: none; width: 100%; font-family: 'Manrope'; font-size: 0.95rem; color: var(--text-dark); background: transparent; }
-    .search-box input::placeholder { color: var(--text-muted); }
-    .search-btn {
-      width: 40px; height: 40px; border-radius: 50%; background: var(--accent-dark); color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; margin-right: -12px;
-    }
-    
-    .icon-action {
-      width: 48px; height: 48px; border-radius: 50%; background: white; color: var(--text-dark); display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: transform 0.2s;
-    }
-    .icon-action:hover { transform: translateY(-2px); }
+    .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--text-dark); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; border: 2px solid white; outline: 2px solid var(--border); }
 
-    /* Dashboard Grid Layout */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-auto-rows: minmax(140px, auto);
-      gap: 24px;
-    }
+    .content-area { padding: 40px; overflow-y: auto; flex: 1; }
     
-    .card { background: var(--card-bg); border-radius: 24px; padding: 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
-    .card-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 16px; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; }
-    
-    /* Specific Cards */
-    /* 1. Resumen Finanzas (Small cards top) */
-    .card-stats { grid-column: span 3; justify-content: center; }
-    .card-stats .label { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
-    .card-stats .value { font-size: 2rem; font-weight: 800; margin: 0; color: var(--text-dark); }
-    
-    .card-stats.green-card { background: var(--accent-green); color: white; }
-    .card-stats.green-card .label, .card-stats.green-card .value { color: white; }
-    
-    /* 2. Clientes y Proyectos (Wide card) */
-    .card-projects { grid-column: span 8; grid-row: span 2; }
-    .project-list { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; overflow-y: auto; }
-    .project-item { display: grid; grid-template-columns: 2fr 2fr 1fr 1fr; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
-    .project-item:last-child { border-bottom: none; }
-    .client-info { display: flex; align-items: center; gap: 12px; }
-    .client-avatar { width: 36px; height: 36px; border-radius: 50%; background: #f0eee7; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--accent-green); font-size: 0.8rem; }
-    .client-name { font-weight: 700; font-size: 0.95rem; }
-    .project-name { color: var(--text-muted); font-size: 0.9rem; }
-    .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block; text-align: center; }
-    .status-dev { background: #e0f2fe; color: #0284c7; }
-    .status-done { background: #dcfce7; color: #166534; }
-    .action-link { color: var(--accent-green); font-size: 0.85rem; font-weight: 700; text-decoration: none; text-align: right; }
-
-    /* 3. Pagos por Validar (Medium card) */
-    .card-payments { grid-column: span 4; grid-row: span 2; }
-    .payment-item { padding: 16px; border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 12px; }
-    .payment-header { display: flex; justify-content: space-between; align-items: flex-start; }
-    .payment-amount { font-size: 1.2rem; font-weight: 800; color: var(--text-dark); }
-    .payment-method { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 4px; font-weight: 600; }
-    .payment-client { font-size: 0.9rem; font-weight: 600; }
-    .btn-validate { background: var(--accent-green); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-family: 'Manrope'; cursor: pointer; width: 100%; transition: background 0.2s; }
-    .btn-validate:hover { background: #4a6853; }
-    .payment-status { font-size: 0.75rem; color: #b45309; background: #fef3c7; padding: 4px 8px; border-radius: 6px; font-weight: 700; align-self: flex-start; }
-
-    /* 4. Próximas Tareas / Calendario (Wide lower card) */
-    .card-tasks { grid-column: span 6; grid-row: span 2; }
-    .task-list { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
-    .task-item { display: flex; align-items: flex-start; gap: 16px; padding: 12px; border-radius: 12px; transition: background 0.2s; }
-    .task-item:hover { background: var(--bg-main); }
-    .task-date { width: 50px; height: 50px; background: var(--text-dark); color: white; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
-    .task-date span:first-child { font-size: 0.7rem; text-transform: uppercase; font-weight: 600; opacity: 0.8; }
-    .task-date span:last-child { font-size: 1.1rem; font-weight: 800; line-height: 1; margin-top: 2px; }
-    .task-info h4 { margin: 0 0 4px; font-size: 1rem; }
-    .task-info p { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
-
-    /* 5. Accesos Rápidos (Medium lower card) */
-    .card-access { grid-column: span 6; grid-row: span 2; background: var(--accent-green); color: white; }
-    .card-access .card-title { color: white; }
-    .access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
-    .access-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 20px; border-radius: 16px; color: white; text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; transition: background 0.2s; }
-    .access-btn:hover { background: rgba(255,255,255,0.2); }
-    .access-btn svg { width: 32px; height: 32px; stroke: white; }
-    .access-btn span { font-weight: 600; font-size: 0.95rem; }
-
-    /* Hide section functionality */
+    /* View container */
     .view-section { display: none; }
-    .view-section.active { display: block; }
+    .view-section.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ---------------------------------
+       VIEW 1: TIMELINE / HITOS (DASHBOARD)
+       --------------------------------- */
+    .timeline-card { background: var(--card-bg); border-radius: 16px; padding: 40px; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 30px; }
+    .timeline-title { font-size: 1.25rem; font-weight: 800; margin: 0 0 40px; color: var(--text-dark); }
+    
+    /* Horizontal Timeline CSS */
+    .hz-timeline { position: relative; padding: 20px 0; margin-bottom: 40px; display: flex; justify-content: space-between; width: 100%; }
+    .hz-timeline::before { content: ''; position: absolute; top: 76px; left: 40px; right: 40px; height: 4px; background: #e5e7eb; z-index: 1; border-radius: 2px; }
+    .hz-timeline-progress { position: absolute; top: 76px; left: 40px; width: 45%; height: 4px; background: var(--success); z-index: 2; border-radius: 2px; transition: width 1s ease; }
+    
+    .hz-step { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 140px; text-align: center; }
+    .hz-date { font-size: 0.9rem; font-weight: 700; color: var(--success); margin-bottom: 16px; min-height: 20px; }
+    .hz-step.pending .hz-date { color: var(--text-dark); }
+    
+    .hz-circle { width: 44px; height: 44px; border-radius: 50%; background: white; border: 4px solid var(--success); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--success); margin-bottom: 16px; box-shadow: 0 0 0 4px white; }
+    .hz-step.active .hz-circle { background: var(--success); color: white; box-shadow: 0 0 0 6px var(--success-light); }
+    .hz-step.pending .hz-circle { border-color: #e5e7eb; color: #9ca3af; }
+    
+    .hz-title { font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
+    .hz-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+    
+    /* Flags attached to timeline */
+    .hz-flag { position: absolute; top: 120px; width: 1px; height: 40px; background: var(--border); display: flex; flex-direction: column; align-items: center; }
+    .hz-flag::before { content: ''; position: absolute; top: 0; width: 12px; height: 12px; background: var(--accent); border-radius: 2px; transform: rotate(45deg); margin-top: -6px; }
+    .hz-flag-content { margin-top: 50px; text-align: center; width: 120px; }
+    .hz-flag-date { font-weight: 800; font-size: 0.8rem; margin-bottom: 2px; }
+    .hz-flag-desc { font-size: 0.75rem; color: var(--text-muted); }
+    .hz-flag.green::before { background: var(--success); }
+
+    /* Bottom stats */
+    .timeline-footer { display: flex; justify-content: center; align-items: center; gap: 8px; color: var(--text-dark); font-weight: 700; font-size: 1rem; padding-top: 60px; border-top: 1px solid #f3f4f6; }
+
+    /* ---------------------------------
+       VIEW 2: CLIENTES (PROYECTOS)
+       --------------------------------- */
+    .clients-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    
+    .tabs-toggle { display: inline-flex; background: #e5e7eb; padding: 4px; border-radius: 8px; }
+    .tab-btn { padding: 8px 16px; border: none; background: transparent; font-family: 'Manrope'; font-size: 0.9rem; font-weight: 700; color: var(--text-muted); border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+    .tab-btn.active { background: white; color: var(--text-dark); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    
+    .clients-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px; }
+    
+    .client-card { background: white; border-radius: 16px; border: 1px solid var(--border); padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+    .client-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 1px solid #f3f4f6; padding-bottom: 16px; }
+    .client-name { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin: 0 0 4px; }
+    .client-status { font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+    .status-active { background: var(--success-light); color: var(--success); }
+    .status-inactive { background: #f3f4f6; color: var(--text-muted); }
+    
+    .client-details { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
+    .detail-row { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--text-dark); }
+    .detail-row svg { width: 16px; height: 16px; color: var(--text-muted); flex-shrink: 0; }
+    
+    .client-folders { background: #f9fafb; border: 1px dashed var(--border); border-radius: 8px; padding: 16px; }
+    .client-folders h4 { margin: 0 0 12px; font-size: 0.85rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+    .add-folder-btn { color: var(--accent); cursor: pointer; background: none; border: none; font-weight: 700; font-size: 0.8rem; }
+    
+    .folder-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+    .folder-link { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-dark); text-decoration: none; padding: 8px; background: white; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.2s; }
+    .folder-link:hover { border-color: var(--accent); }
+    .folder-link svg { width: 14px; height: 14px; color: #4285F4; } /* Drive blue */
   </style>
 </head>
 <body>
 
   <!-- Floating Icon Sidebar -->
   <aside class="sidebar">
-    <!-- Brand / Menu Icon -->
-    <button class="nav-btn" style="color: var(--accent-green);">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-    </button>
+    <!-- Brand -->
+    <div class="brand-mark">NX</div>
 
     <!-- Nav Icons -->
-    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 8px;">
-      <button class="nav-btn active" title="Dashboard">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-      </button>
-      <button class="nav-btn" title="Pagos">
-        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-      </button>
-      <button class="nav-btn" title="Proyectos">
-        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-      </button>
-      <button class="nav-btn" title="Calendario">
-        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </button>
-      <button class="nav-btn" title="Tickets">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-      </button>
-    </div>
-
-    <!-- Bottom Actions -->
-    <div class="sidebar-bottom">
-      <button class="nav-btn" title="Ajustes">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </button>
-      <button class="nav-btn" title="Cerrar sesión" style="transform: rotate(180deg);">
-        <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
-      </button>
-      <div class="user-avatar" title="Administrador">N</div>
-    </div>
+    <button class="nav-btn active" title="Línea de Tiempo" onclick="switchView('timeline-view', this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </button>
+    <button class="nav-btn" title="Clientes" onclick="switchView('clients-view', this)">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+    </button>
+    <button class="nav-btn" title="Pagos" onclick="switchView('payments-view', this)">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+    </button>
+    <button class="nav-btn" title="Tickets" onclick="switchView('tickets-view', this)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    </button>
   </aside>
 
   <!-- Main Content -->
   <main class="main-wrapper">
     <!-- Header -->
     <header class="header">
-      <div class="header-text">
-        <h1>Hola, Nexos Admin!</h1>
-        <p>Monitoreo de ingresos, validaciones y avance de proyectos.</p>
+      <div class="header-breadcrumb" id="header-title">
+        Proyectos Globales / <span>Línea de Tiempo (Hitos)</span>
       </div>
-      <div class="header-actions">
-        <div class="search-box">
-          <input type="text" placeholder="Buscar clientes o proyectos...">
-          <button class="search-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-        </div>
-        <a href="#" class="icon-action">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        </a>
-        <a href="#" class="icon-action">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-        </a>
-      </div>
+      <div class="user-avatar" title="Administrador">A</div>
     </header>
 
-    <!-- Dashboard Grid -->
-    <div class="dashboard-grid">
+    <div class="content-area">
       
-      <!-- Stats Top -->
-      <div class="card card-stats">
-        <div class="label">Ingresos del Mes</div>
-        <div class="value">$124,500<span style="font-size: 1rem; color: var(--accent-green); margin-left: 8px;">MXN</span></div>
-      </div>
-      <div class="card card-stats">
-        <div class="label">Nuevos Leads</div>
-        <div class="value">42 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">(Agosto)</span></div>
-      </div>
-      <div class="card card-stats green-card">
-        <div class="label">Tickets Resueltos</div>
-        <div class="value">18 <span style="font-size: 1rem; font-weight: 500; opacity: 0.8;">esta semana</span></div>
-      </div>
-      <div class="card card-stats" style="background: var(--accent-dark); color: white;">
-        <div class="label" style="color: #a1a1aa;">Proyectos Activos</div>
-        <div class="value" style="color: white;">8 <span style="font-size: 1rem; color: #a1a1aa; font-weight: 500;">(2 REXBOT)</span></div>
+      <!-- ==============================================
+           VIEW 1: TIMELINE (HITOS PRINCIPALES)
+           ============================================== -->
+      <div id="timeline-view" class="view-section active">
+        <h1 style="margin: 0 0 24px; font-size: 2rem;">Seguimiento de Proyectos</h1>
+        
+        <!-- Timeline Card 1: Consultoría Santos -->
+        <div class="timeline-card">
+          <h2 class="timeline-title">Línea de Tiempo: Consultoría Santos Santillanes</h2>
+          
+          <div class="hz-timeline">
+            <!-- Background line and progress handled via CSS ::before -->
+            <div class="hz-timeline-progress"></div>
+            
+            <!-- Step 1 -->
+            <div class="hz-step active">
+              <div class="hz-date">10 Ago</div>
+              <div class="hz-circle">✓</div>
+              <div class="hz-title">Arranque</div>
+              <div class="hz-desc">Firma de contrato y pago anticipo (50%)</div>
+            </div>
+            
+            <!-- Flag 1 (Attached below line between Step 1 & 2) -->
+            <div class="hz-flag green" style="left: 17%;">
+              <div class="hz-flag-content">
+                <div class="hz-flag-date">15 Ago</div>
+                <div class="hz-flag-desc">Sesión Zoom Inicial</div>
+              </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="hz-step active">
+              <div class="hz-date">24 Ago</div>
+              <div class="hz-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="hz-title">Validación Visual</div>
+              <div class="hz-desc">Aprobación de Wireframes</div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="hz-step active" style="margin-top:-2px;"> <!-- active current state -->
+              <div class="hz-date">15 Sep</div>
+              <div class="hz-circle" style="box-shadow: 0 0 0 6px var(--success-light); background: var(--success);">
+                <span style="font-size:12px; color:white;">45%</span>
+              </div>
+              <div class="hz-title">Desarrollo Core</div>
+              <div class="hz-desc">Implementación del dashboard</div>
+            </div>
+            
+            <!-- Flag 2 -->
+            <div class="hz-flag" style="left: 65%;">
+              <div class="hz-flag-content">
+                <div class="hz-flag-date">20 Sep</div>
+                <div class="hz-flag-desc">Petición Extra: Exportar PDF</div>
+              </div>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="hz-step pending">
+              <div class="hz-date"></div>
+              <div class="hz-circle">✓</div>
+              <div class="hz-title">Pruebas Finales</div>
+              <div class="hz-desc">Validación con equipo cliente</div>
+            </div>
+            
+            <!-- Step 5 -->
+            <div class="hz-step pending">
+              <div class="hz-date"></div>
+              <div class="hz-circle">★</div>
+              <div class="hz-title">Cierre Proyecto</div>
+              <div class="hz-desc">Pago final y entrega</div>
+            </div>
+          </div>
+          
+          <div class="timeline-footer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Tiempo restante estimado: 1 Mes, 2 Semanas
+          </div>
+        </div>
+        
+        <!-- Timeline Card 2: Escuela Patria -->
+        <div class="timeline-card" style="opacity: 0.8;">
+          <h2 class="timeline-title">Línea de Tiempo: Escuela Patria (REXBOT)</h2>
+          
+          <div class="hz-timeline">
+            <div class="hz-timeline-progress" style="width: 100%; background: var(--text-dark);"></div>
+            <div class="hz-step active" style="filter: grayscale(1);">
+              <div class="hz-date" style="color:var(--text-dark);">05 Ene</div>
+              <div class="hz-circle" style="background:var(--text-dark); border-color:var(--text-dark);">✓</div>
+              <div class="hz-title">Arranque</div>
+            </div>
+            <div class="hz-step active" style="filter: grayscale(1);">
+              <div class="hz-date" style="color:var(--text-dark);">20 Ene</div>
+              <div class="hz-circle" style="background:var(--text-dark); border-color:var(--text-dark);">✓</div>
+              <div class="hz-title">Guiones Aprobados</div>
+            </div>
+            <div class="hz-step active" style="filter: grayscale(1);">
+              <div class="hz-date" style="color:var(--text-dark);">15 Feb</div>
+              <div class="hz-circle" style="background:var(--text-dark); border-color:var(--text-dark);">✓</div>
+              <div class="hz-title">Desarrollo</div>
+            </div>
+            <div class="hz-step active" style="filter: grayscale(1);">
+              <div class="hz-date" style="color:var(--text-dark);">28 Feb</div>
+              <div class="hz-circle" style="background:var(--text-dark); border-color:var(--text-dark);">✓</div>
+              <div class="hz-title">Cierre Proyecto</div>
+              <div class="hz-desc">Mutuo Acuerdo</div>
+            </div>
+          </div>
+          <div class="timeline-footer" style="color: var(--success);">
+            Proyecto Finalizado
+          </div>
+        </div>
       </div>
 
-      <!-- Clients and Projects (Left wide) -->
-      <div class="card card-projects">
-        <h3 class="card-title">Clientes y Proyectos Activos <a href="#" style="font-size: 0.85rem; color: var(--accent-green); text-decoration: none;">Ver todos</a></h3>
+      <!-- ==============================================
+           VIEW 2: CLIENTES
+           ============================================== -->
+      <div id="clients-view" class="view-section">
+        <h1 style="margin: 0 0 24px; font-size: 2rem;">Directorio de Clientes</h1>
         
-        <div class="project-list">
-          <!-- Item 1 -->
-          <div class="project-item">
-            <div class="client-info">
-              <div class="client-avatar">CS</div>
+        <div class="clients-header">
+          <div class="tabs-toggle">
+            <button class="tab-btn active" onclick="toggleClients('active')">Activos (2)</button>
+            <button class="tab-btn" onclick="toggleClients('inactive')">Inactivos / Completados (1)</button>
+          </div>
+          <button style="background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-family: 'Manrope'; cursor: pointer;">+ Nuevo Cliente</button>
+        </div>
+        
+        <div class="clients-grid">
+          
+          <!-- Cliente 1 -->
+          <div class="client-card" data-status="active">
+            <div class="client-head">
               <div>
-                <div class="client-name">Consultoría Santos Santillanes</div>
-                <div class="project-name">Sistema Eval (NEXOS)</div>
+                <h3 class="client-name">Consultoría Santos Santillanes</h3>
+                <span class="status-active client-status">Servicio Activo</span>
               </div>
             </div>
-            <div>
-              <span class="status-badge status-dev">En Desarrollo</span>
+            <div class="client-details">
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <b>Fechas:</b> 10 Ago 2026 - Presente</div>
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> <b>Contrato:</b> NEX-CT-0826 (Firmado)</div>
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> <b>Cotización final:</b> $65,000 MXN</div>
             </div>
-            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Etapa 2/4</div>
-            <a href="#" class="action-link">Administrar Enlaces</a>
+            
+            <div class="client-folders">
+              <h4>Carpetas de Trabajo (Docs) <button class="add-folder-btn" onclick="addFolder()">+ Añadir Link</button></h4>
+              <div class="folder-list">
+                <a href="https://drive.google.com" target="_blank" class="folder-link">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Carpeta Compartida Drive (Materiales)
+                </a>
+                <a href="https://docs.google.com" target="_blank" class="folder-link">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> Documento de Requerimientos Técnicos
+                </a>
+              </div>
+            </div>
           </div>
-          <!-- Item 2 -->
-          <div class="project-item">
-            <div class="client-info">
-              <div class="client-avatar">EP</div>
+          
+          <!-- Cliente 2 -->
+          <div class="client-card" data-status="active">
+            <div class="client-head">
               <div>
-                <div class="client-name">Escuela Patria</div>
-                <div class="project-name">Chatbot Infantil (REXBOT)</div>
+                <h3 class="client-name">MedikVentas (NEXOS)</h3>
+                <span class="status-active client-status">Servicio Activo</span>
               </div>
             </div>
-            <div>
-              <span class="status-badge status-done">Entregado</span>
+            <div class="client-details">
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <b>Fechas:</b> 25 Ago 2026 - Presente</div>
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> <b>Contrato:</b> NEX-CT-0828 (Pendiente firma)</div>
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> <b>Cotización final:</b> $22,000 MXN</div>
             </div>
-            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Soporte (Alta)</div>
-            <a href="#" class="action-link">Administrar Enlaces</a>
+            <div class="client-folders">
+              <h4>Carpetas de Trabajo (Docs) <button class="add-folder-btn" onclick="addFolder()">+ Añadir Link</button></h4>
+              <div class="folder-list">
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Aún no hay carpetas vinculadas.</span>
+              </div>
+            </div>
           </div>
-          <!-- Item 3 -->
-          <div class="project-item">
-            <div class="client-info">
-              <div class="client-avatar" style="background: #fee2e2; color: #b91c1c;">MV</div>
+          
+          <!-- Cliente 3 -->
+          <div class="client-card" data-status="inactive" style="display: none;">
+            <div class="client-head">
               <div>
-                <div class="client-name">MedikVentas</div>
-                <div class="project-name">Landing Page & Bot (NEXOS)</div>
+                <h3 class="client-name">Escuela Patria (REXBOT)</h3>
+                <span class="status-inactive client-status">Proyecto Completado</span>
               </div>
             </div>
-            <div>
-              <span class="status-badge status-dev">En Desarrollo</span>
+            <div class="client-details">
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <b>Fechas:</b> 05 Ene 2026 - 28 Feb 2026</div>
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> <b>Contrato:</b> REX-CT-0126 (Firmado)</div>
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> <b>Cotización final:</b> $18,500 MXN</div>
             </div>
-            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Etapa 1/4</div>
-            <a href="#" class="action-link">Administrar Enlaces</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pagos / Validaciones Bancarias (Right narrow) -->
-      <div class="card card-payments">
-        <h3 class="card-title">Validación de Pagos <span style="background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;">2 Pendientes</span></h3>
-        
-        <div class="payment-item">
-          <div class="payment-header">
-            <div>
-              <div class="payment-client">Escuela Patria</div>
-              <div class="payment-method">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg> Depósito / Transferencia
+            <div class="client-folders">
+              <h4>Carpetas de Trabajo (Docs)</h4>
+              <div class="folder-list">
+                <a href="https://drive.google.com" target="_blank" class="folder-link">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Carpeta Histórica Drive
+                </a>
               </div>
             </div>
-            <div class="payment-status">Sujeto a validación</div>
           </div>
-          <div class="payment-amount">$18,500.00 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">MXN</span></div>
-          <button class="btn-validate" onclick="alert('Abriendo comprobante para cotejar en App Bancaria...')">Confirmar en App Bancaria</button>
-        </div>
-
-        <div class="payment-item">
-          <div class="payment-header">
-            <div>
-              <div class="payment-client">Consultoría Santos</div>
-              <div class="payment-method">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg> Efectivo (Depósito)
-              </div>
-            </div>
-            <div class="payment-status">Sujeto a validación</div>
-          </div>
-          <div class="payment-amount">$5,000.00 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">MXN</span></div>
-          <button class="btn-validate" style="background: white; color: var(--text-dark); border: 1px solid var(--border);" onclick="alert('Abriendo comprobante...')">Revisar Comprobante</button>
+          
         </div>
       </div>
-
-      <!-- Próximas Tareas (Left Bottom) -->
-      <div class="card card-tasks">
-        <h3 class="card-title">Calendario de Entregas y Reuniones <select style="border: none; outline: none; font-weight: 700; color: var(--text-muted); cursor: pointer;"><option>Próximos 7 días</option><option>Este mes</option></select></h3>
-        
-        <div class="task-list">
-          <div class="task-item">
-            <div class="task-date">
-              <span>Ago</span>
-              <span>28</span>
-            </div>
-            <div class="task-info">
-              <h4>Llamada de Revisión (Wireframes)</h4>
-              <p>Consultoría Santos Santillanes • 11:00 AM</p>
-            </div>
-          </div>
-          <div class="task-item">
-            <div class="task-date" style="background: var(--accent-green);">
-              <span>Ago</span>
-              <span>30</span>
-            </div>
-            <div class="task-info">
-              <h4>Entrega Fase 1 (Landing Page)</h4>
-              <p>MedikVentas • Subida a servidor de pruebas</p>
-            </div>
-          </div>
-          <div class="task-item">
-            <div class="task-date" style="background: var(--border); color: var(--text-dark);">
-              <span>Sep</span>
-              <span>02</span>
-            </div>
-            <div class="task-info">
-              <h4>Cierre de Ticket Técnico (REXBOT)</h4>
-              <p>Escuela Patria • Modificación del saludo inicial del Bot</p>
-            </div>
-          </div>
-        </div>
+      
+      <!-- Blank Views for others -->
+      <div id="payments-view" class="view-section">
+        <h1>Módulo de Pagos (En construcción)</h1>
       </div>
-
-      <!-- Accesos Rápidos (Right Bottom) -->
-      <div class="card card-access">
-        <h3 class="card-title">Gestión Operativa</h3>
-        <p style="margin: 0 0 16px; font-size: 0.9rem; opacity: 0.9;">Atajos para el equipo interno de Nexos IA</p>
-        
-        <div class="access-grid">
-          <a href="#" class="access-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-            <span>Nueva Propuesta</span>
-          </a>
-          <a href="#" class="access-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            <span>Google Agenda</span>
-          </a>
-        </div>
+      <div id="tickets-view" class="view-section">
+        <h1>Módulo de Tickets (En construcción)</h1>
       </div>
 
     </div>
   </main>
 
   <script>
-    // Navegación del sidebar interactiva (Visual)
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        if(!this.hasAttribute('title') || this.getAttribute('title') === 'Cerrar sesión' || this.getAttribute('title') === 'Ajustes') return;
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        // Simulate loading state
-        document.querySelector('.dashboard-grid').style.opacity = '0.5';
-        setTimeout(() => { document.querySelector('.dashboard-grid').style.opacity = '1'; }, 300);
+    const titles = {
+      'timeline-view': 'Proyectos Globales / <span>Línea de Tiempo (Hitos)</span>',
+      'clients-view': 'Proyectos Globales / <span>Directorio de Clientes</span>',
+      'payments-view': 'Proyectos Globales / <span>Control de Pagos</span>',
+      'tickets-view': 'Proyectos Globales / <span>Gestión de Tickets</span>'
+    };
+
+    function switchView(viewId, btn) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+      
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
+      
+      document.getElementById('header-title').innerHTML = titles[viewId];
+    }
+    
+    function toggleClients(status) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      document.querySelectorAll('.client-card').forEach(card => {
+        if (card.dataset.status === status) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
       });
-    });
+    }
+    
+    function addFolder() {
+      const url = prompt("Pega el enlace de Google Drive / Docs compartido con el cliente:");
+      if(url) {
+        alert("Enlace guardado exitosamente. Se sincronizará con la base de datos.");
+      }
+    }
   </script>
 </body>
 </html>
