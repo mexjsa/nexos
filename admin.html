@@ -18,12 +18,14 @@
       --border: #d9d7cf;
       --success: #22c55e;
       --success-light: #dcfce7;
+      --warning: #f59e0b;
+      --warning-light: #fef3c7;
     }
     
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Manrope', sans-serif; background-color: var(--bg-main); color: var(--text-dark); display: flex; min-height: 100vh; overflow-x: hidden; }
+    body { margin: 0; font-family: 'Manrope', sans-serif; background-color: var(--bg-main); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; }
     
-    /* Sidebar (Nexos Dark) */
+    /* Sidebar */
     .sidebar { 
       width: 80px; 
       background: var(--sidebar-bg); 
@@ -36,6 +38,7 @@
       position: sticky;
       top: 0;
       height: 100vh;
+      z-index: 50;
     }
     
     .brand-mark { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
@@ -53,23 +56,27 @@
       border: none;
       background: transparent;
       cursor: pointer;
-      position: relative;
     }
     
     .nav-btn:hover { color: white; background: rgba(255,255,255,0.05); }
     .nav-btn.active { background: var(--accent); color: white; }
     .nav-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; border: 2px solid var(--sidebar-bg); outline: 2px solid var(--accent); cursor: pointer; }
+
     /* Main Content */
     .main-wrapper { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
     
     /* Top Header */
     .header { padding: 24px 40px; background: white; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-    .header-breadcrumb { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-    .header-breadcrumb span { color: var(--text-dark); }
+    .header-breadcrumb { color: var(--text-muted); font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    .header-breadcrumb span { color: var(--text-dark); font-weight: 800; }
     
-    .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--text-dark); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; border: 2px solid white; outline: 2px solid var(--border); }
-
+    .header-actions { display: flex; align-items: center; gap: 16px; }
+    .search-box { background: var(--bg-main); border-radius: 30px; padding: 10px 20px; display: flex; align-items: center; width: 300px; gap: 10px; border: 1px solid var(--border); }
+    .search-box input { border: none; outline: none; width: 100%; font-family: 'Manrope'; font-size: 0.95rem; color: var(--text-dark); background: transparent; }
+    
     .content-area { padding: 40px; overflow-y: auto; flex: 1; }
     
     /* View container */
@@ -77,16 +84,55 @@
     .view-section.active { display: block; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ---------------------------------
-       VIEW 1: TIMELINE / HITOS (DASHBOARD)
-       --------------------------------- */
-    .timeline-card { background: var(--card-bg); border-radius: 16px; padding: 40px; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 30px; }
+    /* =========================================
+       VIEW 0: DASHBOARD GENERAL (GRID v2)
+       ========================================= */
+    .dashboard-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(140px, auto); gap: 24px; }
+    
+    .card { background: var(--card-bg); border-radius: 20px; padding: 24px; border: 1px solid var(--border); display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.01); }
+    .card-title { font-size: 1.1rem; font-weight: 800; margin: 0 0 16px; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; }
+    
+    /* Stats Top */
+    .card-stats { grid-column: span 3; justify-content: center; }
+    .card-stats .label { color: var(--text-muted); font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .card-stats .value { font-size: 2rem; font-weight: 800; margin: 0; color: var(--text-dark); }
+    .card-stats.orange-card { background: var(--accent); color: white; border-color: var(--accent); }
+    .card-stats.orange-card .label, .card-stats.orange-card .value { color: white; }
+    .card-stats.dark-card { background: var(--sidebar-bg); color: white; border-color: var(--sidebar-bg); }
+    .card-stats.dark-card .label { color: #8c939b; }
+    .card-stats.dark-card .value { color: white; }
+    
+    /* Pagos por Validar */
+    .card-payments { grid-column: span 6; grid-row: span 2; }
+    .payment-item { padding: 16px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 12px; background: #fff; }
+    .payment-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .payment-amount { font-size: 1.25rem; font-weight: 800; color: var(--text-dark); }
+    .payment-method { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; font-weight: 600; }
+    .payment-client { font-size: 0.95rem; font-weight: 700; }
+    .btn-validate { background: var(--success); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 700; font-family: 'Manrope'; cursor: pointer; width: 100%; transition: background 0.2s; }
+    .btn-validate:hover { background: #16a34a; }
+    .payment-status { font-size: 0.75rem; color: var(--warning); background: var(--warning-light); padding: 4px 10px; border-radius: 20px; font-weight: 800; }
+
+    /* Calendario Tareas */
+    .card-tasks { grid-column: span 6; grid-row: span 2; }
+    .task-list { display: flex; flex-direction: column; gap: 12px; }
+    .task-item { display: flex; align-items: flex-start; gap: 16px; padding: 12px; border-radius: 12px; border: 1px solid transparent; transition: background 0.2s; }
+    .task-item:hover { background: var(--bg-main); border-color: var(--border); }
+    .task-date { width: 54px; height: 54px; background: var(--sidebar-bg); color: white; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+    .task-date span:first-child { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; opacity: 0.8; }
+    .task-date span:last-child { font-size: 1.2rem; font-weight: 800; line-height: 1; margin-top: 2px; }
+    .task-info h4 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 700; }
+    .task-info p { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
+
+    /* =========================================
+       VIEW 1: TIMELINE / HITOS
+       ========================================= */
+    .timeline-card { background: var(--card-bg); border-radius: 16px; padding: 40px; border: 1px solid var(--border); margin-bottom: 30px; }
     .timeline-title { font-size: 1.25rem; font-weight: 800; margin: 0 0 40px; color: var(--text-dark); }
     
-    /* Horizontal Timeline CSS */
     .hz-timeline { position: relative; padding: 20px 0; margin-bottom: 40px; display: flex; justify-content: space-between; width: 100%; }
     .hz-timeline::before { content: ''; position: absolute; top: 76px; left: 40px; right: 40px; height: 4px; background: #e5e7eb; z-index: 1; border-radius: 2px; }
-    .hz-timeline-progress { position: absolute; top: 76px; left: 40px; width: 45%; height: 4px; background: var(--success); z-index: 2; border-radius: 2px; transition: width 1s ease; }
+    .hz-timeline-progress { position: absolute; top: 76px; left: 40px; width: 45%; height: 4px; background: var(--success); z-index: 2; border-radius: 2px; }
     
     .hz-step { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 140px; text-align: center; }
     .hz-date { font-size: 0.9rem; font-weight: 700; color: var(--success); margin-bottom: 16px; min-height: 20px; }
@@ -99,7 +145,6 @@
     .hz-title { font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
     .hz-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
     
-    /* Flags attached to timeline */
     .hz-flag { position: absolute; top: 120px; width: 1px; height: 40px; background: var(--border); display: flex; flex-direction: column; align-items: center; }
     .hz-flag::before { content: ''; position: absolute; top: 0; width: 12px; height: 12px; background: var(--accent); border-radius: 2px; transform: rotate(45deg); margin-top: -6px; }
     .hz-flag-content { margin-top: 50px; text-align: center; width: 120px; }
@@ -107,24 +152,23 @@
     .hz-flag-desc { font-size: 0.75rem; color: var(--text-muted); }
     .hz-flag.green::before { background: var(--success); }
 
-    /* Bottom stats */
     .timeline-footer { display: flex; justify-content: center; align-items: center; gap: 8px; color: var(--text-dark); font-weight: 700; font-size: 1rem; padding-top: 60px; border-top: 1px solid #f3f4f6; }
 
-    /* ---------------------------------
-       VIEW 2: CLIENTES (PROYECTOS)
-       --------------------------------- */
+    /* =========================================
+       VIEW 2: CLIENTES
+       ========================================= */
     .clients-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
     
     .tabs-toggle { display: inline-flex; background: #e5e7eb; padding: 4px; border-radius: 8px; }
     .tab-btn { padding: 8px 16px; border: none; background: transparent; font-family: 'Manrope'; font-size: 0.9rem; font-weight: 700; color: var(--text-muted); border-radius: 6px; cursor: pointer; transition: all 0.2s; }
     .tab-btn.active { background: white; color: var(--text-dark); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
     
-    .clients-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px; }
+    .clients-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 24px; }
     
     .client-card { background: white; border-radius: 16px; border: 1px solid var(--border); padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
-    .client-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 1px solid #f3f4f6; padding-bottom: 16px; }
+    .client-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
     .client-name { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin: 0 0 4px; }
-    .client-status { font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+    .client-status { font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; }
     .status-active { background: var(--success-light); color: var(--success); }
     .status-inactive { background: #f3f4f6; color: var(--text-muted); }
     
@@ -132,55 +176,157 @@
     .detail-row { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--text-dark); }
     .detail-row svg { width: 16px; height: 16px; color: var(--text-muted); flex-shrink: 0; }
     
-    .client-folders { background: #f9fafb; border: 1px dashed var(--border); border-radius: 8px; padding: 16px; }
-    .client-folders h4 { margin: 0 0 12px; font-size: 0.85rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-    .add-folder-btn { color: var(--accent); cursor: pointer; background: none; border: none; font-weight: 700; font-size: 0.8rem; }
+    .client-folders { background: var(--bg-main); border: 1px dashed var(--border); border-radius: 8px; padding: 16px; }
+    .client-folders h4 { margin: 0 0 12px; font-size: 0.85rem; font-weight: 800; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; letter-spacing: 0.05em; }
+    .add-folder-btn { color: var(--accent); cursor: pointer; background: none; border: none; font-weight: 800; font-size: 0.8rem; }
     
     .folder-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-    .folder-link { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-dark); text-decoration: none; padding: 8px; background: white; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.2s; }
-    .folder-link:hover { border-color: var(--accent); }
-    .folder-link svg { width: 14px; height: 14px; color: #4285F4; } /* Drive blue */
+    .folder-link { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; color: var(--text-dark); text-decoration: none; padding: 10px; background: white; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.2s; }
+    .folder-link:hover { border-color: var(--accent); color: var(--accent); }
+    .folder-link svg { width: 16px; height: 16px; color: #4285F4; } /* Drive blue */
   </style>
 </head>
 <body>
 
-  <!-- Floating Icon Sidebar -->
+  <!-- Floating Icon Sidebar (Nexos Dark) -->
   <aside class="sidebar">
-    <!-- Brand -->
     <div class="brand-mark">NX</div>
 
-    <!-- Nav Icons -->
-    <button class="nav-btn active" title="Línea de Tiempo" onclick="switchView('timeline-view', this)">
+    <button class="nav-btn active" title="Dashboard General" onclick="switchView('dashboard-view', this, 'Resumen Operativo')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+    </button>
+    <button class="nav-btn" title="Línea de Tiempo (Hitos)" onclick="switchView('timeline-view', this, 'Línea de Tiempo (Hitos)')">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     </button>
-    <button class="nav-btn" title="Clientes" onclick="switchView('clients-view', this)">
+    <button class="nav-btn" title="Clientes" onclick="switchView('clients-view', this, 'Directorio de Clientes')">
       <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
     </button>
-    <button class="nav-btn" title="Pagos" onclick="switchView('payments-view', this)">
-      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-    </button>
-    <button class="nav-btn" title="Tickets" onclick="switchView('tickets-view', this)">
+    <button class="nav-btn" title="Tickets / Soporte" onclick="switchView('tickets-view', this, 'Gestión de Tickets')">
       <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
     </button>
+
+    <div class="sidebar-bottom">
+      <div class="user-avatar" title="Administrador">A</div>
+    </div>
   </aside>
 
   <!-- Main Content -->
   <main class="main-wrapper">
     <!-- Header -->
     <header class="header">
-      <div class="header-breadcrumb" id="header-title">
-        Proyectos Globales / <span>Línea de Tiempo (Hitos)</span>
+      <div class="header-breadcrumb">
+        Proyectos Globales / <span id="header-title">Resumen Operativo</span>
       </div>
-      <div class="user-avatar" title="Administrador">A</div>
+      <div class="header-actions">
+        <div class="search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" placeholder="Buscar clientes, tareas, docs...">
+        </div>
+      </div>
     </header>
 
     <div class="content-area">
       
       <!-- ==============================================
+           VIEW 0: DASHBOARD GENERAL (GRID INTEGRADO)
+           ============================================== -->
+      <div id="dashboard-view" class="view-section active">
+        <div class="dashboard-grid">
+          
+          <!-- Stats Top -->
+          <div class="card card-stats">
+            <div class="label">Ingresos del Mes</div>
+            <div class="value">$124,500<span style="font-size: 1rem; color: var(--accent); margin-left: 8px;">MXN</span></div>
+          </div>
+          <div class="card card-stats">
+            <div class="label">Nuevos Leads</div>
+            <div class="value">42</div>
+          </div>
+          <div class="card card-stats orange-card">
+            <div class="label">Tickets Resueltos</div>
+            <div class="value">18</div>
+          </div>
+          <div class="card card-stats dark-card">
+            <div class="label">Proyectos Activos</div>
+            <div class="value">8</div>
+          </div>
+
+          <!-- Pagos por Validar -->
+          <div class="card card-payments">
+            <h3 class="card-title">Validación de Pagos <span class="payment-status">2 Pendientes</span></h3>
+            
+            <div class="payment-item">
+              <div class="payment-header">
+                <div>
+                  <div class="payment-client">Escuela Patria</div>
+                  <div class="payment-method">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg> Depósito / Transferencia
+                  </div>
+                </div>
+                <div class="payment-amount">$18,500 <span style="font-size: 0.8rem; color: var(--text-muted);">MXN</span></div>
+              </div>
+              <button class="btn-validate" onclick="alert('Abriendo comprobante para cotejar en App Bancaria...')">Confirmar en App Bancaria</button>
+            </div>
+
+            <div class="payment-item">
+              <div class="payment-header">
+                <div>
+                  <div class="payment-client">Consultoría Santos</div>
+                  <div class="payment-method">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg> Efectivo (Depósito)
+                  </div>
+                </div>
+                <div class="payment-amount">$5,000 <span style="font-size: 0.8rem; color: var(--text-muted);">MXN</span></div>
+              </div>
+              <button class="btn-validate" style="background: white; color: var(--text-dark); border: 1px solid var(--border);" onclick="alert('Abriendo comprobante...')">Revisar Comprobante</button>
+            </div>
+          </div>
+
+          <!-- Próximas Tareas / Calendario -->
+          <div class="card card-tasks">
+            <h3 class="card-title">Calendario de Entregas y Reuniones <span style="font-size:0.85rem; color:var(--accent);">Próximos 7 días</span></h3>
+            
+            <div class="task-list">
+              <div class="task-item">
+                <div class="task-date">
+                  <span>Ago</span>
+                  <span>28</span>
+                </div>
+                <div class="task-info">
+                  <h4>Llamada de Revisión (Wireframes)</h4>
+                  <p>Consultoría Santos Santillanes • 11:00 AM</p>
+                </div>
+              </div>
+              <div class="task-item">
+                <div class="task-date" style="background: var(--accent);">
+                  <span>Ago</span>
+                  <span>30</span>
+                </div>
+                <div class="task-info">
+                  <h4>Entrega Fase 1 (Landing Page)</h4>
+                  <p>MedikVentas • Subida a servidor de pruebas</p>
+                </div>
+              </div>
+              <div class="task-item">
+                <div class="task-date" style="background: var(--bg-main); color: var(--text-dark); border: 1px solid var(--border);">
+                  <span>Sep</span>
+                  <span>02</span>
+                </div>
+                <div class="task-info">
+                  <h4>Cierre de Ticket Técnico (REXBOT)</h4>
+                  <p>Escuela Patria • Modificación del saludo inicial del Bot</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==============================================
            VIEW 1: TIMELINE (HITOS PRINCIPALES)
            ============================================== -->
-      <div id="timeline-view" class="view-section active">
-        <h1 style="margin: 0 0 24px; font-size: 2rem;">Seguimiento de Proyectos</h1>
+      <div id="timeline-view" class="view-section">
         
         <!-- Timeline Card 1: Consultoría Santos -->
         <div class="timeline-card">
@@ -295,7 +441,6 @@
            VIEW 2: CLIENTES
            ============================================== -->
       <div id="clients-view" class="view-section">
-        <h1 style="margin: 0 0 24px; font-size: 2rem;">Directorio de Clientes</h1>
         
         <div class="clients-header">
           <div class="tabs-toggle">
@@ -325,10 +470,10 @@
               <h4>Carpetas de Trabajo (Docs) <button class="add-folder-btn" onclick="addFolder()">+ Añadir Link</button></h4>
               <div class="folder-list">
                 <a href="https://drive.google.com" target="_blank" class="folder-link">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Carpeta Compartida Drive (Materiales)
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Carpeta Compartida Drive
                 </a>
                 <a href="https://docs.google.com" target="_blank" class="folder-link">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> Documento de Requerimientos Técnicos
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> Documento Requerimientos Técnicos
                 </a>
               </div>
             </div>
@@ -382,32 +527,23 @@
       </div>
       
       <!-- Blank Views for others -->
-      <div id="payments-view" class="view-section">
-        <h1>Módulo de Pagos (En construcción)</h1>
-      </div>
       <div id="tickets-view" class="view-section">
-        <h1>Módulo de Tickets (En construcción)</h1>
+        <h1 style="margin: 0 0 24px; font-size: 2rem;">Bandeja de Incidencias</h1>
+        <p style="color: var(--text-muted);">El buzón de tickets está conectado vía WhatsApp Business API temporalmente.</p>
       </div>
 
     </div>
   </main>
 
   <script>
-    const titles = {
-      'timeline-view': 'Proyectos Globales / <span>Línea de Tiempo (Hitos)</span>',
-      'clients-view': 'Proyectos Globales / <span>Directorio de Clientes</span>',
-      'payments-view': 'Proyectos Globales / <span>Control de Pagos</span>',
-      'tickets-view': 'Proyectos Globales / <span>Gestión de Tickets</span>'
-    };
-
-    function switchView(viewId, btn) {
+    function switchView(viewId, btn, title) {
       document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
       document.getElementById(viewId).classList.add('active');
       
       document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
       btn.classList.add('active');
       
-      document.getElementById('header-title').innerHTML = titles[viewId];
+      document.getElementById('header-title').innerText = title;
     }
     
     function toggleClients(status) {
