@@ -3,19 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Panel | NEXOS IA</title>
+  <title>Admin Dashboard | NEXOS IA</title>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* NEXOS IA PALETTE */
-      --bg-main: #f4f2ec;
-      --sidebar-bg: #101319;
-      --card-bg: #ffffff;
+      --bg-main: #f8f9fa;
+      --sidebar-bg: #ffffff;
       --text-dark: #101319;
-      --text-muted: #60676f;
+      --text-muted: #6b7280;
       --accent: #ec5a28;
-      --accent-light: #fef0eb;
-      --border: #d9d7cf;
+      --accent-light: #fff3ed;
+      --border: #e5e7eb;
+      --card-bg: #ffffff;
       --success: #22c55e;
       --success-light: #dcfce7;
       --warning: #f59e0b;
@@ -25,86 +24,58 @@
     * { box-sizing: border-box; }
     body { margin: 0; font-family: 'Manrope', sans-serif; background-color: var(--bg-main); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; }
     
-    /* Sidebar */
-    .sidebar { 
-      width: 80px; 
-      background: var(--sidebar-bg); 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      padding: 24px 0; 
-      flex-shrink: 0;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      z-index: 50;
-    }
+    /* Sidebar matching Client Portal */
+    .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 1.5rem; flex-shrink: 0; position: relative; z-index: 10; }
+    .brand { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; margin-bottom: 2.5rem; text-decoration: none; color: var(--text-dark); }
+    .brand-mark { width: 12px; height: 12px; background: var(--accent); border-radius: 2px; }
     
-    .brand-mark { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 14px; }
+    .nav-section { margin-bottom: 2rem; }
+    .nav-section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; margin-bottom: 0.8rem; }
+    .nav-link { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; padding: 0.6rem 0.8rem; border-radius: 8px; transition: all 0.2s; margin-bottom: 0.2rem; cursor: pointer; border: none; background: transparent; width: 100%; }
+    .nav-link:hover, .nav-link.active { background: var(--accent-light); color: var(--accent); }
+    .nav-link svg { width: 18px; height: 18px; }
     
-    .nav-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #8c939b;
-      margin-bottom: 12px;
-      transition: all 0.2s ease;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-    }
+    /* Main Layout */
+    .main-wrapper { flex: 1; overflow-y: auto; position: relative; }
     
-    .nav-btn:hover { color: white; background: rgba(255,255,255,0.05); }
-    .nav-btn.active { background: var(--accent); color: white; }
-    .nav-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    /* Ambient Background mimicking the reference */
+    .ambient-header { position: absolute; top: 0; left: 0; right: 0; height: 400px; background: radial-gradient(circle at 50% 0%, #ffe9e0 0%, #f8f9fa 70%); z-index: 0; pointer-events: none; }
     
-    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-    .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; border: 2px solid var(--sidebar-bg); outline: 2px solid var(--accent); cursor: pointer; }
+    .content-area { position: relative; z-index: 1; padding: 2.5rem 3rem; max-width: 1400px; margin: 0 auto; }
+    
+    /* Top Bar */
+    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+    .search-bar { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 0.6rem 1.2rem; width: 350px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+    .search-bar input { border: none; outline: none; width: 100%; font-family: 'Manrope'; font-size: 0.9rem; }
+    
+    .user-profile { display: flex; align-items: center; gap: 12px; }
+    .user-avatar { width: 40px; height: 40px; background: var(--text-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; }
+    
+    /* Header */
+    .welcome-title { font-size: 2.2rem; font-weight: 800; text-align: left; margin: 0 0 2.5rem; letter-spacing: -0.03em; }
 
-    /* Main Content */
-    .main-wrapper { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-    
-    /* Top Header */
-    .header { padding: 24px 40px; background: white; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-    .header-breadcrumb { color: var(--text-muted); font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-    .header-breadcrumb span { color: var(--text-dark); font-weight: 800; }
-    
-    .header-actions { display: flex; align-items: center; gap: 16px; }
-    .search-box { background: var(--bg-main); border-radius: 30px; padding: 10px 20px; display: flex; align-items: center; width: 300px; gap: 10px; border: 1px solid var(--border); }
-    .search-box input { border: none; outline: none; width: 100%; font-family: 'Manrope'; font-size: 0.95rem; color: var(--text-dark); background: transparent; }
-    
-    .content-area { padding: 40px; overflow-y: auto; flex: 1; }
-    
     /* View container */
     .view-section { display: none; }
     .view-section.active { display: block; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* =========================================
-       VIEW 0: DASHBOARD GENERAL (GRID v2)
+       VIEW 0: DASHBOARD GENERAL
        ========================================= */
-    .dashboard-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(140px, auto); gap: 24px; }
-    
-    .card { background: var(--card-bg); border-radius: 20px; padding: 24px; border: 1px solid var(--border); display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.01); }
+    .dashboard-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+    .card { background: var(--card-bg); border-radius: 16px; padding: 24px; border: 1px solid var(--border); display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
     .card-title { font-size: 1.1rem; font-weight: 800; margin: 0 0 16px; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; }
     
-    /* Stats Top */
-    .card-stats { grid-column: span 3; justify-content: center; }
+    /* Stats */
+    .card-stats { grid-column: span 3; justify-content: center; text-align: center; }
     .card-stats .label { color: var(--text-muted); font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
     .card-stats .value { font-size: 2rem; font-weight: 800; margin: 0; color: var(--text-dark); }
-    .card-stats.orange-card { background: var(--accent); color: white; border-color: var(--accent); }
-    .card-stats.orange-card .label, .card-stats.orange-card .value { color: white; }
-    .card-stats.dark-card { background: var(--sidebar-bg); color: white; border-color: var(--sidebar-bg); }
-    .card-stats.dark-card .label { color: #8c939b; }
-    .card-stats.dark-card .value { color: white; }
+    .orange-card { background: var(--accent); color: white; border-color: var(--accent); }
+    .orange-card .label, .orange-card .value { color: white; }
     
     /* Pagos por Validar */
     .card-payments { grid-column: span 6; grid-row: span 2; }
-    .payment-item { padding: 16px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 12px; background: #fff; }
+    .payment-item { padding: 16px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 12px; background: #f8f9fa; }
     .payment-header { display: flex; justify-content: space-between; align-items: flex-start; }
     .payment-amount { font-size: 1.25rem; font-weight: 800; color: var(--text-dark); }
     .payment-method { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; font-weight: 600; }
@@ -118,7 +89,7 @@
     .task-list { display: flex; flex-direction: column; gap: 12px; }
     .task-item { display: flex; align-items: flex-start; gap: 16px; padding: 12px; border-radius: 12px; border: 1px solid transparent; transition: background 0.2s; }
     .task-item:hover { background: var(--bg-main); border-color: var(--border); }
-    .task-date { width: 54px; height: 54px; background: var(--sidebar-bg); color: white; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+    .task-date { width: 54px; height: 54px; background: var(--text-dark); color: white; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
     .task-date span:first-child { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; opacity: 0.8; }
     .task-date span:last-child { font-size: 1.2rem; font-weight: 800; line-height: 1; margin-top: 2px; }
     .task-info h4 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 700; }
@@ -127,12 +98,24 @@
     /* =========================================
        VIEW 1: TIMELINE / HITOS
        ========================================= */
-    .timeline-card { background: var(--card-bg); border-radius: 16px; padding: 40px; border: 1px solid var(--border); margin-bottom: 30px; }
-    .timeline-title { font-size: 1.25rem; font-weight: 800; margin: 0 0 40px; color: var(--text-dark); }
+    .timeline-card { background: var(--card-bg); border-radius: 16px; padding: 30px; border: 1px solid var(--border); margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
     
-    .hz-timeline { position: relative; padding: 20px 0; margin-bottom: 40px; display: flex; justify-content: space-between; width: 100%; }
+    /* Contenedor escrolleable */
+    .hz-scroll-container {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 20px; /* Space for scrollbar */
+      /* Ocultar barra de scroll en navegadores si se desea, o estilizarla */
+    }
+    .hz-scroll-container::-webkit-scrollbar { height: 8px; }
+    .hz-scroll-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+    .hz-scroll-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+    .hz-scroll-container::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+    .hz-timeline { position: relative; padding: 20px 0; margin-bottom: 20px; display: flex; justify-content: space-between; min-width: 800px; /* Forces scroll if content is long */ }
+    
     .hz-timeline::before { content: ''; position: absolute; top: 76px; left: 40px; right: 40px; height: 4px; background: #e5e7eb; z-index: 1; border-radius: 2px; }
-    .hz-timeline-progress { position: absolute; top: 76px; left: 40px; width: 45%; height: 4px; background: var(--success); z-index: 2; border-radius: 2px; }
+    .hz-timeline-progress { position: absolute; top: 76px; left: 40px; height: 4px; background: var(--success); z-index: 2; border-radius: 2px; }
     
     .hz-step { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; width: 140px; text-align: center; }
     .hz-date { font-size: 0.9rem; font-weight: 700; color: var(--success); margin-bottom: 16px; min-height: 20px; }
@@ -152,14 +135,12 @@
     .hz-flag-desc { font-size: 0.75rem; color: var(--text-muted); }
     .hz-flag.green::before { background: var(--success); }
 
-    .timeline-footer { display: flex; justify-content: center; align-items: center; gap: 8px; color: var(--text-dark); font-weight: 700; font-size: 1rem; padding-top: 60px; border-top: 1px solid #f3f4f6; }
+    .timeline-footer { display: flex; justify-content: center; align-items: center; gap: 8px; color: var(--text-dark); font-weight: 700; font-size: 1rem; padding-top: 30px; border-top: 1px solid #f3f4f6; }
 
     /* =========================================
        VIEW 2: CLIENTES
        ========================================= */
-    .clients-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    
-    .tabs-toggle { display: inline-flex; background: #e5e7eb; padding: 4px; border-radius: 8px; }
+    .tabs-toggle { display: inline-flex; background: #e5e7eb; padding: 4px; border-radius: 8px; margin-bottom: 20px; }
     .tab-btn { padding: 8px 16px; border: none; background: transparent; font-family: 'Manrope'; font-size: 0.9rem; font-weight: 700; color: var(--text-muted); border-radius: 6px; cursor: pointer; transition: all 0.2s; }
     .tab-btn.active { background: white; color: var(--text-dark); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
     
@@ -183,52 +164,63 @@
     .folder-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
     .folder-link { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; color: var(--text-dark); text-decoration: none; padding: 10px; background: white; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.2s; }
     .folder-link:hover { border-color: var(--accent); color: var(--accent); }
-    .folder-link svg { width: 16px; height: 16px; color: #4285F4; } /* Drive blue */
+    .folder-link svg { width: 16px; height: 16px; color: #4285F4; }
   </style>
 </head>
 <body>
 
-  <!-- Floating Icon Sidebar (Nexos Dark) -->
+  <!-- Sidebar -->
   <aside class="sidebar">
-    <div class="brand-mark">NX</div>
+    <a class="brand" href="index.html">
+      <span class="brand-mark"></span>NEXOS ADMIN
+    </a>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">Mi Espacio</div>
+      <button class="nav-link active" onclick="switchView('dashboard-view', this, 'Dashboard General')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        Resumen Operativo
+      </button>
+      <button class="nav-link" onclick="switchView('timeline-view', this, 'Hitos de Proyectos Activos')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        Línea de Tiempo
+      </button>
+    </div>
 
-    <button class="nav-btn active" title="Dashboard General" onclick="switchView('dashboard-view', this, 'Resumen Operativo')">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-    </button>
-    <button class="nav-btn" title="Línea de Tiempo (Hitos)" onclick="switchView('timeline-view', this, 'Línea de Tiempo (Hitos)')">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    </button>
-    <button class="nav-btn" title="Clientes" onclick="switchView('clients-view', this, 'Directorio de Clientes')">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-    </button>
-    <button class="nav-btn" title="Tickets / Soporte" onclick="switchView('tickets-view', this, 'Gestión de Tickets')">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-    </button>
-
-    <div class="sidebar-bottom">
-      <div class="user-avatar" title="Administrador">A</div>
+    <div class="nav-section">
+      <div class="nav-section-title">Gestión</div>
+      <button class="nav-link" onclick="switchView('clients-view', this, 'Directorio de Clientes')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        Directorio Clientes
+      </button>
+      <button class="nav-link">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        Tickets (Buzón)
+      </button>
     </div>
   </aside>
 
   <!-- Main Content -->
   <main class="main-wrapper">
-    <!-- Header -->
-    <header class="header">
-      <div class="header-breadcrumb">
-        Proyectos Globales / <span id="header-title">Resumen Operativo</span>
-      </div>
-      <div class="header-actions">
-        <div class="search-box">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <div class="ambient-header"></div>
+    
+    <div class="content-area">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="search-bar">
+          <svg width="18" height="18" fill="none" stroke="var(--text-muted)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           <input type="text" placeholder="Buscar clientes, tareas, docs...">
         </div>
+        <div class="user-profile">
+          <span style="font-weight: 600; font-size: 0.95rem;">Equipo Interno NEXOS</span>
+          <div class="user-avatar">A</div>
+        </div>
       </div>
-    </header>
 
-    <div class="content-area">
+      <h1 class="welcome-title" id="header-title">Dashboard General</h1>
       
       <!-- ==============================================
-           VIEW 0: DASHBOARD GENERAL (GRID INTEGRADO)
+           VIEW 0: DASHBOARD GENERAL (GRID)
            ============================================== -->
       <div id="dashboard-view" class="view-section active">
         <div class="dashboard-grid">
@@ -246,8 +238,8 @@
             <div class="label">Tickets Resueltos</div>
             <div class="value">18</div>
           </div>
-          <div class="card card-stats dark-card">
-            <div class="label">Proyectos Activos</div>
+          <div class="card card-stats" style="background: var(--text-dark); color: white;">
+            <div class="label" style="color: #8c939b;">Proyectos Activos</div>
             <div class="value">8</div>
           </div>
 
@@ -324,76 +316,66 @@
       </div>
 
       <!-- ==============================================
-           VIEW 1: TIMELINE (HITOS PRINCIPALES)
+           VIEW 1: TIMELINE (HITOS DE PROYECTOS ACTIVOS)
            ============================================== -->
       <div id="timeline-view" class="view-section">
         
         <!-- Timeline Card 1: Consultoría Santos -->
-        <div class="timeline-card">
-          <h2 class="timeline-title">Línea de Tiempo: Consultoría Santos Santillanes</h2>
+        <div class="card timeline-card">
+          <h2 class="card-title" style="font-size: 1.25rem;">Línea de Tiempo: Consultoría Santos Santillanes</h2>
           
-          <div class="hz-timeline">
-            <!-- Background line and progress handled via CSS ::before -->
-            <div class="hz-timeline-progress"></div>
-            
-            <!-- Step 1 -->
-            <div class="hz-step active">
-              <div class="hz-date">10 Ago</div>
-              <div class="hz-circle">✓</div>
-              <div class="hz-title">Arranque</div>
-              <div class="hz-desc">Firma de contrato y pago anticipo (50%)</div>
-            </div>
-            
-            <!-- Flag 1 (Attached below line between Step 1 & 2) -->
-            <div class="hz-flag green" style="left: 17%;">
-              <div class="hz-flag-content">
-                <div class="hz-flag-date">15 Ago</div>
-                <div class="hz-flag-desc">Sesión Zoom Inicial</div>
+          <div class="hz-scroll-container">
+            <div class="hz-timeline">
+              <div class="hz-timeline-progress" style="width: 45%;"></div>
+              
+              <div class="hz-step active">
+                <div class="hz-date">10 Ago</div>
+                <div class="hz-circle">✓</div>
+                <div class="hz-title">Arranque</div>
+                <div class="hz-desc">Firma y anticipo (50%)</div>
               </div>
-            </div>
-            
-            <!-- Step 2 -->
-            <div class="hz-step active">
-              <div class="hz-date">24 Ago</div>
-              <div class="hz-circle">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              
+              <div class="hz-flag green" style="left: 17%;">
+                <div class="hz-flag-content">
+                  <div class="hz-flag-date">15 Ago</div>
+                  <div class="hz-flag-desc">Sesión Zoom Inicial</div>
+                </div>
               </div>
-              <div class="hz-title">Validación Visual</div>
-              <div class="hz-desc">Aprobación de Wireframes</div>
-            </div>
-            
-            <!-- Step 3 -->
-            <div class="hz-step active" style="margin-top:-2px;"> <!-- active current state -->
-              <div class="hz-date">15 Sep</div>
-              <div class="hz-circle" style="box-shadow: 0 0 0 6px var(--success-light); background: var(--success);">
-                <span style="font-size:12px; color:white;">45%</span>
+              
+              <div class="hz-step active">
+                <div class="hz-date">24 Ago</div>
+                <div class="hz-circle"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                <div class="hz-title">Validación Visual</div>
+                <div class="hz-desc">Wireframes</div>
               </div>
-              <div class="hz-title">Desarrollo Core</div>
-              <div class="hz-desc">Implementación del dashboard</div>
-            </div>
-            
-            <!-- Flag 2 -->
-            <div class="hz-flag" style="left: 65%;">
-              <div class="hz-flag-content">
-                <div class="hz-flag-date">20 Sep</div>
-                <div class="hz-flag-desc">Petición Extra: Exportar PDF</div>
+              
+              <div class="hz-step active" style="margin-top:-2px;">
+                <div class="hz-date">15 Sep</div>
+                <div class="hz-circle" style="box-shadow: 0 0 0 6px var(--success-light); background: var(--success);"><span style="font-size:12px; color:white;">45%</span></div>
+                <div class="hz-title">Desarrollo Core</div>
+                <div class="hz-desc">Dashboard</div>
               </div>
-            </div>
-            
-            <!-- Step 4 -->
-            <div class="hz-step pending">
-              <div class="hz-date"></div>
-              <div class="hz-circle">✓</div>
-              <div class="hz-title">Pruebas Finales</div>
-              <div class="hz-desc">Validación con equipo cliente</div>
-            </div>
-            
-            <!-- Step 5 -->
-            <div class="hz-step pending">
-              <div class="hz-date"></div>
-              <div class="hz-circle">★</div>
-              <div class="hz-title">Cierre Proyecto</div>
-              <div class="hz-desc">Pago final y entrega</div>
+              
+              <div class="hz-flag" style="left: 65%;">
+                <div class="hz-flag-content">
+                  <div class="hz-flag-date">20 Sep</div>
+                  <div class="hz-flag-desc">Petición Extra: PDF</div>
+                </div>
+              </div>
+              
+              <div class="hz-step pending">
+                <div class="hz-date"></div>
+                <div class="hz-circle">✓</div>
+                <div class="hz-title">Pruebas Finales</div>
+                <div class="hz-desc">Validación cliente</div>
+              </div>
+              
+              <div class="hz-step pending">
+                <div class="hz-date"></div>
+                <div class="hz-circle">★</div>
+                <div class="hz-title">Cierre Proyecto</div>
+                <div class="hz-desc">Pago final</div>
+              </div>
             </div>
           </div>
           
@@ -402,37 +384,83 @@
             Tiempo restante estimado: 1 Mes, 2 Semanas
           </div>
         </div>
-        
-        <!-- Timeline Card 2: Escuela Patria -->
-        <div class="timeline-card" style="opacity: 0.8;">
-          <h2 class="timeline-title">Línea de Tiempo: Escuela Patria (REXBOT)</h2>
+
+        <!-- Timeline Card 2: Mantenimiento Anual (SCROLL HORIZONTAL) -->
+        <div class="card timeline-card">
+          <h2 class="card-title" style="font-size: 1.25rem;">
+            Línea de Tiempo Larga (Mantenimiento Anual) - MedikVentas
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">*Desplaza hacia la derecha para ver los próximos meses</span>
+          </h2>
           
-          <div class="hz-timeline">
-            <div class="hz-timeline-progress" style="width: 100%; background: var(--text-dark);"></div>
-            <div class="hz-step active" style="filter: grayscale(1);">
-              <div class="hz-date" style="color:var(--text-dark);">05 Ene</div>
-              <div class="hz-circle" style="background:var(--text-dark); border-color:var(--text-dark);">✓</div>
-              <div class="hz-title">Arranque</div>
-            </div>
-            <div class="hz-step active" style="filter: grayscale(1);">
-              <div class="hz-date" style="color:var(--text-dark);">20 Ene</div>
-              <div class="hz-circle" style="background:var(--text-dark); border-color:var(--text-dark);">✓</div>
-              <div class="hz-title">Guiones Aprobados</div>
-            </div>
-            <div class="hz-step active" style="filter: grayscale(1);">
-              <div class="hz-date" style="color:var(--text-dark);">15 Feb</div>
-              <div class="hz-circle" style="background:var(--text-dark); border-color:var(--text-dark);">✓</div>
-              <div class="hz-title">Desarrollo</div>
-            </div>
-            <div class="hz-step active" style="filter: grayscale(1);">
-              <div class="hz-date" style="color:var(--text-dark);">28 Feb</div>
-              <div class="hz-circle" style="background:var(--text-dark); border-color:var(--text-dark);">✓</div>
-              <div class="hz-title">Cierre Proyecto</div>
-              <div class="hz-desc">Mutuo Acuerdo</div>
+          <!-- Contenedor con Scroll Horizontal (min-width: 1200px) -->
+          <div class="hz-scroll-container">
+            <div class="hz-timeline" style="min-width: 1200px;">
+              <div class="hz-timeline-progress" style="width: 25%;"></div>
+              
+              <!-- Pagos Mensuales / Etapas -->
+              <div class="hz-step active">
+                <div class="hz-date">Ene 2026</div>
+                <div class="hz-circle">✓</div>
+                <div class="hz-title">Pago Mes 1</div>
+                <div class="hz-desc">$5,000 MXN</div>
+              </div>
+              
+              <div class="hz-step active">
+                <div class="hz-date">Feb 2026</div>
+                <div class="hz-circle">✓</div>
+                <div class="hz-title">Pago Mes 2</div>
+                <div class="hz-desc">$5,000 MXN</div>
+              </div>
+              
+              <div class="hz-step active" style="margin-top:-2px;">
+                <div class="hz-date">Mar 2026</div>
+                <div class="hz-circle" style="box-shadow: 0 0 0 6px var(--success-light); background: var(--success);"><span style="font-size:12px; color:white;">Mes 3</span></div>
+                <div class="hz-title">Pago Mes 3</div>
+                <div class="hz-desc">$5,000 MXN (Cubierto)</div>
+              </div>
+              
+              <!-- Bandera extra de mantenimiento -->
+              <div class="hz-flag" style="left: 45%;">
+                <div class="hz-flag-content">
+                  <div class="hz-flag-date">15 Abr 2026</div>
+                  <div class="hz-flag-desc">Mantenimiento de Servidores (Planeado)</div>
+                </div>
+              </div>
+              
+              <div class="hz-step pending">
+                <div class="hz-date">Abr 2026</div>
+                <div class="hz-circle">4</div>
+                <div class="hz-title">Pago Mes 4</div>
+                <div class="hz-desc">$5,000 MXN</div>
+              </div>
+              
+              <div class="hz-step pending">
+                <div class="hz-date">May 2026</div>
+                <div class="hz-circle">5</div>
+                <div class="hz-title">Pago Mes 5</div>
+                <div class="hz-desc">$5,000 MXN</div>
+              </div>
+              
+              <div class="hz-step pending">
+                <div class="hz-date">Jun 2026</div>
+                <div class="hz-circle">6</div>
+                <div class="hz-title">Pago Mes 6</div>
+                <div class="hz-desc">$5,000 MXN</div>
+              </div>
+              
+              <div class="hz-step pending">
+                <div class="hz-date">Dic 2026</div>
+                <div class="hz-circle">★</div>
+                <div class="hz-title">Cierre Anual</div>
+                <div class="hz-desc">Renovación de póliza</div>
+              </div>
+
             </div>
           </div>
-          <div class="timeline-footer" style="color: var(--success);">
-            Proyecto Finalizado
+          
+          <div class="timeline-footer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Restante de anualidad: 9 Meses (Monto pendiente: $45,000 MXN)
           </div>
         </div>
       </div>
@@ -441,18 +469,13 @@
            VIEW 2: CLIENTES
            ============================================== -->
       <div id="clients-view" class="view-section">
-        
-        <div class="clients-header">
-          <div class="tabs-toggle">
-            <button class="tab-btn active" onclick="toggleClients('active')">Activos (2)</button>
-            <button class="tab-btn" onclick="toggleClients('inactive')">Inactivos / Completados (1)</button>
-          </div>
-          <button style="background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-family: 'Manrope'; cursor: pointer;">+ Nuevo Cliente</button>
+        <div class="tabs-toggle">
+          <button class="tab-btn active" onclick="toggleClients('active')">Activos (2)</button>
+          <button class="tab-btn" onclick="toggleClients('inactive')">Inactivos / Completados (1)</button>
         </div>
         
         <div class="clients-grid">
           
-          <!-- Cliente 1 -->
           <div class="client-card" data-status="active">
             <div class="client-head">
               <div>
@@ -472,25 +495,20 @@
                 <a href="https://drive.google.com" target="_blank" class="folder-link">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Carpeta Compartida Drive
                 </a>
-                <a href="https://docs.google.com" target="_blank" class="folder-link">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> Documento Requerimientos Técnicos
-                </a>
               </div>
             </div>
           </div>
           
-          <!-- Cliente 2 -->
           <div class="client-card" data-status="active">
             <div class="client-head">
               <div>
                 <h3 class="client-name">MedikVentas (NEXOS)</h3>
-                <span class="status-active client-status">Servicio Activo</span>
+                <span class="status-active client-status">Mantenimiento Anual</span>
               </div>
             </div>
             <div class="client-details">
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <b>Fechas:</b> 25 Ago 2026 - Presente</div>
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> <b>Contrato:</b> NEX-CT-0828 (Pendiente firma)</div>
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> <b>Cotización final:</b> $22,000 MXN</div>
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <b>Fechas:</b> Ene 2026 - Dic 2026</div>
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> <b>Anualidad:</b> $60,000 MXN</div>
             </div>
             <div class="client-folders">
               <h4>Carpetas de Trabajo (Docs) <button class="add-folder-btn" onclick="addFolder()">+ Añadir Link</button></h4>
@@ -500,7 +518,6 @@
             </div>
           </div>
           
-          <!-- Cliente 3 -->
           <div class="client-card" data-status="inactive" style="display: none;">
             <div class="client-head">
               <div>
@@ -511,25 +528,10 @@
             <div class="client-details">
               <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <b>Fechas:</b> 05 Ene 2026 - 28 Feb 2026</div>
               <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> <b>Contrato:</b> REX-CT-0126 (Firmado)</div>
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> <b>Cotización final:</b> $18,500 MXN</div>
-            </div>
-            <div class="client-folders">
-              <h4>Carpetas de Trabajo (Docs)</h4>
-              <div class="folder-list">
-                <a href="https://drive.google.com" target="_blank" class="folder-link">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Carpeta Histórica Drive
-                </a>
-              </div>
             </div>
           </div>
           
         </div>
-      </div>
-      
-      <!-- Blank Views for others -->
-      <div id="tickets-view" class="view-section">
-        <h1 style="margin: 0 0 24px; font-size: 2rem;">Bandeja de Incidencias</h1>
-        <p style="color: var(--text-muted);">El buzón de tickets está conectado vía WhatsApp Business API temporalmente.</p>
       </div>
 
     </div>
@@ -540,7 +542,7 @@
       document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
       document.getElementById(viewId).classList.add('active');
       
-      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
       btn.classList.add('active');
       
       document.getElementById('header-title').innerText = title;
