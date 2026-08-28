@@ -122,6 +122,8 @@
     .hz-flag-date { font-weight: 800; font-size: 0.8rem; margin-bottom: 2px; }
     .hz-flag-desc { font-size: 0.75rem; color: var(--text-muted); }
     .hz-flag.green::before { background: var(--success); }
+    .hz-flag.incident-flag::before { background: #ef4444; } /* Red for incidents */
+    .hz-flag.incident-flag .hz-flag-date { color: #ef4444; }
     .hz-flag.new-flag { animation: dropIn 0.4s ease; }
     
     @keyframes dropIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
@@ -416,23 +418,29 @@
       if(url) alert("Enlace guardado.");
     }
 
-    // Funcionalidad para agregar un hito / bandera a la línea de tiempo
     function addMilestone(containerId) {
-      const date = prompt("¿Qué fecha tiene este hito o reunión? (Ej. '28 Sep')");
+      const date = prompt("¿Qué fecha tiene este evento? (Ej. '28 Sep')");
       if(!date) return;
       
-      const title = prompt("Describe brevemente el hito (Ej. 'Llamada de Revisión')");
+      const title = prompt("Describe brevemente el evento (Ej. 'Llamada de Revisión' o 'Falla de servidor')");
       if(!title) return;
 
+      const type = prompt("¿Qué tipo de evento es?\n1: Hito / Reunión programada\n2: Incidencia / Retraso (No planeado)");
+      
       const container = document.getElementById(containerId);
       if(container) {
-        // Calcular una posición horizontal al azar o basada en lógica. 
-        // Para la demo, lo pondremos por el 85% de la línea de tiempo.
-        const leftPercent = "85%";
+        // En una app real, la posición se calcularía con base en la fecha. 
+        // Aquí lo colocamos dinámicamente en una posición visible para la demo.
+        const leftPercent = Math.floor(Math.random() * (90 - 20 + 1)) + 20 + "%";
         
-        // Crear el elemento bandera (flag)
         const flag = document.createElement('div');
-        flag.className = 'hz-flag new-flag';
+        // Si es incidencia (opción 2), le asignamos una clase especial para pintar la bandera de rojo/naranja oscuro.
+        let flagColorClass = "";
+        if(type === "2") {
+          flagColorClass = "incident-flag";
+        }
+        
+        flag.className = `hz-flag new-flag ${flagColorClass}`;
         flag.style.left = leftPercent;
         
         flag.innerHTML = `
@@ -444,8 +452,7 @@
         
         container.appendChild(flag);
         
-        // Alerta simulación de backend
-        alert("Hito añadido a la línea de tiempo. En el sistema final esto se guarda en la base de datos de este cliente.");
+        alert("Evento añadido a la línea de tiempo. Se diferenciará visualmente si es incidencia.");
       }
     }
   </script>
