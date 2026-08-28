@@ -24,7 +24,7 @@
     * { box-sizing: border-box; }
     body { margin: 0; font-family: 'Manrope', sans-serif; background-color: var(--bg-main); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; }
     
-    /* Sidebar matching Client Portal */
+    /* Sidebar */
     .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 1.5rem; flex-shrink: 0; position: relative; z-index: 10; }
     .brand { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; margin-bottom: 2.5rem; text-decoration: none; color: var(--text-dark); }
     .brand-mark { width: 12px; height: 12px; background: var(--accent); border-radius: 2px; }
@@ -37,8 +37,6 @@
     
     /* Main Layout */
     .main-wrapper { flex: 1; overflow-y: auto; position: relative; }
-    
-    /* Ambient Background mimicking the reference */
     .ambient-header { position: absolute; top: 0; left: 0; right: 0; height: 400px; background: radial-gradient(circle at 50% 0%, #ffe9e0 0%, #f8f9fa 70%); z-index: 0; pointer-events: none; }
     
     .content-area { position: relative; z-index: 1; padding: 2.5rem 3rem; max-width: 1400px; margin: 0 auto; }
@@ -51,7 +49,6 @@
     .user-profile { display: flex; align-items: center; gap: 12px; }
     .user-avatar { width: 40px; height: 40px; background: var(--text-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; }
     
-    /* Header */
     .welcome-title { font-size: 2.2rem; font-weight: 800; text-align: left; margin: 0 0 2.5rem; letter-spacing: -0.03em; }
 
     /* View container */
@@ -66,14 +63,12 @@
     .card { background: var(--card-bg); border-radius: 16px; padding: 24px; border: 1px solid var(--border); display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
     .card-title { font-size: 1.1rem; font-weight: 800; margin: 0 0 16px; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; }
     
-    /* Stats */
     .card-stats { grid-column: span 3; justify-content: center; text-align: center; }
     .card-stats .label { color: var(--text-muted); font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
     .card-stats .value { font-size: 2rem; font-weight: 800; margin: 0; color: var(--text-dark); }
     .orange-card { background: var(--accent); color: white; border-color: var(--accent); }
     .orange-card .label, .orange-card .value { color: white; }
     
-    /* Pagos por Validar */
     .card-payments { grid-column: span 6; grid-row: span 2; }
     .payment-item { padding: 16px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 12px; background: #f8f9fa; }
     .payment-header { display: flex; justify-content: space-between; align-items: flex-start; }
@@ -84,7 +79,6 @@
     .btn-validate:hover { background: #16a34a; }
     .payment-status { font-size: 0.75rem; color: var(--warning); background: var(--warning-light); padding: 4px 10px; border-radius: 20px; font-weight: 800; }
 
-    /* Calendario Tareas */
     .card-tasks { grid-column: span 6; grid-row: span 2; }
     .task-list { display: flex; flex-direction: column; gap: 12px; }
     .task-item { display: flex; align-items: flex-start; gap: 16px; padding: 12px; border-radius: 12px; border: 1px solid transparent; transition: background 0.2s; }
@@ -100,19 +94,13 @@
        ========================================= */
     .timeline-card { background: var(--card-bg); border-radius: 16px; padding: 30px; border: 1px solid var(--border); margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
     
-    /* Contenedor escrolleable */
-    .hz-scroll-container {
-      width: 100%;
-      overflow-x: auto;
-      padding-bottom: 20px; /* Space for scrollbar */
-      /* Ocultar barra de scroll en navegadores si se desea, o estilizarla */
-    }
+    .hz-scroll-container { width: 100%; overflow-x: auto; padding-bottom: 20px; }
     .hz-scroll-container::-webkit-scrollbar { height: 8px; }
     .hz-scroll-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
     .hz-scroll-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
     .hz-scroll-container::-webkit-scrollbar-thumb:hover { background: #aaa; }
 
-    .hz-timeline { position: relative; padding: 20px 0; margin-bottom: 20px; display: flex; justify-content: space-between; min-width: 800px; /* Forces scroll if content is long */ }
+    .hz-timeline { position: relative; padding: 20px 0; margin-bottom: 20px; display: flex; justify-content: space-between; min-width: 800px; }
     
     .hz-timeline::before { content: ''; position: absolute; top: 76px; left: 40px; right: 40px; height: 4px; background: #e5e7eb; z-index: 1; border-radius: 2px; }
     .hz-timeline-progress { position: absolute; top: 76px; left: 40px; height: 4px; background: var(--success); z-index: 2; border-radius: 2px; }
@@ -128,14 +116,20 @@
     .hz-title { font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
     .hz-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
     
-    .hz-flag { position: absolute; top: 120px; width: 1px; height: 40px; background: var(--border); display: flex; flex-direction: column; align-items: center; }
+    .hz-flag { position: absolute; top: 120px; width: 1px; height: 40px; background: var(--border); display: flex; flex-direction: column; align-items: center; transition: all 0.3s ease; }
     .hz-flag::before { content: ''; position: absolute; top: 0; width: 12px; height: 12px; background: var(--accent); border-radius: 2px; transform: rotate(45deg); margin-top: -6px; }
     .hz-flag-content { margin-top: 50px; text-align: center; width: 120px; }
     .hz-flag-date { font-weight: 800; font-size: 0.8rem; margin-bottom: 2px; }
     .hz-flag-desc { font-size: 0.75rem; color: var(--text-muted); }
     .hz-flag.green::before { background: var(--success); }
+    .hz-flag.new-flag { animation: dropIn 0.4s ease; }
+    
+    @keyframes dropIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
     .timeline-footer { display: flex; justify-content: center; align-items: center; gap: 8px; color: var(--text-dark); font-weight: 700; font-size: 1rem; padding-top: 30px; border-top: 1px solid #f3f4f6; }
+    
+    .btn-add-milestone { background: white; border: 1px solid var(--accent); color: var(--accent); padding: 6px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; font-family: 'Manrope'; font-size: 0.85rem; transition: background 0.2s; }
+    .btn-add-milestone:hover { background: var(--accent); color: white; }
 
     /* =========================================
        VIEW 2: CLIENTES
@@ -182,7 +176,7 @@
         Resumen Operativo
       </button>
       <button class="nav-link" onclick="switchView('timeline-view', this, 'Hitos de Proyectos Activos')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
         Línea de Tiempo
       </button>
     </div>
@@ -219,13 +213,9 @@
 
       <h1 class="welcome-title" id="header-title">Dashboard General</h1>
       
-      <!-- ==============================================
-           VIEW 0: DASHBOARD GENERAL (GRID)
-           ============================================== -->
+      <!-- VIEW 0: DASHBOARD -->
       <div id="dashboard-view" class="view-section active">
         <div class="dashboard-grid">
-          
-          <!-- Stats Top -->
           <div class="card card-stats">
             <div class="label">Ingresos del Mes</div>
             <div class="value">$124,500<span style="font-size: 1rem; color: var(--accent); margin-left: 8px;">MXN</span></div>
@@ -243,10 +233,8 @@
             <div class="value">8</div>
           </div>
 
-          <!-- Pagos por Validar -->
           <div class="card card-payments">
             <h3 class="card-title">Validación de Pagos <span class="payment-status">2 Pendientes</span></h3>
-            
             <div class="payment-item">
               <div class="payment-header">
                 <div>
@@ -259,25 +247,10 @@
               </div>
               <button class="btn-validate" onclick="alert('Abriendo comprobante para cotejar en App Bancaria...')">Confirmar en App Bancaria</button>
             </div>
-
-            <div class="payment-item">
-              <div class="payment-header">
-                <div>
-                  <div class="payment-client">Consultoría Santos</div>
-                  <div class="payment-method">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg> Efectivo (Depósito)
-                  </div>
-                </div>
-                <div class="payment-amount">$5,000 <span style="font-size: 0.8rem; color: var(--text-muted);">MXN</span></div>
-              </div>
-              <button class="btn-validate" style="background: white; color: var(--text-dark); border: 1px solid var(--border);" onclick="alert('Abriendo comprobante...')">Revisar Comprobante</button>
-            </div>
           </div>
 
-          <!-- Próximas Tareas / Calendario -->
           <div class="card card-tasks">
             <h3 class="card-title">Calendario de Entregas y Reuniones <span style="font-size:0.85rem; color:var(--accent);">Próximos 7 días</span></h3>
-            
             <div class="task-list">
               <div class="task-item">
                 <div class="task-date">
@@ -299,33 +272,23 @@
                   <p>MedikVentas • Subida a servidor de pruebas</p>
                 </div>
               </div>
-              <div class="task-item">
-                <div class="task-date" style="background: var(--bg-main); color: var(--text-dark); border: 1px solid var(--border);">
-                  <span>Sep</span>
-                  <span>02</span>
-                </div>
-                <div class="task-info">
-                  <h4>Cierre de Ticket Técnico (REXBOT)</h4>
-                  <p>Escuela Patria • Modificación del saludo inicial del Bot</p>
-                </div>
-              </div>
             </div>
           </div>
-
         </div>
       </div>
 
-      <!-- ==============================================
-           VIEW 1: TIMELINE (HITOS DE PROYECTOS ACTIVOS)
-           ============================================== -->
+      <!-- VIEW 1: TIMELINE -->
       <div id="timeline-view" class="view-section">
         
         <!-- Timeline Card 1: Consultoría Santos -->
-        <div class="card timeline-card">
-          <h2 class="card-title" style="font-size: 1.25rem;">Línea de Tiempo: Consultoría Santos Santillanes</h2>
+        <div class="card timeline-card" id="timeline-santos">
+          <div class="card-title" style="font-size: 1.25rem;">
+            Línea de Tiempo: Consultoría Santos Santillanes
+            <button class="btn-add-milestone" onclick="addMilestone('santos-timeline-container')">+ Programar Hito / Reunión</button>
+          </div>
           
           <div class="hz-scroll-container">
-            <div class="hz-timeline">
+            <div class="hz-timeline" id="santos-timeline-container">
               <div class="hz-timeline-progress" style="width: 45%;"></div>
               
               <div class="hz-step active">
@@ -385,89 +348,9 @@
           </div>
         </div>
 
-        <!-- Timeline Card 2: Mantenimiento Anual (SCROLL HORIZONTAL) -->
-        <div class="card timeline-card">
-          <h2 class="card-title" style="font-size: 1.25rem;">
-            Línea de Tiempo Larga (Mantenimiento Anual) - MedikVentas
-            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">*Desplaza hacia la derecha para ver los próximos meses</span>
-          </h2>
-          
-          <!-- Contenedor con Scroll Horizontal (min-width: 1200px) -->
-          <div class="hz-scroll-container">
-            <div class="hz-timeline" style="min-width: 1200px;">
-              <div class="hz-timeline-progress" style="width: 25%;"></div>
-              
-              <!-- Pagos Mensuales / Etapas -->
-              <div class="hz-step active">
-                <div class="hz-date">Ene 2026</div>
-                <div class="hz-circle">✓</div>
-                <div class="hz-title">Pago Mes 1</div>
-                <div class="hz-desc">$5,000 MXN</div>
-              </div>
-              
-              <div class="hz-step active">
-                <div class="hz-date">Feb 2026</div>
-                <div class="hz-circle">✓</div>
-                <div class="hz-title">Pago Mes 2</div>
-                <div class="hz-desc">$5,000 MXN</div>
-              </div>
-              
-              <div class="hz-step active" style="margin-top:-2px;">
-                <div class="hz-date">Mar 2026</div>
-                <div class="hz-circle" style="box-shadow: 0 0 0 6px var(--success-light); background: var(--success);"><span style="font-size:12px; color:white;">Mes 3</span></div>
-                <div class="hz-title">Pago Mes 3</div>
-                <div class="hz-desc">$5,000 MXN (Cubierto)</div>
-              </div>
-              
-              <!-- Bandera extra de mantenimiento -->
-              <div class="hz-flag" style="left: 45%;">
-                <div class="hz-flag-content">
-                  <div class="hz-flag-date">15 Abr 2026</div>
-                  <div class="hz-flag-desc">Mantenimiento de Servidores (Planeado)</div>
-                </div>
-              </div>
-              
-              <div class="hz-step pending">
-                <div class="hz-date">Abr 2026</div>
-                <div class="hz-circle">4</div>
-                <div class="hz-title">Pago Mes 4</div>
-                <div class="hz-desc">$5,000 MXN</div>
-              </div>
-              
-              <div class="hz-step pending">
-                <div class="hz-date">May 2026</div>
-                <div class="hz-circle">5</div>
-                <div class="hz-title">Pago Mes 5</div>
-                <div class="hz-desc">$5,000 MXN</div>
-              </div>
-              
-              <div class="hz-step pending">
-                <div class="hz-date">Jun 2026</div>
-                <div class="hz-circle">6</div>
-                <div class="hz-title">Pago Mes 6</div>
-                <div class="hz-desc">$5,000 MXN</div>
-              </div>
-              
-              <div class="hz-step pending">
-                <div class="hz-date">Dic 2026</div>
-                <div class="hz-circle">★</div>
-                <div class="hz-title">Cierre Anual</div>
-                <div class="hz-desc">Renovación de póliza</div>
-              </div>
-
-            </div>
-          </div>
-          
-          <div class="timeline-footer">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            Restante de anualidad: 9 Meses (Monto pendiente: $45,000 MXN)
-          </div>
-        </div>
       </div>
 
-      <!-- ==============================================
-           VIEW 2: CLIENTES
-           ============================================== -->
+      <!-- VIEW 2: CLIENTES -->
       <div id="clients-view" class="view-section">
         <div class="tabs-toggle">
           <button class="tab-btn active" onclick="toggleClients('active')">Activos (2)</button>
@@ -484,50 +367,17 @@
               </div>
             </div>
             <div class="client-details">
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <b>Fechas:</b> 10 Ago 2026 - Presente</div>
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> <b>Contrato:</b> NEX-CT-0826 (Firmado)</div>
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> <b>Cotización final:</b> $65,000 MXN</div>
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect></svg> <b>Fechas:</b> 10 Ago 2026 - Presente</div>
+              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> <b>Contrato:</b> NEX-CT-0826 (Firmado)</div>
             </div>
             
             <div class="client-folders">
-              <h4>Carpetas de Trabajo (Docs) <button class="add-folder-btn" onclick="addFolder()">+ Añadir Link</button></h4>
+              <h4>Carpetas (Docs) <button class="add-folder-btn" onclick="addFolder()">+ Añadir</button></h4>
               <div class="folder-list">
                 <a href="https://drive.google.com" target="_blank" class="folder-link">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Carpeta Compartida Drive
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Drive
                 </a>
               </div>
-            </div>
-          </div>
-          
-          <div class="client-card" data-status="active">
-            <div class="client-head">
-              <div>
-                <h3 class="client-name">MedikVentas (NEXOS)</h3>
-                <span class="status-active client-status">Mantenimiento Anual</span>
-              </div>
-            </div>
-            <div class="client-details">
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <b>Fechas:</b> Ene 2026 - Dic 2026</div>
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> <b>Anualidad:</b> $60,000 MXN</div>
-            </div>
-            <div class="client-folders">
-              <h4>Carpetas de Trabajo (Docs) <button class="add-folder-btn" onclick="addFolder()">+ Añadir Link</button></h4>
-              <div class="folder-list">
-                <span style="font-size: 0.8rem; color: var(--text-muted);">Aún no hay carpetas vinculadas.</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="client-card" data-status="inactive" style="display: none;">
-            <div class="client-head">
-              <div>
-                <h3 class="client-name">Escuela Patria (REXBOT)</h3>
-                <span class="status-inactive client-status">Proyecto Completado</span>
-              </div>
-            </div>
-            <div class="client-details">
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <b>Fechas:</b> 05 Ene 2026 - 28 Feb 2026</div>
-              <div class="detail-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> <b>Contrato:</b> REX-CT-0126 (Firmado)</div>
             </div>
           </div>
           
@@ -562,9 +412,40 @@
     }
     
     function addFolder() {
-      const url = prompt("Pega el enlace de Google Drive / Docs compartido con el cliente:");
-      if(url) {
-        alert("Enlace guardado exitosamente. Se sincronizará con la base de datos.");
+      const url = prompt("Pega el enlace de Google Drive / Docs:");
+      if(url) alert("Enlace guardado.");
+    }
+
+    // Funcionalidad para agregar un hito / bandera a la línea de tiempo
+    function addMilestone(containerId) {
+      const date = prompt("¿Qué fecha tiene este hito o reunión? (Ej. '28 Sep')");
+      if(!date) return;
+      
+      const title = prompt("Describe brevemente el hito (Ej. 'Llamada de Revisión')");
+      if(!title) return;
+
+      const container = document.getElementById(containerId);
+      if(container) {
+        // Calcular una posición horizontal al azar o basada en lógica. 
+        // Para la demo, lo pondremos por el 85% de la línea de tiempo.
+        const leftPercent = "85%";
+        
+        // Crear el elemento bandera (flag)
+        const flag = document.createElement('div');
+        flag.className = 'hz-flag new-flag';
+        flag.style.left = leftPercent;
+        
+        flag.innerHTML = `
+          <div class="hz-flag-content">
+            <div class="hz-flag-date">${date}</div>
+            <div class="hz-flag-desc">${title}</div>
+          </div>
+        `;
+        
+        container.appendChild(flag);
+        
+        // Alerta simulación de backend
+        alert("Hito añadido a la línea de tiempo. En el sistema final esto se guarda en la base de datos de este cliente.");
       }
     }
   </script>
