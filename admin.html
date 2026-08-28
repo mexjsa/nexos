@@ -419,9 +419,25 @@
     }
 
     function addMilestone(containerId) {
-      const date = prompt("¿Qué fecha tiene este evento? (Ej. '28 Sep')");
-      if(!date) return;
+      // Pedimos fecha en formato estándar para poder procesarla
+      const dateString = prompt("Ingresa la fecha exacta (Formato: YYYY-MM-DD) Ej: '2026-09-05':", "2026-09-05");
+      if(!dateString) return;
       
+      const eventDate = new Date(dateString);
+      if(isNaN(eventDate.getTime())) {
+        alert("Formato de fecha inválido. Por favor usa YYYY-MM-DD.");
+        return;
+      }
+      
+      // Rango de fechas del proyecto (Consultoría Santos: 10 Ago 2026 a 31 Dic 2026)
+      const startDate = new Date("2026-08-10");
+      const endDate = new Date("2026-12-31");
+      
+      if(eventDate < startDate || eventDate > endDate) {
+        alert(`Error: La fecha debe estar dentro del rango del proyecto (Entre ${startDate.toLocaleDateString()} y ${endDate.toLocaleDateString()}).`);
+        return;
+      }
+
       const title = prompt("Describe brevemente el evento (Ej. 'Llamada de Revisión' o 'Falla de servidor')");
       if(!title) return;
 
@@ -429,30 +445,36 @@
       
       const container = document.getElementById(containerId);
       if(container) {
-        // En una app real, la posición se calcularía con base en la fecha. 
-        // Aquí lo colocamos dinámicamente en una posición visible para la demo.
-        const leftPercent = Math.floor(Math.random() * (90 - 20 + 1)) + 20 + "%";
+        // Calcular posición precisa matemáticamente basada en las fechas
+        const totalDuration = endDate.getTime() - startDate.getTime();
+        const elapsed = eventDate.getTime() - startDate.getTime();
+        // Mapeamos el progreso de 5% a 95% para que no quede pegado a los bordes visuales
+        const progressPercentage = (elapsed / totalDuration);
+        const leftPosition = 5 + (progressPercentage * 90); 
+        
+        // Formatear para mostrar bonito en la bandera (Ej: 05 Sep)
+        const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        const displayDate = `${String(eventDate.getDate()).padStart(2, '0')} ${meses[eventDate.getMonth()]}`;
         
         const flag = document.createElement('div');
-        // Si es incidencia (opción 2), le asignamos una clase especial para pintar la bandera de rojo/naranja oscuro.
         let flagColorClass = "";
         if(type === "2") {
           flagColorClass = "incident-flag";
         }
         
         flag.className = `hz-flag new-flag ${flagColorClass}`;
-        flag.style.left = leftPercent;
+        flag.style.left = leftPosition + "%";
         
         flag.innerHTML = `
           <div class="hz-flag-content">
-            <div class="hz-flag-date">${date}</div>
+            <div class="hz-flag-date">${displayDate}</div>
             <div class="hz-flag-desc">${title}</div>
           </div>
         `;
         
         container.appendChild(flag);
         
-        alert("Evento añadido a la línea de tiempo. Se diferenciará visualmente si es incidencia.");
+        alert("Evento calculado matemáticamente y añadido a la línea de tiempo.");
       }
     }
   </script>
