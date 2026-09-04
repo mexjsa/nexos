@@ -865,17 +865,62 @@ footer p {
 
 footer > div {
   display: flex;
-  gap: 24px;
+  align-items: center;
+  gap: 20px;
   margin-top: 30px;
   font-size: 14px;
+  flex-wrap: wrap;
 }
 
-footer > div a {
+footer > div a:not(.portal-partner-link) {
   border-bottom: 1px solid #70736f;
   padding-bottom: 4px;
   transition: color 150ms ease;
 }
-footer > div a:hover { color: var(--orange); }
+footer > div a:not(.portal-partner-link):hover { color: var(--orange); }
+
+.portal-partner-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  background: rgba(241, 90, 36, 0.14);
+  border: 1px solid rgba(241, 90, 36, 0.55) !important;
+  color: #fff !important;
+  padding: 6px 13px 6px 10px !important;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 12.5px;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+.portal-partner-link:hover {
+  background: var(--orange) !important;
+  border-color: var(--orange) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(241, 90, 36, 0.35);
+}
+
+.portal-badge-icon {
+  display: flex;
+  align-items: center;
+  color: var(--orange);
+  transition: color 150ms ease;
+}
+.portal-partner-link:hover .portal-badge-icon { color: #fff; }
+
+.portal-badge-arrow {
+  color: #ff9d7a;
+  font-size: 13px;
+  font-weight: 800;
+  transition: color 150ms ease, transform 150ms ease;
+}
+.portal-partner-link:hover .portal-badge-arrow {
+  color: #fff;
+  transform: translate(1px, -1px);
+}
 
 footer > small {
   justify-self: end;
