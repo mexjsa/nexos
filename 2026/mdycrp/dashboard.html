@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Med&Corp | Portal del Socio | NEXOS IA</title>
+  
+  <!-- Favicon y meta -->
+  <link rel="icon" type="image/svg+xml" href="../../darey/integrador/favicon.svg">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Portal privado y espacio operativo para Med&Corp en NEXOS IA. Seguimiento de desarrollos, hitos y facturación.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Geist Sans y Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700;800&family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', 'system-ui', 'sans-serif'],
+            mono: ['Geist Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              orange: '#ff4800',
+              charcoal: '#11141a',
+              sand: '#f6f5f1',
+              sandDark: '#edebe6',
+              surface: '#ffffff',
+              border: '#dedad0',
+              clinical: '#0284c7'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Geist', sans-serif;
+      background-color: #f6f5f1;
+      color: #11141a;
+      letter-spacing: -0.015em;
+    }
+    
+    .font-mono-custom {
+      font-family: 'Geist Mono', monospace;
+      letter-spacing: -0.03em;
+    }
+
+    /* Tarjetas estilo empaque suizo Neubau */
+    .swiss-card {
+      background-color: #ffffff;
+      border: 1px solid #dedad0;
+      border-radius: 18px;
+      box-shadow: 0 4px 16px -4px rgba(17, 20, 26, 0.04), 0 1px 3px rgba(17, 20, 26, 0.03);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Animación de elevación hacia el frente */
+    .swiss-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 24px 38px -8px rgba(255, 72, 0, 0.12), 0 12px 24px -6px rgba(17, 20, 26, 0.08);
+      border-color: #ff4800;
+      z-index: 20;
+    }
+
+    /* Banda elástica naranja */
+    .orange-elastic-band {
+      background: linear-gradient(135deg, #ff4800 0%, #eb3f00 100%);
+      box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(255, 72, 0, 0.15);
+      position: relative;
+    }
+
+    .orange-elastic-band::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.08), transparent);
+    }
+
+    /* Pliego inferior troquelado */
+    .packaging-fold {
+      background-color: #faf9f6;
+      border-top: 1px dashed #d5d1c5;
+      position: relative;
+    }
+
+    /* Filas tabulares */
+    .spec-table-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 3.5px 0;
+      border-bottom: 1px solid #f2efe9;
+      font-size: 11px;
+    }
+    .spec-table-row:last-child {
+      border-bottom: none;
+    }
+
+    /* Árbol ramificado */
+    .tree-branch {
+      position: relative;
+    }
+    .tree-node-line {
+      position: relative;
+    }
+    .tree-node-line::before {
+      content: '';
+      position: absolute;
+      left: -13px;
+      top: 50%;
+      width: 10px;
+      height: 1.5px;
+      background-color: #dedad0;
+    }
+
+    /* Hover en avatar */
+    .avatar-upload-trigger:hover .avatar-overlay {
+      opacity: 1;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f6f5f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d5d1c5;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff4800;
+    }
+  </style>
+</head>
+<body class="antialiased min-h-screen bg-[#f6f5f1] text-[#11141a]">
+
+  <!-- Barra superior móvil -->
+  <div class="lg:hidden bg-white border-b border-[#dedad0] p-4 flex justify-between items-center sticky top-0 z-40 shadow-sm">
+    <div class="flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-[#11141a] flex items-center justify-center p-1.5 shadow-sm">
+        <span class="w-5 h-5 relative inline-block">
+          <span class="absolute w-3 h-3 bg-[#ff4800] top-0 left-0 rounded-sm"></span>
+          <span class="absolute w-3 h-3 bg-[#ff4800] bottom-0 right-0 opacity-60 rounded-sm"></span>
+        </span>
+      </span>
+      <div>
+        <h1 class="font-extrabold text-xs tracking-tight text-[#11141a]">MED&CORP × NEXOS IA</h1>
+        <span class="font-mono-custom text-[9px] font-bold uppercase tracking-wider text-[#ff4800]">Portal de Socio</span>
+      </div>
+    </div>
+    <button onclick="toggleMobileSidebar()" class="p-2 rounded-lg bg-[#f6f5f1] border border-[#dedad0] text-xs font-bold flex items-center gap-1.5">
+      <span>Secciones</span>
+      <svg class="w-4 h-4 text-[#ff4800]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+    </button>
+  </div>
+
+  <!-- CONTENEDOR PRINCIPAL: SIDEBAR + ÁREA DERECHA -->
+  <div class="flex flex-col lg:flex-row min-h-screen">
+
+    <!-- PANEL LATERAL IZQUIERDO (SIDEBAR) -->
+    <aside id="sidebarNav" class="w-full lg:w-80 xl:w-96 bg-white border-r border-[#dedad0] flex flex-col justify-between shrink-0 shadow-sm z-30 hidden lg:flex lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
+      
+      <div class="p-5 md:p-6 space-y-6">
+
+        <!-- 1. Logotipo Oficial NEXOS IA y Co-Branding -->
+        <div class="space-y-4 pb-5 border-b border-[#edebe6]">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#11141a] flex items-center justify-center p-2 shadow-sm border border-[#e5e2db] shrink-0">
+              <span class="w-6 h-6 relative inline-block">
+                <span class="absolute w-3.5 h-3.5 bg-[#ff4800] top-0 left-0 rounded-sm"></span>
+                <span class="absolute w-3.5 h-3.5 bg-[#ff4800] bottom-0 right-0 opacity-60 rounded-sm"></span>
+              </span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="font-black text-lg tracking-tight text-[#11141a]">NEXOS IA</h2>
+                <span class="font-mono-custom text-[10px] font-bold uppercase tracking-wider bg-[#fff3ed] text-[#ff4800] px-2 py-0.5 rounded border border-[#ffd2c2]">
+                  SOCIO PRIVADO
+                </span>
+              </div>
+              <p class="text-xs text-[#6e7178] leading-tight mt-0.5">
+                Espacio Corporativo Med&Corp (2026)
+              </p>
+            </div>
+          </div>
+
+          <!-- 2. Ficha de Med&Corp con Fotografía Personalizable -->
+          <div class="bg-[#faf9f6] border border-[#e3e0d8] p-3 rounded-xl flex items-center gap-3 shadow-inner relative group">
+            
+            <div onclick="triggerPartnerAvatarUpload()" class="avatar-upload-trigger relative w-11 h-11 rounded-full overflow-hidden shrink-0 cursor-pointer shadow-sm border-2 border-white ring-1 ring-[#dedad0] group" title="Personalizar fotografía">
+              <img id="partnerAvatarImg" src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=160&h=160&q=80" alt="Fotografía del Socio" class="w-full h-full object-cover">
+              
+              <div class="avatar-overlay absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white opacity-0 transition-opacity duration-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span class="text-[8px] font-bold">Cambiar</span>
+              </div>
+
+              <input type="file" id="partnerPhotoInput" class="hidden" accept="image/*" onchange="handlePartnerPhotoUpload(event)">
+            </div>
+
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1.5">
+                <p class="font-black text-xs text-[#11141a] truncate">Med&Corp Salud S.A.</p>
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" title="Verificado con Cloudflare Zero Trust"></span>
+              </div>
+              <p class="text-[11px] text-[#555861] font-mono-custom truncate">RFC: MCO240315-9K2</p>
+              <div class="flex items-center gap-2 mt-0.5">
+                <span class="text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded font-bold">
+                  SLA Oro 99.9%
+                </span>
+                <button onclick="triggerPartnerAvatarUpload()" class="text-[10px] text-[#ff4800] hover:underline font-medium">
+                  Subir Foto
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Menú de Secciones y Desarrollos -->
+        <nav class="space-y-4">
+
+          <!-- RAMA 1: DESARROLLOS -->
+          <div class="tree-item">
+            <button onclick="toggleTreeNode('tree-desarrollos', 'icon-desarrollos')" class="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f6f5f1] text-[#11141a] font-bold text-left group transition-colors">
+              <div class="flex items-center gap-2">
+                <span id="icon-desarrollos" class="text-[10px] text-[#7a7d85] transition-transform duration-200">▼</span>
+                <span class="w-2 h-2 rounded-full bg-[#ff4800]"></span>
+                <span class="font-bold text-xs text-[#11141a]">1. Desarrollos Contratados</span>
+              </div>
+              <span class="text-[10px] font-mono-custom bg-[#edebe6] text-[#11141a] font-bold px-1.5 py-0.5 rounded">4 activos</span>
+            </button>
+
+            <div id="tree-desarrollos" class="tree-branch ml-3 pl-3 border-l-2 border-[#e3e0d8] space-y-1.5 mt-1">
+              <a href="#proj-oct-agent" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] text-xs text-[#484b52] hover:text-[#ff4800] font-medium transition-colors">
+                <span>🤖 #MC-DEV-OCT (Agente Triaje)</span>
+                <span class="text-[10px] font-mono-custom text-emerald-600 font-bold">85%</span>
+              </a>
+              <a href="#proj-oct-ocr" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] text-xs text-[#484b52] hover:text-[#ff4800] font-medium transition-colors">
+                <span>📄 #MC-DEV-OCR (Lector Recetas)</span>
+                <span class="text-[10px] font-mono-custom text-amber-600 font-bold">45%</span>
+              </a>
+              <a href="#proj-sep-web" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] text-xs text-[#484b52] hover:text-[#ff4800] font-medium transition-colors">
+                <span>🌐 #MC-DEV-SEP (Portal Pacientes)</span>
+                <span class="text-[10px] font-mono-custom text-blue-600 font-bold">100%</span>
+              </a>
+              <a href="#proj-ago-data" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] text-xs text-[#484b52] hover:text-[#ff4800] font-medium transition-colors">
+                <span>📊 #MC-HIST-AGO (Productividad)</span>
+                <span class="text-[10px] font-mono-custom text-gray-500 font-bold">100%</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- RAMA 2: MESA DE AYUDA -->
+          <div class="tree-item pt-2 border-t border-[#edebe6]">
+            <button onclick="toggleTreeNode('tree-incidencias', 'icon-incidencias')" class="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f6f5f1] text-[#11141a] font-bold text-left group transition-colors">
+              <div class="flex items-center gap-2">
+                <span id="icon-incidencias" class="text-[10px] text-[#7a7d85] transition-transform duration-200">▼</span>
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                <span class="font-bold text-xs text-[#11141a]">2. Soporte e Incidencias</span>
+              </div>
+              <span class="text-[10px] font-mono-custom bg-[#fff3ed] text-[#ff4800] font-bold px-1.5 py-0.5 rounded">1 abierta</span>
+            </button>
+
+            <div id="tree-incidencias" class="tree-branch ml-3 pl-3 border-l-2 border-[#e3e0d8] space-y-1.5 mt-1">
+              <a href="#tickets-section" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-xs text-[#484b52] font-medium">
+                <span>🎫 #TK-MC-101 (Filtro CIE-10)</span>
+                <span class="text-[10px] font-mono-custom text-amber-700 font-bold">🔄 En curso</span>
+              </a>
+              <button onclick="openModal()" class="tree-node-line w-full flex items-center gap-1.5 py-1 px-2 rounded-md text-xs font-bold text-[#ff4800] hover:bg-[#fff3ed] text-left transition-colors">
+                <span>➕ Reportar Nueva Incidencia</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- RAMA 3: BÓVEDA FISCAL -->
+          <div class="tree-item pt-2 border-t border-[#edebe6]">
+            <button onclick="toggleTreeNode('tree-vault', 'icon-vault')" class="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f6f5f1] text-[#11141a] font-bold text-left group transition-colors">
+              <div class="flex items-center gap-2">
+                <span id="icon-vault" class="text-[10px] text-[#7a7d85] transition-transform duration-200">▼</span>
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                <span class="font-bold text-xs text-[#11141a]">3. Bóveda Fiscal & CFDIs</span>
+              </div>
+              <span class="text-[10px] font-mono-custom bg-[#edebe6] text-[#11141a] font-bold px-1.5 py-0.5 rounded">4 CFDI</span>
+            </button>
+
+            <div id="tree-vault" class="tree-branch ml-3 pl-3 border-l-2 border-[#e3e0d8] space-y-1.5 mt-1">
+              <button onclick="alert('Descargando Lote CFDI 4.0 Med&Corp 2026 (ZIP)...')" class="tree-node-line w-full flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-xs text-[#484b52] font-medium text-left transition-colors">
+                <span>🧾 Lote Fiscal CFDI (ZIP)</span>
+                <span class="text-xs text-[#ff4800] font-bold">↓</span>
+              </button>
+              <a href="https://drive.google.com" target="_blank" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-xs text-[#484b52] font-medium">
+                <span>📁 Repositorio Médico Drive</span>
+                <span class="text-xs text-gray-400">↗</span>
+              </a>
+              <a href="../../index.html" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-xs text-[#484b52] font-medium">
+                <span>🏠 Portal Público NEXOS IA</span>
+                <span class="text-xs text-[#ff4800] font-bold">→</span>
+              </a>
+            </div>
+          </div>
+
+        </nav>
+
+      </div>
+
+      <!-- Footer del Sidebar -->
+      <div class="p-5 border-t border-[#edebe6] bg-[#faf9f6] space-y-3">
+        <div class="flex items-center justify-between text-xs text-[#6e7178]">
+          <span class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Cloudflare Access Cifrado</span>
+          </span>
+          <span class="font-mono-custom text-[10px] text-gray-400">v2.4-MED</span>
+        </div>
+        
+        <a href="https://wa.me/528180922883?text=Hola%20NEXOS%20IA%2C%20requiero%20soporte%20prioritario%20para%20Med%26Corp" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+          <span>Soporte Prioritario WhatsApp</span>
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- ÁREA PRINCIPAL DERECHA -->
+    <main class="flex-1 p-4 md:p-8 lg:p-10 space-y-10 max-w-7xl mx-auto w-full">
+
+      <!-- BANNER DE BIENVENIDA Y RESUMEN OPERATIVO -->
+      <section class="bg-white border border-[#dedad0] rounded-2xl p-6 md:p-8 shadow-sm relative overflow-hidden">
+        <div class="relative z-10 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#e0f2fe] text-[#0369a1] text-xs font-bold border border-[#bae6fd] mb-2">
+                <span class="w-2 h-2 rounded-full bg-[#0284c7] animate-ping"></span>
+                <span>ESPACIO DE DESARROLLO ASIGNADO A MED&CORP</span>
+              </div>
+              <h1 class="text-2xl md:text-3xl font-black tracking-tight text-[#11141a]">
+                Panel de Desarrollos e Hitos Médicos
+              </h1>
+              <p class="text-sm text-[#52555f] mt-1 max-w-2xl">
+                Monitorea en tiempo real el progreso de ingeniería de tus sistemas IA, consulta entregables técnicos, descarga comprobantes fiscales CFDI y gestiona incidencias con soporte 24/7.
+              </p>
+            </div>
+
+            <!-- Métricas Clave de Med&Corp -->
+            <div class="flex items-center gap-3">
+              <div class="bg-[#faf9f6] border border-[#dedad0] p-3 rounded-xl text-center min-w-[100px]">
+                <span class="text-[10px] font-mono-custom text-[#7a7d85] uppercase">Desarrollos</span>
+                <p class="text-xl font-black text-[#11141a]">4</p>
+              </div>
+              <div class="bg-[#faf9f6] border border-[#dedad0] p-3 rounded-xl text-center min-w-[100px]">
+                <span class="text-[10px] font-mono-custom text-[#7a7d85] uppercase">Avance Global</span>
+                <p class="text-xl font-black text-[#ff4800]">82.5%</p>
+              </div>
+              <div class="bg-[#faf9f6] border border-[#dedad0] p-3 rounded-xl text-center min-w-[100px]">
+                <span class="text-[10px] font-mono-custom text-[#7a7d85] uppercase">Facturas</span>
+                <p class="text-xl font-black text-emerald-600">Al Corriente</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN: LÍNEA DE TIEMPO DE PROYECTOS -->
+      <section class="space-y-6">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-[#dedad0]">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#ff4800]"></span>
+              <h2 class="text-xl font-black text-[#11141a] tracking-tight">
+                Cronograma de Entregas & Desarrollos Pagados
+              </h2>
+            </div>
+            <p class="text-xs text-[#6e7178] mt-1">
+              Haz clic en cualquier caja para abrir sus <strong>Hitos Operativos</strong> o descargar comprobantes fiscales.
+            </p>
+          </div>
+
+          <!-- Filtros de Navegación Rápida -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+            <button onclick="filterProjects('all')" id="btn-filter-all" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#11141a] text-white shadow-sm transition-all">Todos (4)</button>
+            <button onclick="filterProjects('oct')" id="btn-filter-oct" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white border border-[#dedad0] text-[#555861] hover:border-[#ff4800] transition-all">Octubre 2026 (2)</button>
+            <button onclick="filterProjects('sep')" id="btn-filter-sep" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white border border-[#dedad0] text-[#555861] hover:border-[#ff4800] transition-all">Septiembre 2026 (1)</button>
+            <button onclick="filterProjects('ago')" id="btn-filter-ago" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white border border-[#dedad0] text-[#555861] hover:border-[#ff4800] transition-all">Agosto 2026 (1)</button>
+          </div>
+        </div>
+
+        <!-- GRID DE 4 PROYECTOS TIPO CAJA SUIZA -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch">
+
+          <!-- ==============================================================
+               CAJA 1: AGENTE IA WHATSAPP CLÍNICO (OCTUBRE)
+               ============================================================== -->
+          <article id="proj-oct-agent" onclick="openMilestones('mc-oct-agent')" class="proj-card oct swiss-card group">
+            
+            <!-- BANDA NARANJA SIN PORCENTAJE REPETIDO -->
+            <div class="orange-elastic-band px-4 py-2.5 text-white flex justify-between items-center">
+              <span class="font-mono-custom text-[11px] font-extrabold uppercase tracking-wider">
+                #MC-DEV-OCT-2026
+              </span>
+              <div class="flex items-center gap-1.5 bg-black/20 px-2.5 py-0.5 rounded text-[10px] font-mono-custom font-extrabold">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>EN PRUEBAS FINALES</span>
+              </div>
+            </div>
+
+            <!-- CUERPO BLANCO MATE -->
+            <div class="p-5 space-y-4 flex-1 flex flex-col justify-between">
+              
+              <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-[#e0f2fe] border border-[#bae6fd] text-[#0284c7] flex items-center justify-center flex-shrink-0 font-bold">
+                    <svg class="w-5 h-5 text-[#0284c7]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                  </div>
+                  <div>
+                    <h3 class="font-black text-sm text-[#11141a] leading-snug">
+                      Agente IA WhatsApp Clínico
+                    </h3>
+                    <p class="text-[11px] text-[#6e7178] font-semibold mt-0.5">Triaje CIE-10 & Agendamiento</p>
+                  </div>
+                </div>
+
+                <p class="text-xs text-[#52555f] leading-relaxed">
+                  Asistente médico 24/7 conectado a WhatsApp Cloud API con priorización de síntomas, sincronización de agenda y pre-registro.
+                </p>
+
+                <div class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#11141a] bg-[#f7f6f2] px-2.5 py-1 rounded-md border border-[#e8e6df]">
+                  <span>🩺 14 Especialistas Vinculados</span>
+                </div>
+              </div>
+
+              <!-- FICHA TÉCNICA TABULAR: PORCENTAJE DESTACADO AL INTERIOR -->
+              <div class="py-3 border-y border-[#edebe6] space-y-2 font-mono-custom">
+                <div class="spec-table-row items-center bg-[#f2efe9] -mx-2 px-2.5 py-1.5 rounded-lg border border-[#e5e1d7]">
+                  <span class="text-[#555861] font-bold text-xs uppercase tracking-tight">Avance del Proyecto</span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-base font-black text-[#11141a]">85%</span>
+                    <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100/90 border border-emerald-300 px-1.5 py-0.5 rounded">PRUEBAS</span>
+                  </div>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Pruebas</span>
+                  <span class="font-bold text-[#11141a]">89 / 105 validadas</span>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Factura</span>
+                  <span class="font-bold text-[#11141a]">A-1088 <span class="text-emerald-700 bg-emerald-50 px-1 py-0.2 rounded text-[10px] border border-emerald-200">PAGADA</span></span>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Importe</span>
+                  <span class="font-bold text-[#11141a]">$18,500 MXN</span>
+                </div>
+              </div>
+
+              <!-- Barra de Avance -->
+              <div class="space-y-1.5">
+                <div class="w-full bg-[#edebe6] h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-[#11141a] h-full rounded-full transition-all group-hover:bg-[#ff4800]" style="width: 85%;"></div>
+                </div>
+                <div class="flex justify-between items-center text-[10px] text-[#7a7d85] font-mono-custom">
+                  <span>Octubre 2026</span>
+                  <button onclick="event.stopPropagation(); alert('Descargando comprobante fiscal CFDI Factura A-1088 de Med&Corp...')" class="text-[#ff4800] font-bold hover:underline">
+                    Descargar CFDI ↓
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PLIEGO INFERIOR -->
+            <div class="packaging-fold p-4 space-y-3">
+              <div class="flex flex-wrap gap-1 text-[10px] font-mono-custom">
+                <span class="bg-white text-[#444] px-1.5 py-0.5 rounded border border-[#dedad0]">WhatsApp Cloud</span>
+                <span class="bg-white text-[#444] px-1.5 py-0.5 rounded border border-[#dedad0]">Triaje CIE-10</span>
+                <span class="bg-white text-[#444] px-1.5 py-0.5 rounded border border-[#dedad0]">FastAPI</span>
+              </div>
+
+              <button onclick="event.stopPropagation(); openMilestones('mc-oct-agent')" class="w-full bg-[#11141a] hover:bg-[#2b313b] text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all flex items-center justify-center gap-2 group-hover:bg-[#ff4800]">
+                <span>Ver Hitos del Proyecto</span>
+                <span class="transition-transform group-hover:translate-x-1">→</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- ==============================================================
+               CAJA 2: LECTOR OCR DE RECETAS & ASEGURADORAS (OCTUBRE)
+               ============================================================== -->
+          <article id="proj-oct-ocr" onclick="openMilestones('mc-oct-ocr')" class="proj-card oct swiss-card group">
+            
+            <div class="orange-elastic-band px-4 py-2.5 text-white flex justify-between items-center">
+              <span class="font-mono-custom text-[11px] font-extrabold uppercase tracking-wider">
+                #MC-DEV-OCT-2026-B
+              </span>
+              <div class="flex items-center gap-1.5 bg-black/20 px-2.5 py-0.5 rounded text-[10px] font-mono-custom font-extrabold">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-300 animate-pulse"></span>
+                <span>EN CONSTRUCCIÓN</span>
+              </div>
+            </div>
+
+            <div class="p-5 space-y-4 flex-1 flex flex-col justify-between">
+              
+              <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-[#fef3c7] border border-[#fde68a] text-amber-700 flex items-center justify-center flex-shrink-0 font-bold">
+                    <svg class="w-5 h-5 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                  </div>
+                  <div>
+                    <h3 class="font-black text-sm text-[#11141a] leading-snug">
+                      Lector OCR de Recetas & Facturación
+                    </h3>
+                    <p class="text-[11px] text-[#6e7178] font-semibold mt-0.5">Conciliación GNP / AXA / MetLife</p>
+                  </div>
+                </div>
+
+                <p class="text-xs text-[#52555f] leading-relaxed">
+                  Extracción por visión computacional de manuscritos médicos y recetas impresas con cruce automático para reclamos de seguros.
+                </p>
+
+                <div class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#11141a] bg-[#f7f6f2] px-2.5 py-1 rounded-md border border-[#e8e6df]">
+                  <span>📋 Cumplimiento NOM-024 SSA</span>
+                </div>
+              </div>
+
+              <!-- FICHA TÉCNICA TABULAR: PORCENTAJE DESTACADO AL INTERIOR -->
+              <div class="py-3 border-y border-[#edebe6] space-y-2 font-mono-custom">
+                <div class="spec-table-row items-center bg-[#f2efe9] -mx-2 px-2.5 py-1.5 rounded-lg border border-[#e5e1d7]">
+                  <span class="text-[#555861] font-bold text-xs uppercase tracking-tight">Avance del Proyecto</span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-base font-black text-[#11141a]">45%</span>
+                    <span class="text-[10px] font-bold text-amber-800 bg-amber-100/90 border border-amber-300 px-1.5 py-0.5 rounded">ETAPA 2/4</span>
+                  </div>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Fase</span>
+                  <span class="font-bold text-[#11141a]">Modelos Manuscritos</span>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Factura</span>
+                  <span class="font-bold text-[#11141a]">A-1094 <span class="text-amber-800 bg-amber-50 px-1 py-0.2 rounded text-[10px] border border-amber-200">ANTICIPO 50%</span></span>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Entrega</span>
+                  <span class="font-bold text-[#11141a]">28-Oct (7 días)</span>
+                </div>
+              </div>
+
+              <!-- Barra de Avance -->
+              <div class="space-y-1.5">
+                <div class="w-full bg-[#edebe6] h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-[#11141a] h-full rounded-full transition-all group-hover:bg-[#ff4800]" style="width: 45%;"></div>
+                </div>
+                <div class="flex justify-between items-center text-[10px] text-[#7a7d85] font-mono-custom">
+                  <span>Liquidación a entrega</span>
+                  <button onclick="event.stopPropagation(); alert('Descargando comprobante fiscal CFDI Factura A-1094...')" class="text-[#ff4800] font-bold hover:underline">
+                    Descargar CFDI ↓
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PLIEGO INFERIOR -->
+            <div class="packaging-fold p-4 space-y-3">
+              <div class="flex flex-wrap gap-1 text-[10px] font-mono-custom">
+                <span class="bg-white text-[#444] px-1.5 py-0.5 rounded border border-[#dedad0]">Vision AI Salud</span>
+                <span class="bg-white text-[#444] px-1.5 py-0.5 rounded border border-[#dedad0]">CFDI 4.0</span>
+              </div>
+
+              <button onclick="event.stopPropagation(); openMilestones('mc-oct-ocr')" class="w-full bg-[#11141a] hover:bg-[#2b313b] text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all flex items-center justify-center gap-2 group-hover:bg-[#ff4800]">
+                <span>Ver Hitos y Solicitar Ajuste</span>
+                <span class="transition-transform group-hover:translate-x-1">→</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- ==============================================================
+               CAJA 3: PORTAL DE PACIENTES & TELEMEDICINA (SEPTIEMBRE)
+               ============================================================== -->
+          <article id="proj-sep-web" onclick="openMilestones('mc-sep-web')" class="proj-card sep swiss-card group">
+            
+            <div class="orange-elastic-band px-4 py-2.5 text-white flex justify-between items-center">
+              <span class="font-mono-custom text-[11px] font-extrabold uppercase tracking-wider">
+                #MC-DEV-SEP-2026
+              </span>
+              <div class="flex items-center gap-1.5 bg-black/20 px-2.5 py-0.5 rounded text-[10px] font-mono-custom font-extrabold">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-300"></span>
+                <span>EN PRODUCCIÓN</span>
+              </div>
+            </div>
+
+            <div class="p-5 space-y-4 flex-1 flex flex-col justify-between">
+              
+              <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-[#eff6ff] border border-[#dbeafe] text-blue-600 flex items-center justify-center flex-shrink-0 font-bold">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                  </div>
+                  <div>
+                    <h3 class="font-black text-sm text-[#11141a] leading-snug">
+                      Portal de Pacientes & Telemedicina
+                    </h3>
+                    <p class="text-[11px] text-[#6e7178] font-semibold mt-0.5">Estudios de Laboratorio & Consultas</p>
+                  </div>
+                </div>
+
+                <p class="text-xs text-[#52555f] leading-relaxed">
+                  Plataforma web perimetral cifrada donde los pacientes acceden a resultados de análisis clínicos y recetas digitales.
+                </p>
+
+                <div class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#11141a] bg-[#f7f6f2] px-2.5 py-1 rounded-md border border-[#e8e6df]">
+                  <span>🔐 +4,200 Pacientes Registrados</span>
+                </div>
+              </div>
+
+              <!-- FICHA TÉCNICA TABULAR: PORCENTAJE DESTACADO AL INTERIOR -->
+              <div class="py-3 border-y border-[#edebe6] space-y-2 font-mono-custom">
+                <div class="spec-table-row items-center bg-[#f2efe9] -mx-2 px-2.5 py-1.5 rounded-lg border border-[#e5e1d7]">
+                  <span class="text-[#555861] font-bold text-xs uppercase tracking-tight">Avance del Proyecto</span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-base font-black text-[#11141a]">100%</span>
+                    <span class="text-[10px] font-bold text-blue-800 bg-blue-100/90 border border-blue-300 px-1.5 py-0.5 rounded">EN LÍNEA</span>
+                  </div>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Hosting</span>
+                  <span class="font-bold text-[#11141a]">Cloudflare + Workers</span>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Factura</span>
+                  <span class="font-bold text-[#11141a]">A-1042 <span class="text-emerald-700 bg-emerald-50 px-1 py-0.2 rounded text-[10px] border border-emerald-200">LIQUIDADO</span></span>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Importe</span>
+                  <span class="font-bold text-[#11141a]">$28,000 MXN</span>
+                </div>
+              </div>
+
+              <!-- Barra de Avance -->
+              <div class="space-y-1.5">
+                <div class="w-full bg-[#edebe6] h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-[#11141a] h-full rounded-full transition-all group-hover:bg-[#ff4800]" style="width: 100%;"></div>
+                </div>
+                <div class="flex justify-between items-center text-[10px] text-[#7a7d85] font-mono-custom">
+                  <span>Entregado: 25-Sep</span>
+                  <button onclick="event.stopPropagation(); alert('Descargando comprobante fiscal CFDI Factura A-1042 de Med&Corp...')" class="text-[#ff4800] font-bold hover:underline">
+                    Descargar CFDI ↓
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PLIEGO INFERIOR -->
+            <div class="packaging-fold p-4 space-y-3">
+              <div class="flex flex-wrap gap-1 text-[10px] font-mono-custom">
+                <span class="bg-white text-[#444] px-1.5 py-0.5 rounded border border-[#dedad0]">Cloudflare Zero Trust</span>
+                <span class="bg-white text-[#444] px-1.5 py-0.5 rounded border border-[#dedad0]">HIPAA Ready</span>
+              </div>
+
+              <button onclick="event.stopPropagation(); openMilestones('mc-sep-web')" class="w-full bg-[#11141a] hover:bg-[#2b313b] text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all flex items-center justify-center gap-2 group-hover:bg-[#ff4800]">
+                <span>Ver Hitos del Proyecto</span>
+                <span class="transition-transform group-hover:translate-x-1">→</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- ==============================================================
+               CAJA 4: PRODUCTIVIDAD MÉDICA Y QUIRÓFANOS (AGOSTO)
+               ============================================================== -->
+          <article id="proj-ago-data" onclick="openMilestones('mc-ago-data')" class="proj-card ago swiss-card group">
+            
+            <div class="orange-elastic-band px-4 py-2.5 text-white flex justify-between items-center">
+              <span class="font-mono-custom text-[11px] font-extrabold uppercase tracking-wider">
+                #MC-HIST-AGO-2026
+              </span>
+              <div class="flex items-center gap-1.5 bg-black/20 px-2.5 py-0.5 rounded text-[10px] font-mono-custom font-extrabold">
+                <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                <span>AUDITADO & ARCHIVADO</span>
+              </div>
+            </div>
+
+            <div class="p-5 space-y-4 flex-1 flex flex-col justify-between">
+              
+              <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-[#f1f5f9] border border-[#e2e8f0] text-slate-700 flex items-center justify-center flex-shrink-0 font-bold">
+                    <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                  </div>
+                  <div>
+                    <h3 class="font-black text-sm text-[#11141a] leading-snug">
+                      Productividad Médica & Quirófanos
+                    </h3>
+                    <p class="text-[11px] text-[#6e7178] font-semibold mt-0.5">Analítica de 3 Sucursales Clínicas</p>
+                  </div>
+                </div>
+
+                <p class="text-xs text-[#52555f] leading-relaxed">
+                  Consolidación de tiempos quirúrgicos, rotación de camas hospitalarias y consumo de inventario farmacéutico.
+                </p>
+
+                <div class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#11141a] bg-[#f7f6f2] px-2.5 py-1 rounded-md border border-[#e8e6df]">
+                  <span>🏥 3 Sucursales Integradas</span>
+                </div>
+              </div>
+
+              <!-- FICHA TÉCNICA TABULAR: PORCENTAJE DESTACADO AL INTERIOR -->
+              <div class="py-3 border-y border-[#edebe6] space-y-2 font-mono-custom">
+                <div class="spec-table-row items-center bg-[#f2efe9] -mx-2 px-2.5 py-1.5 rounded-lg border border-[#e5e1d7]">
+                  <span class="text-[#555861] font-bold text-xs uppercase tracking-tight">Avance del Proyecto</span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-base font-black text-[#11141a]">100%</span>
+                    <span class="text-[10px] font-bold text-slate-800 bg-slate-200/90 border border-slate-300 px-1.5 py-0.5 rounded">ENTREGADO</span>
+                  </div>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Entrega</span>
+                  <span class="font-bold text-[#11141a]">Llaves & Código Fuente</span>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Factura</span>
+                  <span class="font-bold text-[#11141a]">A-0995 <span class="text-gray-700 bg-gray-100 px-1 py-0.2 rounded text-[10px] border border-gray-300">AUDITADO</span></span>
+                </div>
+                <div class="spec-table-row">
+                  <span class="text-[#7a7d85]">Importe</span>
+                  <span class="font-bold text-[#11141a]">$24,000 MXN</span>
+                </div>
+              </div>
+
+              <!-- Barra de Avance -->
+              <div class="space-y-1.5">
+                <div class="w-full bg-[#edebe6] h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-[#11141a] h-full rounded-full transition-all group-hover:bg-[#ff4800]" style="width: 100%;"></div>
+                </div>
+                <div class="flex justify-between items-center text-[10px] text-[#7a7d85] font-mono-custom">
+                  <span>Entregado: 20-Ago</span>
+                  <button onclick="event.stopPropagation(); alert('Descargando comprobante fiscal CFDI Factura A-0995...')" class="text-[#ff4800] font-bold hover:underline">
+                    Descargar CFDI ↓
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PLIEGO INFERIOR -->
+            <div class="packaging-fold p-4 space-y-3">
+              <div class="flex flex-wrap gap-1 text-[10px] font-mono-custom">
+                <span class="bg-white text-[#444] px-1.5 py-0.5 rounded border border-[#dedad0]">PostgreSQL BI</span>
+                <span class="bg-white text-[#444] px-1.5 py-0.5 rounded border border-[#dedad0]">Dashboard Cloud</span>
+              </div>
+
+              <button onclick="event.stopPropagation(); openMilestones('mc-ago-data')" class="w-full bg-[#11141a] hover:bg-[#2b313b] text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all flex items-center justify-center gap-2 group-hover:bg-[#ff4800]">
+                <span>Ver Hitos del Proyecto</span>
+                <span class="transition-transform group-hover:translate-x-1">→</span>
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- SECCIÓN: MESA DE INCIDENCIAS DE MED&CORP -->
+      <section id="tickets-section" class="bg-white border border-[#dedad0] rounded-2xl p-6 md:p-8 space-y-6 shadow-sm">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#dedad0]">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+              <h2 class="text-xl font-black text-[#11141a] tracking-tight">
+                Mesa de Ayuda & Ajustes Operativos Med&Corp
+              </h2>
+            </div>
+            <p class="text-xs text-[#6e7178] mt-1">
+              Canal oficial para requerimientos, dudas operativas o solicitudes de ajuste vinculadas a tus facturas y proyectos activos.
+            </p>
+          </div>
+
+          <button onclick="openModal()" class="inline-flex items-center gap-2 bg-[#ff4800] hover:bg-[#e03f00] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition-all self-start md:self-auto">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            <span>Levantar Incidencia</span>
+          </button>
+        </div>
+
+        <div class="overflow-x-auto border border-[#dedad0] rounded-xl">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-[#fbfaf8] text-[#6e7178] border-b border-[#dedad0]">
+              <tr>
+                <th class="p-3 font-semibold">FOLIO</th>
+                <th class="p-3 font-semibold">DESARROLLO VINCULADO</th>
+                <th class="p-3 font-semibold">REQUERIMIENTO</th>
+                <th class="p-3 font-semibold">PRIORIDAD</th>
+                <th class="p-3 font-semibold">ESTATUS</th>
+                <th class="p-3 font-semibold">FACTURA</th>
+                <th class="p-3 font-semibold text-right">ACCIÓN</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#eee] text-[#11141a]">
+              <tr class="hover:bg-[#faf9f6]">
+                <td class="p-3 font-mono-custom font-bold text-[#ff4800]">#TK-MC-101</td>
+                <td class="p-3 font-medium">Agente IA WhatsApp (#MC-DEV-OCT)</td>
+                <td class="p-3 text-[#444]">Ajustar árbol de clasificación para triaje de pediatría</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">Media</span></td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800">En Atención</span></td>
+                <td class="p-3 font-mono-custom text-[#666]">A-1088</td>
+                <td class="p-3 text-right">
+                  <button onclick="alert('Abriendo hilo de comunicación para ticket #TK-MC-101...')" class="text-xs text-[#ff4800] font-bold hover:underline">Ver Hilo →</button>
+                </td>
+              </tr>
+              <tr class="hover:bg-[#faf9f6]">
+                <td class="p-3 font-mono-custom font-bold text-gray-500">#TK-MC-098</td>
+                <td class="p-3 font-medium">Portal Pacientes (#MC-DEV-SEP)</td>
+                <td class="p-3 text-[#444]">Configuración de dominio perimetral portal.medycorp.com</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">Alta</span></td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-700">Resuelto</span></td>
+                <td class="p-3 font-mono-custom text-[#666]">A-1042</td>
+                <td class="p-3 text-right">
+                  <span class="text-xs text-gray-400 font-semibold">Cerrado ✓</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL DE HITOS DEL PROYECTO -->
+  <div id="milestoneModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-[#dedad0] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl p-6 md:p-8 space-y-6 animate-in fade-in zoom-in-95 duration-200">
+      
+      <div class="flex items-start justify-between border-b border-[#dedad0] pb-4">
+        <div>
+          <span id="modalProjectTag" class="text-xs font-mono-custom font-bold text-[#ff4800] bg-[#fff3ed] px-2 py-0.5 rounded border border-[#ffd2c2]">
+            #MC-DEV-OCT-2026
+          </span>
+          <h3 id="modalProjectTitle" class="text-xl font-black text-[#11141a] mt-1.5">
+            Agente IA WhatsApp Clínico
+          </h3>
+          <p id="modalProjectSub" class="text-xs text-[#6e7178] mt-0.5">
+            Triaje de Síntomas & Agendamiento de Consultas
+          </p>
+        </div>
+        <button onclick="closeMilestones()" class="p-2 rounded-lg bg-[#f6f5f1] hover:bg-[#edebe6] text-[#7a7d85] hover:text-[#11141a]">
+          ✕
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-[#6e7178]">
+          Progreso Técnico de Hitos (SLA Med&Corp)
+        </h4>
+
+        <div id="modalMilestonesList" class="space-y-3">
+          <!-- Se inyecta dinámicamente -->
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-[#faf9f6] border border-[#edebe6] space-y-2">
+        <h5 class="text-xs font-bold text-[#11141a]">¿Deseas solicitar una adecuación sobre este desarrollo?</h5>
+        <p class="text-xs text-[#666]">
+          Cualquier cambio a la arquitectura técnica o inclusión de campos adicionales puede reportarse directamente a la mesa de ayuda técnica.
+        </p>
+        <button onclick="closeMilestones(); openModal();" class="text-xs font-bold text-[#ff4800] hover:underline flex items-center gap-1 mt-1">
+          <span>Abrir ticket con folio precargado</span> →
+        </button>
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <button onclick="closeMilestones()" class="px-5 py-2.5 rounded-xl bg-[#11141a] text-white text-xs font-bold hover:bg-[#2b313b]">
+          Cerrar Vista de Hitos
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LEVANTAR NUEVA INCIDENCIA -->
+  <div id="ticketModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-[#dedad0] rounded-2xl w-full max-w-lg shadow-2xl p-6 md:p-8 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+      
+      <div class="flex items-center justify-between border-b border-[#dedad0] pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#ff4800]"></span>
+          <h3 class="text-lg font-black text-[#11141a]">Levantar Incidencia / Requerimiento</h3>
+        </div>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-[#11141a] text-sm">✕</button>
+      </div>
+
+      <form onsubmit="submitTicket(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-[#444] mb-1">Desarrollo Vinculado</label>
+          <select id="ticketDevSelect" class="w-full bg-[#faf9f6] border border-[#dedad0] rounded-xl p-2.5 text-xs text-[#11141a] focus:border-[#ff4800] focus:outline-none">
+            <option value="Agente IA WhatsApp Clínico">#MC-DEV-OCT-2026 - Agente IA WhatsApp Clínico</option>
+            <option value="Lector OCR Recetas">#MC-DEV-OCT-2026-B - Lector OCR de Recetas</option>
+            <option value="Portal Pacientes">#MC-DEV-SEP-2026 - Portal de Pacientes & Telemedicina</option>
+            <option value="Productividad Quirófanos">#MC-HIST-AGO-2026 - Productividad Quirófanos</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-[#444] mb-1">Nivel de Prioridad (SLA)</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="flex items-center gap-2 p-2 border border-[#dedad0] rounded-xl cursor-pointer hover:bg-[#faf9f6]">
+              <input type="radio" name="priority" value="Baja" checked class="text-[#ff4800]">
+              <span>Baja (72h)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 border border-[#dedad0] rounded-xl cursor-pointer hover:bg-[#faf9f6]">
+              <input type="radio" name="priority" value="Media" class="text-[#ff4800]">
+              <span>Media (24h)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 border border-[#ff4800]/40 bg-[#fff3ed] rounded-xl cursor-pointer font-bold text-[#ff4800]">
+              <input type="radio" name="priority" value="Alta" class="text-[#ff4800]">
+              <span>Alta / Crítica (4h)</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-[#444] mb-1">Descripción del Requerimiento</label>
+          <textarea id="ticketDesc" rows="4" required placeholder="Explica detalladamente la adecuación, ajuste en prompts médicos o comportamiento esperado..." class="w-full bg-[#faf9f6] border border-[#dedad0] rounded-xl p-2.5 text-xs text-[#11141a] focus:border-[#ff4800] focus:outline-none"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-[#dedad0]">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl bg-[#f6f5f1] text-[#444] font-bold hover:bg-[#edebe6]">Cancelar</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-[#ff4800] hover:bg-[#e03f00] text-white font-bold shadow-md">Registrar Ticket</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPT DE INTERACTIVIDAD & PERSONALIZACIÓN DE FOTO -->
+  <script>
+    const mcMilestonesData = {
+      'mc-oct-agent': {
+        tag: '#MC-DEV-OCT-2026',
+        title: 'Agente IA WhatsApp Clínico & Triaje',
+        subtitle: 'Atención 24/7 de pacientes y sincronización médica',
+        items: [
+          { name: 'Integración API Oficial WhatsApp Cloud con número institucional Med&Corp', status: 'done', pct: '100%' },
+          { name: 'Entrenamiento de protocolo de triaje y priorización de síntomas (CIE-10)', status: 'done', pct: '100%' },
+          { name: 'Sincronización bidireccional con agenda médica y Google Calendar de 14 especialistas', status: 'done', pct: '100%' },
+          { name: 'Pruebas de estrés y validación clínica con equipo de enfermería y recepción', status: 'in-progress', pct: '85%' },
+          { name: 'Liberación a producción en conmutador principal y despliegue perimetral', status: 'pending', pct: '0%' }
+        ]
+      },
+      'mc-oct-ocr': {
+        tag: '#MC-DEV-OCT-2026-B',
+        title: 'Lector OCR de Recetas & Facturación Aseguradoras',
+        subtitle: 'Extracción de manuscritos médicos y conciliación CFDI 4.0',
+        items: [
+          { name: 'Arquitectura de seguridad y cifrado en reposo bajo norma NOM-024 SSA', status: 'done', pct: '100%' },
+          { name: 'Entrenamiento del modelo Vision AI para descifrado de caligrafía médica', status: 'in-progress', pct: '60%' },
+          { name: 'Conexión con tabulador de siniestros GNP, AXA y MetLife', status: 'in-progress', pct: '30%' },
+          { name: 'Generador automatizado de comprobantes fiscales digitales CFDI 4.0', status: 'pending', pct: '0%' }
+        ]
+      },
+      'mc-sep-web': {
+        tag: '#MC-DEV-SEP-2026',
+        title: 'Portal de Pacientes & Telemedicina',
+        subtitle: 'Consulta perimetral cifrada de análisis y recetas digitales',
+        items: [
+          { name: 'Despliegue perimetral de alta velocidad en Cloudflare Pages con caché edge', status: 'done', pct: '100%' },
+          { name: 'Módulo de autenticación segura de pacientes vía Magic Link / OTP WhatsApp', status: 'done', pct: '100%' },
+          { name: 'Visor de PDF seguro de resultados de laboratorio con marca de agua', status: 'done', pct: '100%' },
+          { name: 'Integración de sala de teleconsulta cifrada de extremo a extremo', status: 'done', pct: '100%' }
+        ]
+      },
+      'mc-ago-data': {
+        tag: '#MC-HIST-AGO-2026',
+        title: 'Tablero Central de Productividad Médica y Quirófanos',
+        subtitle: 'Analítica de 3 sucursales hospitalarias y tiempos quirúrgicos',
+        items: [
+          { name: 'Extracción y limpieza de bases de datos operativas dispersas', status: 'done', pct: '100%' },
+          { name: 'Modelado analítico de tiempos de quirófano, rotación y desabasto', status: 'done', pct: '100%' },
+          { name: 'Tablero interactivo con filtros por sucursal, médico y horario', status: 'done', pct: '100%' },
+          { name: 'Capacitación a dirección médica y entrega de accesos maestros', status: 'done', pct: '100%' }
+        ]
+      }
+    };
+
+    // PERSONALIZACIÓN DE FOTO DEL SOCIO MED&CORP
+    function triggerPartnerAvatarUpload() {
+      const fileInput = document.getElementById('partnerPhotoInput');
+      if (fileInput) fileInput.click();
+    }
+
+    function handlePartnerPhotoUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const photoUrl = e.target.result;
+          const img = document.getElementById('partnerAvatarImg');
+          if (img) img.src = photoUrl;
+          try {
+            localStorage.setItem('nexos_partner_photo_mdycrp', photoUrl);
+          } catch (err) {
+            console.warn('LocalStorage limit', err);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const savedPhoto = localStorage.getItem('nexos_partner_photo_mdycrp');
+        if (savedPhoto) {
+          const img = document.getElementById('partnerAvatarImg');
+          if (img) img.src = savedPhoto;
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    });
+
+    // TOGGLE DEL ÁRBOL
+    function toggleTreeNode(elementId, iconId) {
+      const el = document.getElementById(elementId);
+      const icon = document.getElementById(iconId);
+      if (el) {
+        el.classList.toggle('hidden');
+        if (icon) {
+          icon.style.transform = el.classList.contains('hidden') ? 'rotate(-90deg)' : 'rotate(0deg)';
+        }
+      }
+    }
+
+    function toggleMobileSidebar() {
+      const s = document.getElementById('sidebarNav');
+      if (s) s.classList.toggle('hidden');
+    }
+
+    // MODAL DE HITOS
+    function openMilestones(key) {
+      const data = mcMilestonesData[key];
+      if (!data) return;
+
+      document.getElementById('modalProjectTag').innerText = data.tag;
+      document.getElementById('modalProjectTitle').innerText = data.title;
+      document.getElementById('modalProjectSub').innerText = data.subtitle;
+
+      const container = document.getElementById('modalMilestonesList');
+      container.innerHTML = '';
+
+      data.items.forEach((item, index) => {
+        let badgeColor = 'bg-gray-100 text-gray-600';
+        let badgeText = 'Pendiente';
+        let icon = '○';
+
+        if (item.status === 'done') {
+          badgeColor = 'bg-emerald-100 text-emerald-800 border border-emerald-300';
+          badgeText = 'Completado';
+          icon = '✓';
+        } else if (item.status === 'in-progress') {
+          badgeColor = 'bg-amber-100 text-amber-800 border border-amber-300';
+          badgeText = 'En Desarrollo';
+          icon = '⚙';
+        }
+
+        const div = document.createElement('div');
+        div.className = 'flex items-center justify-between p-3 rounded-xl border border-[#edebe6] bg-[#faf9f6]';
+        div.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${item.status === 'done' ? 'bg-emerald-500 text-white' : item.status === 'in-progress' ? 'bg-[#ff4800] text-white' : 'bg-gray-200 text-gray-600'}">${icon}</span>
+            <div>
+              <p class="text-xs font-bold text-[#11141a]">Hito ${index + 1}: ${item.name}</p>
+              <p class="text-[10px] text-[#7a7d85] font-mono-custom mt-0.5">Avance: ${item.pct}</p>
+            </div>
+          </div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded ${badgeColor}">${badgeText}</span>
+        `;
+        container.appendChild(div);
+      });
+
+      document.getElementById('milestoneModal').classList.remove('hidden');
+    }
+
+    function closeMilestones() {
+      document.getElementById('milestoneModal').classList.add('hidden');
+    }
+
+    // MODAL DE INCIDENCIAS
+    function openModal() {
+      document.getElementById('ticketModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('ticketModal').classList.add('hidden');
+    }
+
+    function submitTicket(e) {
+      e.preventDefault();
+      const dev = document.getElementById('ticketDevSelect').value;
+      const desc = document.getElementById('ticketDesc').value;
+      const folio = '#TK-MC-' + Math.floor(100 + Math.random() * 900);
+      alert(`✅ Incidencia ${folio} registrada para Med&Corp.\n\nDesarrollo: ${dev}\nDetalle: ${desc}\n\nEl equipo de guardia técnica de NEXOS IA ha sido notificado con SLA de atención.`);
+      closeModal();
+      document.getElementById('ticketDesc').value = '';
+    }
+
+    // FILTRO DE PROYECTOS
+    function filterProjects(filter) {
+      const cards = document.querySelectorAll('.proj-card');
+      const buttons = ['all', 'oct', 'sep', 'ago'];
+      
+      buttons.forEach(b => {
+        const btn = document.getElementById('btn-filter-' + b);
+        if (btn) {
+          if (b === filter) {
+            btn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-[#11141a] text-white shadow-sm transition-all';
+          } else {
+            btn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-white border border-[#dedad0] text-[#555861] hover:border-[#ff4800] transition-all';
+          }
+        }
+      });
+
+      cards.forEach(card => {
+        if (filter === 'all' || card.classList.contains(filter)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
