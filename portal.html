@@ -1,407 +1,1331 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portal de Socios | NEXOS IA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal del Socio | NEXOS IA — Desarrollos, Hitos & Facturación</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
-    :root {
-      --bg-main: #f8f9fa;
-      --sidebar-bg: #ffffff;
-      --text-dark: #101319;
-      --text-muted: #6b7280;
-      --accent: #ec5a28;
-      --accent-light: #fff3ed;
-      --border: #e5e7eb;
-      --card-bg: #ffffff;
-      --google-blue: #1a73e8;
-      --google-green: #188038;
-      --google-yellow: #f9ab00;
+    @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700;800&family=Geist:wght@400;500;600;700;800;900&display=swap');
+    
+    body {
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #eceae3;
+      color: #11141a;
+      background-image: radial-gradient(#d8d5cb 1px, transparent 1px);
+      background-size: 24px 24px;
     }
     
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Manrope', sans-serif; background-color: var(--bg-main); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; }
+    .font-mono-custom {
+      font-family: 'Geist Mono', monospace;
+    }
+
+    /* ==============================================================
+       ESTILOS METÁLICOS INDUSTRIALES (INSPIRADOS EN LAS REFERENCIAS)
+       Aluminio cepillado, remaches, bisel metálico y reflejo especular
+       ============================================================== */
     
-    /* Sidebar */
-    .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 1.5rem; flex-shrink: 0; }
-    .brand { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; margin-bottom: 2.5rem; text-decoration: none; color: var(--text-dark); }
-    .brand-mark { width: 12px; height: 12px; background: var(--accent); border-radius: 2px; }
-    
-    .nav-section { margin-bottom: 2rem; }
-    .nav-section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; margin-bottom: 0.8rem; }
-    .nav-link { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; padding: 0.6rem 0.8rem; border-radius: 8px; transition: all 0.2s; margin-bottom: 0.2rem; }
-    .nav-link:hover, .nav-link.active { background: var(--accent-light); color: var(--accent); }
-    .nav-link svg { width: 18px; height: 18px; }
-    
-    /* Main Layout */
-    .main-wrapper { flex: 1; overflow-y: auto; position: relative; }
-    
-    /* Ambient Background mimicking the reference */
-    .ambient-header { position: absolute; top: 0; left: 0; right: 0; height: 400px; background: radial-gradient(circle at 50% 0%, #ffe9e0 0%, #f8f9fa 70%); z-index: 0; pointer-events: none; }
-    
-    .content-area { position: relative; z-index: 1; padding: 2.5rem 3rem; max-width: 1200px; margin: 0 auto; }
-    
-    /* Top Bar */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
-    .search-bar { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 0.6rem 1.2rem; width: 350px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-    .search-bar input { border: none; outline: none; width: 100%; font-family: 'Manrope'; font-size: 0.9rem; }
-    
-    .user-profile { display: flex; align-items: center; gap: 12px; }
-    .user-avatar { width: 40px; height: 40px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; }
-    
-    /* Header & Quick Links */
-    .welcome-title { font-size: 2.4rem; font-weight: 800; text-align: center; margin-bottom: 2.5rem; letter-spacing: -0.03em; }
-    
-    .quick-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2.5rem; }
-    .quick-card { background: #fff; padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border); text-align: center; text-decoration: none; color: var(--text-dark); transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-    .quick-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); border-color: var(--accent); }
-    .quick-icon { width: 48px; height: 48px; margin: 0 auto 1rem; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--bg-main); }
-    .quick-card h4 { margin: 0; font-size: 1rem; font-weight: 700; }
-    
-    /* Dashboard Grid */
-    .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
-    @media (max-width: 1024px) { .dashboard-grid { grid-template-columns: 1fr; } }
-    
-    .panel { background: #fff; border-radius: 16px; border: 1px solid var(--border); padding: 1.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.02); margin-bottom: 1.5rem; }
-    .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-    .panel-header h3 { margin: 0; font-size: 1.15rem; font-weight: 700; }
-    
-    /* Project Timeline */
-    .progress-bar-container { position: relative; margin: 2.5rem 0 1rem; }
-    .progress-line { position: absolute; top: 10px; left: 0; right: 0; height: 4px; background: #eee; border-radius: 2px; z-index: 1; }
-    .progress-line-fill { position: absolute; top: 10px; left: 0; width: 66%; height: 4px; background: var(--accent); border-radius: 2px; z-index: 2; }
-    .progress-steps { display: flex; justify-content: space-between; position: relative; z-index: 3; }
-    .step-dot { width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 3px solid #eee; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); }
-    .step-dot.completed { border-color: var(--accent); background: var(--accent); color: white; }
-    .step-dot.active { border-color: var(--accent); color: var(--accent); }
-    .step-labels { display: flex; justify-content: space-between; margin-top: 0.8rem; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
-    
-    /* Tasks List */
-    .task-list { list-style: none; padding: 0; margin: 0; }
-    .task-item { display: flex; align-items: center; gap: 12px; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
-    .task-item:last-child { border-bottom: none; }
-    .task-checkbox { width: 18px; height: 18px; border: 2px solid #ccc; border-radius: 4px; cursor: pointer; }
-    .task-item.done .task-checkbox { background: var(--accent); border-color: var(--accent); position: relative; }
-    .task-item.done .task-checkbox::after { content: '✓'; color: white; position: absolute; font-size: 12px; top: -1px; left: 2px; }
-    .task-title { flex: 1; font-size: 0.95rem; font-weight: 500; }
-    .task-item.done .task-title { text-decoration: line-through; color: var(--text-muted); }
-    .task-tag { font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 600; }
-    .tag-blue { background: #e8f0fe; color: var(--google-blue); }
-    .tag-green { background: #ceead6; color: var(--google-green); }
-    
-    /* Google Integrations List */
-    .doc-item { display: flex; align-items: center; gap: 12px; padding: 0.8rem; border-radius: 8px; text-decoration: none; color: var(--text-dark); transition: background 0.2s; }
-    .doc-item:hover { background: var(--bg-main); }
-    .doc-icon { width: 32px; height: 32px; flex-shrink: 0; }
-    .doc-info h5 { margin: 0; font-size: 0.9rem; font-weight: 600; }
-    .doc-info p { margin: 0; font-size: 0.75rem; color: var(--text-muted); }
-    
-    /* Incident Modal Styles */
-    #incident-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-    .modal-content { background: #fff; padding: 2rem; border-radius: 16px; max-width: 550px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-    .form-group { margin-bottom: 1.2rem; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; color: #333; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Manrope', sans-serif; background: var(--bg-main); transition: border-color 0.2s; }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--accent); background: #fff; }
-    .file-upload-wrapper { border: 2px dashed var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; background: var(--bg-main); cursor: pointer; transition: border-color 0.2s; }
-    .file-upload-wrapper:hover { border-color: var(--accent); }
-    .btn-primary { background: var(--accent); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: 'Manrope'; transition: background 0.2s; width: 100%; font-size: 1rem; }
-    .btn-primary:hover { background: #d64a1e; }
+    .metal-card {
+      position: relative;
+      background-color: #d6d9e0;
+      /* Textura de aluminio cepillado con reflejos de luz direccionales */
+      background-image: 
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 3px),
+        linear-gradient(135deg, #c5cad4 0%, #f4f6f9 16%, #bcc3ce 36%, #ffffff 52%, #aab2c0 68%, #e2e6eb 84%, #b4bcc8 100%);
+      border-radius: 18px;
+      border: 1px solid #9aa1ad;
+      /* Bisel metálico y sombras de relieve (tin canister embossed edge) */
+      box-shadow: 
+        0 10px 24px -4px rgba(17, 24, 39, 0.12),
+        0 4px 10px -2px rgba(17, 24, 39, 0.06),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.95),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.22),
+        inset 1.5px 0 2px rgba(255, 255, 255, 0.7),
+        inset -1.5px 0 2px rgba(0, 0, 0, 0.15);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Bisel interior secundario troquelado (borde prensado estilo lata de metal) */
+    .metal-card::after {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* ANIMACIÓN: DESTAQUE HACIA AL FRENTE (HOVER POP-FORWARD) */
+    .metal-card:hover {
+      transform: translateY(-12px) scale(1.025);
+      box-shadow: 
+        0 32px 64px -12px rgba(15, 23, 42, 0.35),
+        0 16px 28px -6px rgba(15, 23, 42, 0.20),
+        inset 0 2px 3px rgba(255, 255, 255, 1),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.25),
+        0 0 0 2px rgba(241, 90, 36, 0.45);
+      z-index: 30;
+      border-color: #838b99;
+    }
+
+    /* Brillo de reflejo de luz dinámico al pasar el cursor */
+    .metal-glare {
+      position: absolute;
+      top: 0;
+      left: -160%;
+      width: 120%;
+      height: 100%;
+      background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.3) 45%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.3) 55%, transparent 80%);
+      transform: skewX(-25deg);
+      transition: left 0.85s ease-out;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .metal-card:hover .metal-glare {
+      left: 170%;
+    }
+
+    /* Remaches metálicos / tornillos industriales en las 4 esquinas */
+    .screw {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffffff 0%, #9fa6b2 60%, #58606c 100%);
+      box-shadow: 0 1px 1px rgba(255,255,255,0.9), inset 0 1px 1px rgba(0,0,0,0.7);
+      z-index: 12;
+      pointer-events: none;
+    }
+    .screw::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 1px;
+      width: 5px;
+      height: 1px;
+      background: #474e59;
+    }
+    .screw-tl { top: 9px; left: 9px; }
+    .screw-tr { top: 9px; right: 9px; }
+    .screw-bl { bottom: 9px; left: 9px; }
+    .screw-br { bottom: 9px; right: 9px; }
+
+    /* TEXTO CON RELIEVE METÁLICO (DEBOSSED / EMBOSSED LETTERPRESS) */
+    .text-embossed-light {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+    .text-embossed-title {
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85), 0 -1px 0 rgba(0, 0, 0, 0.12);
+      letter-spacing: -0.02em;
+    }
+
+    /* STICKER NARANJA INDUSTRIAL (REFERENCIA HONEY CASTILLO / UNA HUELLA IMBORRABLE) */
+    .orange-sticker {
+      background: linear-gradient(135deg, #ff5b1a 0%, #f15a24 100%);
+      color: #0b0d10;
+      border-radius: 4px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.45);
+      border: 1px solid #d44312;
+      position: relative;
+    }
+    .orange-sticker::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1.5px;
+      background: rgba(255,255,255,0.6);
+    }
+
+    /* Bandejas interiores maquinadas (paneles rehundidos con sombra interna) */
+    .metal-tray {
+      background: rgba(245, 247, 250, 0.72);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(160, 168, 180, 0.55);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.10), 0 1px 1px rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+    }
+
+    /* Scrollbar personalizada */
+    .timeline-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+    .timeline-scroll::-webkit-scrollbar-track {
+      background: #dedad0;
+      border-radius: 9999px;
+    }
+    .timeline-scroll::-webkit-scrollbar-thumb {
+      background: #aaa79c;
+      border-radius: 9999px;
+    }
+    .timeline-scroll::-webkit-scrollbar-thumb:hover {
+      background: #f15a24;
+    }
   </style>
 </head>
-<body>
+<body class="antialiased min-h-screen p-4 md:p-8">
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <a class="brand" href="index.html">
-      <span class="brand-mark"></span>NEXOS IA
-    </a>
-    
-    <div class="nav-section">
-      <div class="nav-section-title">Mi Espacio</div>
-      <a href="#" class="nav-link active">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-        Dashboard Principal
-      </a>
-      <a href="#" class="nav-link">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-        Mis Tareas
-      </a>
-      <a href="#" class="nav-link">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-        Entregables y Métricas
-      </a>
-    </div>
+  <div class="max-w-7xl mx-auto space-y-8">
 
-    <div class="nav-section">
-      <div class="nav-section-title">Proyectos</div>
-      <a href="#" class="nav-link">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-        Portal RH (NEXOS)
-      </a>
-      <a href="#" class="nav-link">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-        Chatbot (REXBOT)
-      </a>
-    </div>
-    
-    <div style="margin-top: auto;">
-      <a href="#" class="nav-link" style="color: var(--accent);" onclick="openIncidentModal()">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-        Reportar Incidencia
-      </a>
-    </div>
-  </aside>
-
-  <!-- Main Content -->
-  <main class="main-wrapper">
-    <div class="ambient-header"></div>
-    
-    <div class="content-area">
-      <!-- Top Bar -->
-      <div class="top-bar">
-        <div class="search-bar">
-          <svg width="18" height="18" fill="none" stroke="var(--text-muted)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-          <input type="text" placeholder="Buscar documentos, tareas o chats...">
-        </div>
-        <div class="user-profile">
-          <span style="font-weight: 600; font-size: 0.95rem;">Consultoría Santos Santillanes</span>
-          <div class="user-avatar">CS</div>
-        </div>
-      </div>
-
-      <!-- Welcome -->
-      <h1 class="welcome-title">Bienvenido a tu Portal</h1>
-
-      <!-- Quick Action Cards -->
-      <div class="quick-links">
-        <a href="https://drive.google.com" target="_blank" class="quick-card">
-          <div class="quick-icon" style="color: var(--google-blue);">
-            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
-          </div>
-          <h4>Google Drive</h4>
-          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.5rem 0 0;">Archivos del proyecto</p>
-        </a>
-        <a href="https://calendar.google.com" target="_blank" class="quick-card">
-          <div class="quick-icon" style="color: var(--google-yellow);">
-            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-          </div>
-          <h4>Agenda</h4>
-          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.5rem 0 0;">Cronograma y fechas</p>
-        </a>
-        <a href="https://meet.google.com" target="_blank" class="quick-card">
-          <div class="quick-icon" style="color: var(--google-green);">
-            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-          </div>
-          <h4>Reuniones (Meet)</h4>
-          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.5rem 0 0;">Llamadas de seguimiento</p>
-        </a>
-        <a href="#" class="quick-card" onclick="openIncidentModal()">
-          <div class="quick-icon" style="color: var(--accent);">
-            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-          </div>
-          <h4>Tickets / Cambios</h4>
-          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.5rem 0 0;">Solicitar ajustes</p>
-        </a>
-      </div>
-
-      <div class="dashboard-grid">
-        <!-- Main Column -->
+    <!-- Topbar / Identidad del Portal -->
+    <header class="bg-white/95 backdrop-blur-md border border-[#d9d5cc] rounded-2xl p-5 md:p-6 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div class="flex items-center gap-3">
+        <span class="w-7 h-7 relative inline-block">
+          <i class="absolute w-4 h-4 bg-[#f15a24] top-0 left-0 rounded-sm"></i>
+          <i class="absolute w-4 h-4 bg-[#11141a] bottom-0 right-0 opacity-80 rounded-sm"></i>
+        </span>
         <div>
-          <!-- Project Progress -->
-          <div class="panel">
-            <div class="panel-header">
-              <h3>Progreso del Proyecto: Portal Operativo (NEXOS IA)</h3>
-            </div>
-            
-            <div class="progress-bar-container">
-              <div class="progress-line"></div>
-              <div class="progress-line-fill"></div>
-              <div class="progress-steps">
-                <div class="step-dot completed">✓</div>
-                <div class="step-dot completed">✓</div>
-                <div class="step-dot active">3</div>
-                <div class="step-dot">4</div>
-              </div>
-              <div class="step-labels">
-                <span>Diagnóstico</span>
-                <span>Propuesta</span>
-                <span style="color: var(--text-dark);">Construcción</span>
-                <span>Lanzamiento</span>
-              </div>
-            </div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-xl tracking-tight text-[#11141a]">NEXOS IA</h1>
+            <span class="font-mono-custom text-[11px] font-bold uppercase tracking-wider bg-[#fff3ed] text-[#f15a24] px-2 py-0.5 rounded border border-[#fbd4c6]">Portal del Socio</span>
           </div>
-
-          <!-- Tasks -->
-          <div class="panel">
-            <div class="panel-header">
-              <h3>Tareas y Entregables</h3>
-              <a href="#" style="font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 600;">Ver cronograma completo</a>
-            </div>
-            
-            <ul class="task-list">
-              <li class="task-item done">
-                <div class="task-checkbox"></div>
-                <div class="task-title">Aprobar plan de arquitectura y base de datos</div>
-                <span class="task-tag tag-blue">Documentación</span>
-                <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: auto;">15/08</span>
-              </li>
-              <li class="task-item done">
-                <div class="task-checkbox"></div>
-                <div class="task-title">Entregar accesos de servidores actuales</div>
-                <span class="task-tag tag-green">Cliente</span>
-                <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: auto;">20/08</span>
-              </li>
-              <li class="task-item">
-                <div class="task-checkbox"></div>
-                <div class="task-title">Revisión de Flujos de Usuario (Wireframes Figma)</div>
-                <span class="task-tag tag-blue">Revisión</span>
-                <span style="font-size: 0.8rem; color: var(--text-dark); margin-left: auto; font-weight: 600;">Hoy</span>
-              </li>
-              <li class="task-item">
-                <div class="task-checkbox"></div>
-                <div class="task-title">Sesión de Capacitación Inicial</div>
-                <span class="task-tag" style="background: var(--accent-light); color: var(--accent);">Meet</span>
-                <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: auto;">05/09</span>
-              </li>
-            </ul>
-          </div>
+          <p class="text-xs text-[#676862]">Línea de tiempo de proyectos metálicos, hitos de desarrollo e incidencias operativas</p>
         </div>
+      </div>
 
-        <!-- Side Column -->
+      <!-- Badge de Socio Autenticado con Cloudflare Access -->
+      <div class="flex items-center gap-3 bg-[#fbfaf6] border border-[#d9d5cc] px-4 py-2 rounded-xl text-sm">
+        <div class="w-8 h-8 rounded-full bg-[#11141a] text-white flex items-center justify-center font-bold text-xs font-mono-custom shadow-inner">
+          CS
+        </div>
         <div>
-          <!-- Latest Docs -->
-          <div class="panel">
-            <div class="panel-header">
-              <h3>Documentos Recientes</h3>
-            </div>
-            
-            <a href="https://docs.google.com" target="_blank" class="doc-item">
-              <div class="doc-icon">
-                <!-- SVG Icon for Google Doc -->
-                <svg viewBox="0 0 40 40"><path fill="#4285F4" d="M28.5,36h-17C9.015,36,7,33.985,7,31.5v-23C7,6.015,9.015,4,11.5,4h10.293c0.398,0,0.78,1.158,1.061,1.439l8.707,8.707 C31.842,14.427,33,14.809,33,15.207V31.5C33,33.985,30.985,36,28.5,36z"/><path fill="#90CAF9" d="M33,15H24c-1.105,0-2-0.895-2-2V4L33,15z"/></svg>
-              </div>
-              <div class="doc-info">
-                <h5>Minuta de Reunión Semanal</h5>
-                <p>Google Docs • Modificado ayer</p>
-              </div>
-            </a>
-            
-            <a href="https://sheets.google.com" target="_blank" class="doc-item">
-              <div class="doc-icon">
-                <!-- SVG Icon for Google Sheet -->
-                <svg viewBox="0 0 40 40"><path fill="#0F9D58" d="M28.5,36h-17C9.015,36,7,33.985,7,31.5v-23C7,6.015,9.015,4,11.5,4h10.293c0.398,0,0.78,1.158,1.061,1.439l8.707,8.707 C31.842,14.427,33,14.809,33,15.207V31.5C33,33.985,30.985,36,28.5,36z"/><path fill="#81C784" d="M33,15H24c-1.105,0-2-0.895-2-2V4L33,15z"/></svg>
-              </div>
-              <div class="doc-info">
-                <h5>Estructura de Base de Datos</h5>
-                <p>Google Sheets • Hace 3 días</p>
-              </div>
-            </a>
-          </div>
-          
-          <!-- Quick Chat/Support -->
-          <div class="panel" style="background: var(--text-dark); color: white; border: none;">
-            <h3 style="color: white; border-bottom-color: rgba(255,255,255,0.1);">Soporte Continuo</h3>
-            <p style="font-size: 0.9rem; color: #a1a1aa; margin-bottom: 1.5rem; line-height: 1.5;">Tu Project Manager y equipo técnico están conectados.</p>
-            <a href="https://wa.me/525514803488" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: white; color: var(--text-dark); text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-              Chat de Seguimiento
-            </a>
-          </div>
+          <p class="font-bold text-xs text-[#11141a]">Consultoría Santos Santillanes</p>
+          <p class="text-[11px] text-[#676862] flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Autenticado vía Cloudflare Access (PIN Verificado)
+          </p>
         </div>
       </div>
-    </div>
-  </main>
+    </header>
 
-  <!-- MODAL DE INCIDENCIAS / TICKETS -->
-  <div id="incident-modal">
-    <div class="modal-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-        <h3 style="margin: 0; font-size: 1.3rem;">Levantar Incidencia / Ticket</h3>
-        <button onclick="closeIncidentModal()" style="background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #a1a1aa; line-height: 1;">&times;</button>
-      </div>
+    <!-- SECCIÓN PRINCIPAL: LÍNEA DE TIEMPO DE PROYECTOS METÁLICOS -->
+    <section class="space-y-4">
       
-      <form id="incidencias-form">
-        <div class="form-group">
-          <label>Área o Proyecto</label>
-          <select id="inc-area" required>
-            <option value="NEXOS IA">NEXOS IA (Sistemas y automatización)</option>
-            <option value="REXBOT">REXBOT (Programas educativos infantiles)</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>Nivel de Urgencia</label>
-          <select id="inc-urgency" required>
-            <option value="Baja">Baja - Duda, tarea o ajuste visual</option>
-            <option value="Media">Media - Falla parcial o modificación de flujo</option>
-            <option value="Alta">Alta - Falla crítica, sistema detenido</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>Descripción detallada</label>
-          <textarea id="inc-desc" rows="4" required placeholder="Describe exactamente el requerimiento..."></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>Evidencia Visual (Imágenes/Capturas)</label>
-          <div class="file-upload-wrapper" onclick="document.getElementById('inc-file').click()">
-            <svg width="24" height="24" fill="none" stroke="var(--text-muted)" viewBox="0 0 24 24" style="margin-bottom: 8px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-            <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">Haz clic para seleccionar imágenes</p>
-            <p style="margin: 4px 0 0; font-size: 0.75rem; color: var(--text-muted);">*Nota: Las imágenes deberás pegarlas directamente en el chat de WhatsApp que se abrirá.</p>
-            <input type="file" id="inc-file" accept="image/*" multiple style="display: none;">
+      <!-- Título de sección y selector mensual -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 pb-2 border-b border-[#dedad0]">
+        <div>
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-[#f15a24]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            <h2 class="text-lg md:text-xl font-extrabold text-[#11141a] tracking-tight">
+              1. Selecciona el Desarrollo o Proyecto a Consultar
+            </h2>
           </div>
-          <div id="file-list" style="margin-top: 8px; font-size: 0.8rem; color: var(--accent); font-weight: 600;"></div>
+          <p class="text-xs text-[#676862] mt-0.5">
+            Cajas con acabado metálico de lata/aluminio cepillado. Pasa el cursor para destacarlo hacia el frente o haz clic para ver sus <strong>Hitos Operativos</strong>.
+          </p>
         </div>
-        
-        <button class="btn-primary" type="submit" style="margin-top: 1rem;">Generar Ticket y Enviar</button>
+
+        <!-- Filtro rápido por mes -->
+        <div class="flex items-center gap-1.5 bg-white border border-[#d9d5cc] p-1 rounded-xl text-xs font-mono-custom shadow-sm">
+          <button onclick="filterMonth('all')" id="btn-all" class="px-2.5 py-1 rounded-lg bg-[#11141a] text-white font-bold transition-all">Todos (4)</button>
+          <button onclick="filterMonth('oct')" id="btn-oct" class="px-2.5 py-1 rounded-lg text-[#676862] hover:text-[#11141a] transition-all">Oct 2026 (Activo)</button>
+          <button onclick="filterMonth('sep')" id="btn-sep" class="px-2.5 py-1 rounded-lg text-[#676862] hover:text-[#11141a] transition-all">Sep 2026</button>
+          <button onclick="filterMonth('ago')" id="btn-ago" class="px-2.5 py-1 rounded-lg text-[#676862] hover:text-[#11141a] transition-all">Ago 2026</button>
+        </div>
+      </div>
+
+      <!-- CONTENEDOR GRID: CAJAS METÁLICAS CON ANIMACIÓN 3D AL FRENTE -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
+
+        <!-- ==============================================================
+             CAJA METÁLICA 1: AGENTE IA WHATSAPP (OCTUBRE - 85% ACTIVO)
+             ============================================================== -->
+        <article onclick="openMilestones('oct-agent')" class="proj-card oct metal-card p-5 space-y-4">
+          <!-- Reflejo de luz dinámico (Specular sweep) -->
+          <div class="metal-glare"></div>
+          
+          <!-- 4 Remaches metálicos en esquinas -->
+          <div class="screw screw-tl"></div>
+          <div class="screw screw-tr"></div>
+          <div class="screw screw-bl"></div>
+          <div class="screw screw-br"></div>
+
+          <!-- Micro leyenda troquelada superior estilo caja industrial -->
+          <div class="flex justify-between items-center text-[10px] font-mono-custom text-[#545b66] border-b border-[rgba(160,168,180,0.4)] pb-1.5">
+            <span class="tracking-widest">©NEXOS.2026 / BATCH-01</span>
+            <span class="text-[#20252e] font-bold">MX-REG.32</span>
+          </div>
+
+          <!-- Fila Superior: Tag Técnico y Sticker Naranja Industrial -->
+          <div class="flex justify-between items-start gap-2">
+            <span class="font-mono-custom text-[11px] font-bold text-[#11141a] bg-white/70 border border-white/80 px-2 py-0.5 rounded shadow-sm">
+              #DEV-OCT-2026
+            </span>
+
+            <!-- STICKER NARANJA ESTILO "HONEY CASTILLO" / "UNA HUELLA IMBORRABLE" -->
+            <div class="orange-sticker px-2 py-1 text-right flex-shrink-0">
+              <p class="text-[9px] font-mono-custom font-extrabold uppercase tracking-tight text-[#0f1115] leading-none">85% CONCLUIDO</p>
+              <div class="flex items-center justify-end gap-1 mt-0.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-950 animate-pulse"></span>
+                <span class="text-[8px] font-mono-custom font-bold text-[#0f1115]">FASE PRUEBAS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Header con Icono Cuadrado e Identidad -->
+          <div class="flex items-start gap-3 pt-1">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#1a1f26] to-[#0d1014] text-white flex items-center justify-center flex-shrink-0 font-bold shadow-md border border-white/20">
+              <svg class="w-5 h-5 text-[#ff6a33]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </div>
+            <div>
+              <h3 class="font-black text-sm text-[#0f141c] text-embossed-title leading-tight uppercase">
+                Agente IA WhatsApp
+              </h3>
+              <p class="text-[11px] text-[#474e59] font-bold text-embossed-light mt-0.5">Jornada Ventas Octubre (32 Entidades)</p>
+            </div>
+          </div>
+
+          <!-- Descripción del entregable -->
+          <p class="text-xs text-[#333a44] leading-relaxed text-embossed-light font-medium">
+            Bot conectado a WhatsApp Business API con calificación automática de prospectos y escalamiento en caliente a ejecutivos.
+          </p>
+
+          <!-- Badges de alcance y equipo -->
+          <div class="flex items-center gap-2 text-xs text-[#20252e]">
+            <span class="inline-flex items-center gap-1 font-bold text-xs bg-white/50 px-2 py-0.5 rounded border border-white/70">
+              👤 🏛️ +134 Asesores en Línea
+            </span>
+          </div>
+
+          <!-- Bandeja Maquinada 1: Avance Operativo / Barra de progreso -->
+          <div class="metal-tray p-2.5 space-y-1.5">
+            <div class="flex justify-between text-xs font-black text-[#11141a]">
+              <span class="uppercase tracking-tight">Avance Operativo</span>
+              <span class="text-emerald-800 font-mono-custom font-extrabold">85%</span>
+            </div>
+            <div class="w-full bg-[#cbd1dc] h-2 rounded-full overflow-hidden shadow-inner border border-black/10">
+              <div class="bg-gradient-to-r from-emerald-600 to-teal-500 h-full rounded-full shadow" style="width: 85%;"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-[#48505c] font-medium">
+              <span>117 / 137 pruebas validadas</span>
+              <span class="font-mono-custom font-bold">Meta: 137</span>
+            </div>
+          </div>
+
+          <!-- Bandeja Maquinada 2: Factura & Detalles Administrativos -->
+          <div class="metal-tray p-2.5 text-xs space-y-1.5">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-[#11141a] flex items-center gap-1">
+                🧾 Factura A-1048
+              </span>
+              <span class="bg-emerald-600 text-white text-[10px] font-mono-custom font-extrabold px-1.5 py-0.5 rounded shadow-sm">
+                PAGADA
+              </span>
+            </div>
+            <div class="flex justify-between items-center text-[11px] text-[#474e59]">
+              <span class="font-semibold">Monto: $15,000 MXN</span>
+              <button onclick="event.stopPropagation(); alert('Descargando comprobante fiscal CFDI Factura A-1048 (PDF y XML)...')" class="text-[#f15a24] font-bold hover:underline">
+                Descargar CFDI ↓
+              </button>
+            </div>
+          </div>
+
+          <!-- Tags técnicos con acabado industrial -->
+          <div class="flex flex-wrap gap-1 text-[10px] font-mono-custom">
+            <span class="bg-white/60 text-[#252b33] font-bold px-1.5 py-0.5 rounded border border-white/80">WhatsApp API</span>
+            <span class="bg-white/60 text-[#252b33] font-bold px-1.5 py-0.5 rounded border border-white/80">FastAPI</span>
+            <span class="bg-white/60 text-[#252b33] font-bold px-1.5 py-0.5 rounded border border-white/80">PostgreSQL</span>
+          </div>
+
+          <!-- Metadata inferior -->
+          <div class="flex justify-between text-[11px] text-[#474e59] font-medium pt-1 border-t border-[rgba(160,168,180,0.35)]">
+            <span>📅 15-Oct-2026</span>
+            <span class="font-bold text-[#20252e]">📁 Docs en Bóveda</span>
+          </div>
+
+          <!-- Botón de Acción Principal (Abre Hitos) -->
+          <div class="pt-1">
+            <button onclick="event.stopPropagation(); openMilestones('oct-agent')" class="w-full bg-gradient-to-b from-[#1c222b] to-[#0c0e12] hover:from-[#2e3745] hover:to-[#171b21] text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 border border-white/10 group">
+              <span class="group-hover:text-[#ff6a33] transition-colors">Ver Hitos del Proyecto</span>
+              <span class="text-[#ff6a33] group-hover:translate-x-1 transition-transform">→</span>
+            </button>
+            <p class="text-[10px] text-center text-[#58606c] font-medium mt-1.5">
+              🔍 Haz clic en la caja para desplegar hitos
+            </p>
+          </div>
+        </article>
+
+        <!-- ==============================================================
+             CAJA METÁLICA 2: LECTOR OCR CONTABLE (OCTUBRE - 40% CONSTRUCCIÓN)
+             ============================================================== -->
+        <article onclick="openMilestones('oct-ocr')" class="proj-card oct metal-card p-5 space-y-4">
+          <!-- Reflejo de luz dinámico (Specular sweep) -->
+          <div class="metal-glare"></div>
+          
+          <!-- 4 Remaches metálicos en esquinas -->
+          <div class="screw screw-tl"></div>
+          <div class="screw screw-tr"></div>
+          <div class="screw screw-bl"></div>
+          <div class="screw screw-br"></div>
+
+          <!-- Micro leyenda troquelada superior -->
+          <div class="flex justify-between items-center text-[10px] font-mono-custom text-[#545b66] border-b border-[rgba(160,168,180,0.4)] pb-1.5">
+            <span class="tracking-widest">©NEXOS.2026 / BATCH-02</span>
+            <span class="text-[#20252e] font-bold">OCR-V4</span>
+          </div>
+
+          <!-- Fila Superior: Tag Técnico y Sticker Naranja Industrial -->
+          <div class="flex justify-between items-start gap-2">
+            <span class="font-mono-custom text-[11px] font-bold text-[#11141a] bg-white/70 border border-white/80 px-2 py-0.5 rounded shadow-sm">
+              #DEV-OCT-2026-B
+            </span>
+
+            <!-- STICKER NARANJA -->
+            <div class="orange-sticker px-2 py-1 text-right flex-shrink-0">
+              <p class="text-[9px] font-mono-custom font-extrabold uppercase tracking-tight text-[#0f1115] leading-none">40% CONSTRUCCIÓN</p>
+              <div class="flex items-center justify-end gap-1 mt-0.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-950 animate-ping"></span>
+                <span class="text-[8px] font-mono-custom font-bold text-[#0f1115]">ENTRENAMIENTO</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Header con Icono Cuadrado -->
+          <div class="flex items-start gap-3 pt-1">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#1a1f26] to-[#0d1014] text-white flex items-center justify-center flex-shrink-0 font-bold shadow-md border border-white/20">
+              <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <div>
+              <h3 class="font-black text-sm text-[#0f141c] text-embossed-title leading-tight uppercase">
+                Lector OCR Contable
+              </h3>
+              <p class="text-[11px] text-[#474e59] font-bold text-embossed-light mt-0.5">Módulo Facturación CFDI 4.0</p>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <p class="text-xs text-[#333a44] leading-relaxed text-embossed-light font-medium">
+            Extracción visual con IA de datos fiscales en PDFs y fotografías con conciliación automática en tiempo real a Google Sheets.
+          </p>
+
+          <div class="flex items-center gap-2 text-xs text-[#20252e]">
+            <span class="inline-flex items-center gap-1 font-bold text-xs bg-white/50 px-2 py-0.5 rounded border border-white/70">
+              ⚙️ OCR Vision AI v2.4
+            </span>
+          </div>
+
+          <!-- Bandeja 1: Avance -->
+          <div class="metal-tray p-2.5 space-y-1.5">
+            <div class="flex justify-between text-xs font-black text-[#11141a]">
+              <span class="uppercase tracking-tight">Avance Operativo</span>
+              <span class="text-amber-800 font-mono-custom font-extrabold">40%</span>
+            </div>
+            <div class="w-full bg-[#cbd1dc] h-2 rounded-full overflow-hidden shadow-inner border border-black/10">
+              <div class="bg-gradient-to-r from-amber-500 to-orange-500 h-full rounded-full shadow" style="width: 40%;"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-[#48505c] font-medium">
+              <span>Etapa 2 de 4 (Entrenamiento)</span>
+              <span class="font-mono-custom font-bold">Meta: 100%</span>
+            </div>
+          </div>
+
+          <!-- Bandeja 2: Factura & Anticipo -->
+          <div class="metal-tray p-2.5 text-xs space-y-1.5">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-[#11141a] flex items-center gap-1">
+                🧾 Factura A-1052
+              </span>
+              <span class="bg-amber-600 text-white text-[10px] font-mono-custom font-extrabold px-1.5 py-0.5 rounded shadow-sm">
+                ANTICIPO 50%
+              </span>
+            </div>
+            <div class="flex justify-between items-center text-[11px] text-[#474e59]">
+              <span class="font-semibold">Saldo restante al entregar</span>
+              <button onclick="event.stopPropagation(); alert('Descargando comprobante fiscal de anticipo Factura A-1052...')" class="text-[#f15a24] font-bold hover:underline">
+                Descargar CFDI ↓
+              </button>
+            </div>
+          </div>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-1 text-[10px] font-mono-custom">
+            <span class="bg-white/60 text-[#252b33] font-bold px-1.5 py-0.5 rounded border border-white/80">Google Vision</span>
+            <span class="bg-white/60 text-[#252b33] font-bold px-1.5 py-0.5 rounded border border-white/80">CFDI 4.0</span>
+          </div>
+
+          <div class="flex justify-between text-[11px] text-[#474e59] font-medium pt-1 border-t border-[rgba(160,168,180,0.35)]">
+            <span>📅 Entrega: 25-Oct</span>
+            <span class="font-bold text-[#20252e]">⏱️ 5 días hábiles</span>
+          </div>
+
+          <!-- Botón de Acción -->
+          <div class="pt-1">
+            <button onclick="event.stopPropagation(); openMilestones('oct-ocr')" class="w-full bg-gradient-to-b from-[#1c222b] to-[#0c0e12] hover:from-[#2e3745] hover:to-[#171b21] text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 border border-white/10 group">
+              <span class="group-hover:text-[#ff6a33] transition-colors">Ver Hitos y Solicitar Ajuste</span>
+              <span class="text-[#ff6a33] group-hover:translate-x-1 transition-transform">→</span>
+            </button>
+            <p class="text-[10px] text-center text-[#58606c] font-medium mt-1.5">
+              🔍 Haz clic en la caja para desplegar hitos
+            </p>
+          </div>
+        </article>
+
+        <!-- ==============================================================
+             CAJA METÁLICA 3: PORTAL WEB CONVERSIÓN (SEPTIEMBRE - 100% PRODUCCIÓN)
+             ============================================================== -->
+        <article onclick="openMilestones('sep-web')" class="proj-card sep metal-card p-5 space-y-4">
+          <!-- Reflejo de luz dinámico -->
+          <div class="metal-glare"></div>
+          
+          <!-- 4 Remaches metálicos en esquinas -->
+          <div class="screw screw-tl"></div>
+          <div class="screw screw-tr"></div>
+          <div class="screw screw-bl"></div>
+          <div class="screw screw-br"></div>
+
+          <!-- Micro leyenda troquelada superior -->
+          <div class="flex justify-between items-center text-[10px] font-mono-custom text-[#545b66] border-b border-[rgba(160,168,180,0.4)] pb-1.5">
+            <span class="tracking-widest">©NEXOS.2026 / PROD-03</span>
+            <span class="text-[#20252e] font-bold">RELEASED</span>
+          </div>
+
+          <!-- Fila Superior: Tag Técnico y Sticker Naranja Industrial -->
+          <div class="flex justify-between items-start gap-2">
+            <span class="font-mono-custom text-[11px] font-bold text-[#11141a] bg-white/70 border border-white/80 px-2 py-0.5 rounded shadow-sm">
+              #DEV-SEP-2026
+            </span>
+
+            <!-- STICKER NARANJA -->
+            <div class="orange-sticker px-2 py-1 text-right flex-shrink-0">
+              <p class="text-[9px] font-mono-custom font-extrabold uppercase tracking-tight text-[#0f1115] leading-none">100% PRODUCCIÓN</p>
+              <div class="flex items-center justify-end gap-1 mt-0.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-950"></span>
+                <span class="text-[8px] font-mono-custom font-bold text-[#0f1115]">EN LÍNEA</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Header con Icono Cuadrado -->
+          <div class="flex items-start gap-3 pt-1">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#1a1f26] to-[#0d1014] text-white flex items-center justify-center flex-shrink-0 font-bold shadow-md border border-white/20">
+              <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+            </div>
+            <div>
+              <h3 class="font-black text-sm text-[#0f141c] text-embossed-title leading-tight uppercase">
+                Portal de Alta Conversión
+              </h3>
+              <p class="text-[11px] text-[#474e59] font-bold text-embossed-light mt-0.5">Sitio Corporativo Oficial & Funnels</p>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <p class="text-xs text-[#333a44] leading-relaxed text-embossed-light font-medium">
+            Plataforma web ultrarrápida (Geist / Tailwind) con funnels directos a WhatsApp, SEO estructurado y entrega Cloudflare.
+          </p>
+
+          <div class="flex items-center gap-2 text-xs text-[#20252e]">
+            <span class="inline-flex items-center gap-1 font-bold text-xs bg-white/50 px-2 py-0.5 rounded border border-white/70">
+              🌐 Dominio Producción Vinculado
+            </span>
+          </div>
+
+          <!-- Bandeja 1: Avance -->
+          <div class="metal-tray p-2.5 space-y-1.5">
+            <div class="flex justify-between text-xs font-black text-[#11141a]">
+              <span class="uppercase tracking-tight">Avance Operativo</span>
+              <span class="text-blue-800 font-mono-custom font-extrabold">100%</span>
+            </div>
+            <div class="w-full bg-[#cbd1dc] h-2 rounded-full overflow-hidden shadow-inner border border-black/10">
+              <div class="bg-gradient-to-r from-blue-600 to-cyan-500 h-full rounded-full shadow" style="width: 100%;"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-[#48505c] font-medium">
+              <span>Despliegue GitHub Pages + Cloudflare</span>
+              <span class="font-mono-custom font-bold">Lanzado</span>
+            </div>
+          </div>
+
+          <!-- Bandeja 2: Factura & Liquidado -->
+          <div class="metal-tray p-2.5 text-xs space-y-1.5">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-[#11141a] flex items-center gap-1">
+                🧾 Factura A-1025
+              </span>
+              <span class="bg-emerald-600 text-white text-[10px] font-mono-custom font-extrabold px-1.5 py-0.5 rounded shadow-sm">
+                LIQUIDADO
+              </span>
+            </div>
+            <div class="flex justify-between items-center text-[11px] text-[#474e59]">
+              <span class="font-semibold">Monto: $12,500 MXN</span>
+              <button onclick="event.stopPropagation(); alert('Descargando factura CFDI liquidada Factura A-1025...')" class="text-[#f15a24] font-bold hover:underline">
+                Descargar CFDI ↓
+              </button>
+            </div>
+          </div>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-1 text-[10px] font-mono-custom">
+            <span class="bg-white/60 text-[#252b33] font-bold px-1.5 py-0.5 rounded border border-white/80">Cloudflare DNS</span>
+            <span class="bg-white/60 text-[#252b33] font-bold px-1.5 py-0.5 rounded border border-white/80">SSL / HTTPS</span>
+          </div>
+
+          <div class="flex justify-between text-[11px] text-[#474e59] font-medium pt-1 border-t border-[rgba(160,168,180,0.35)]">
+            <span>📅 Entregado: 28-Sep</span>
+            <span class="font-bold text-[#20252e]">⚡ Score 100/100</span>
+          </div>
+
+          <!-- Botón de Acción -->
+          <div class="pt-1">
+            <button onclick="event.stopPropagation(); openMilestones('sep-web')" class="w-full bg-gradient-to-b from-[#1c222b] to-[#0c0e12] hover:from-[#2e3745] hover:to-[#171b21] text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 border border-white/10 group">
+              <span class="group-hover:text-[#ff6a33] transition-colors">Ver Hitos del Proyecto</span>
+              <span class="text-[#ff6a33] group-hover:translate-x-1 transition-transform">→</span>
+            </button>
+            <p class="text-[10px] text-center text-[#58606c] font-medium mt-1.5">
+              🔍 Haz clic en la caja para desplegar hitos
+            </p>
+          </div>
+        </article>
+
+        <!-- ==============================================================
+             CAJA METÁLICA 4: TABLERO CENTRAL DE DATOS (AGOSTO - 100% AUDITADO)
+             ============================================================== -->
+        <article onclick="openMilestones('ago-data')" class="proj-card ago metal-card p-5 space-y-4">
+          <!-- Reflejo de luz dinámico -->
+          <div class="metal-glare"></div>
+          
+          <!-- 4 Remaches metálicos en esquinas -->
+          <div class="screw screw-tl"></div>
+          <div class="screw screw-tr"></div>
+          <div class="screw screw-bl"></div>
+          <div class="screw screw-br"></div>
+
+          <!-- Micro leyenda troquelada superior -->
+          <div class="flex justify-between items-center text-[10px] font-mono-custom text-[#545b66] border-b border-[rgba(160,168,180,0.4)] pb-1.5">
+            <span class="tracking-widest">©NEXOS.2026 / AUDIT-04</span>
+            <span class="text-[#20252e] font-bold">ARCHIVED</span>
+          </div>
+
+          <!-- Fila Superior: Tag Técnico y Sticker Naranja Industrial -->
+          <div class="flex justify-between items-start gap-2">
+            <span class="font-mono-custom text-[11px] font-bold text-[#11141a] bg-white/70 border border-white/80 px-2 py-0.5 rounded shadow-sm">
+              #HIST-AGO-2026
+            </span>
+
+            <!-- STICKER NARANJA -->
+            <div class="orange-sticker px-2 py-1 text-right flex-shrink-0">
+              <p class="text-[9px] font-mono-custom font-extrabold uppercase tracking-tight text-[#0f1115] leading-none">100% AUDITADO</p>
+              <div class="flex items-center justify-end gap-1 mt-0.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-gray-950"></span>
+                <span class="text-[8px] font-mono-custom font-bold text-[#0f1115]">CORTE FINAL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Header con Icono Cuadrado -->
+          <div class="flex items-start gap-3 pt-1">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#1a1f26] to-[#0d1014] text-white flex items-center justify-center flex-shrink-0 font-bold shadow-md border border-white/20">
+              <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            </div>
+            <div>
+              <h3 class="font-black text-sm text-[#0f141c] text-embossed-title leading-tight uppercase">
+                Tablero Central de Datos
+              </h3>
+              <p class="text-[11px] text-[#474e59] font-bold text-embossed-light mt-0.5">Auditoría & Análisis Histórico</p>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <p class="text-xs text-[#333a44] leading-relaxed text-embossed-light font-medium">
+            Consolidación de bases de datos dispersas en un tablero interactivo para toma de decisiones y reportes semanales.
+          </p>
+
+          <div class="flex items-center gap-2 text-xs text-[#20252e]">
+            <span class="inline-flex items-center gap-1 font-bold text-xs bg-white/50 px-2 py-0.5 rounded border border-white/70">
+              🗄️ +109 Casos Auditados
+            </span>
+          </div>
+
+          <!-- Bandeja 1: Avance -->
+          <div class="metal-tray p-2.5 space-y-1.5">
+            <div class="flex justify-between text-xs font-black text-[#11141a]">
+              <span class="uppercase tracking-tight">Avance Operativo</span>
+              <span class="text-slate-800 font-mono-custom font-extrabold">100%</span>
+            </div>
+            <div class="w-full bg-[#cbd1dc] h-2 rounded-full overflow-hidden shadow-inner border border-black/10">
+              <div class="bg-gradient-to-r from-slate-700 to-gray-600 h-full rounded-full shadow" style="width: 100%;"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-[#48505c] font-medium">
+              <span>Entrega de Llaves y Accesos</span>
+              <span class="font-mono-custom font-bold">Concluido</span>
+            </div>
+          </div>
+
+          <!-- Bandeja 2: Factura & Auditado -->
+          <div class="metal-tray p-2.5 text-xs space-y-1.5">
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-[#11141a] flex items-center gap-1">
+                🧾 Factura A-0988
+              </span>
+              <span class="bg-slate-700 text-white text-[10px] font-mono-custom font-extrabold px-1.5 py-0.5 rounded shadow-sm">
+                AUDITADO
+              </span>
+            </div>
+            <div class="flex justify-between items-center text-[11px] text-[#474e59]">
+              <span class="font-semibold">Monto: $18,000 MXN</span>
+              <button onclick="event.stopPropagation(); alert('Descargando factura histórica Factura A-0988...')" class="text-[#f15a24] font-bold hover:underline">
+                Descargar CFDI ↓
+              </button>
+            </div>
+          </div>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-1 text-[10px] font-mono-custom">
+            <span class="bg-white/60 text-[#252b33] font-bold px-1.5 py-0.5 rounded border border-white/80">Looker Studio</span>
+            <span class="bg-white/60 text-[#252b33] font-bold px-1.5 py-0.5 rounded border border-white/80">BigQuery</span>
+          </div>
+
+          <div class="flex justify-between text-[11px] text-[#474e59] font-medium pt-1 border-t border-[rgba(160,168,180,0.35)]">
+            <span>📅 Cierre: 30-Ago</span>
+            <span class="font-bold text-[#20252e]">🔐 Archivo Seguro</span>
+          </div>
+
+          <!-- Botón de Acción -->
+          <div class="pt-1">
+            <button onclick="event.stopPropagation(); openMilestones('ago-data')" class="w-full bg-gradient-to-b from-[#1c222b] to-[#0c0e12] hover:from-[#2e3745] hover:to-[#171b21] text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 border border-white/10 group">
+              <span class="group-hover:text-[#ff6a33] transition-colors">Ver Hitos del Proyecto</span>
+              <span class="text-[#ff6a33] group-hover:translate-x-1 transition-transform">→</span>
+            </button>
+            <p class="text-[10px] text-center text-[#58606c] font-medium mt-1.5">
+              🔍 Haz clic en la caja para desplegar hitos
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: CENTRO DE INCIDENCIAS & TICKETS (FOCALIZADO) -->
+    <section class="bg-white border border-[#d9d5cc] rounded-2xl p-6 shadow-sm space-y-5">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-3 border-b border-[#eee]">
+        <div>
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-[#f15a24]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <h2 class="text-lg font-bold text-[#11141a] tracking-tight">2. Centro de Incidencias & Soporte de Entregables</h2>
+          </div>
+          <p class="text-xs text-[#676862]">Reporta errores, solicita modificaciones a tus desarrollos o abre consultas directas con tu Project Manager.</p>
+        </div>
+        <button onclick="openModal()" class="bg-[#f15a24] hover:bg-[#d84918] text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all flex items-center gap-2 flex-shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          <span>Levantar Nueva Incidencia</span>
+        </button>
+      </div>
+
+      <!-- Tabla de Incidencias Activas y Pasadas -->
+      <div class="overflow-x-auto border border-[#d9d5cc] rounded-xl">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-[#fbfaf6] text-[#676862] font-mono-custom border-b border-[#d9d5cc]">
+            <tr>
+              <th class="p-3">FOLIO</th>
+              <th class="p-3">DESARROLLO VINCULADO</th>
+              <th class="p-3">REQUERIMIENTO</th>
+              <th class="p-3">PRIORIDAD</th>
+              <th class="p-3">ESTATUS</th>
+              <th class="p-3">FACTURA ASOCIADA</th>
+              <th class="p-3 text-right">ACCIÓN</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#eee] text-[#11141a]">
+            <!-- Ticket 1 -->
+            <tr class="hover:bg-slate-50">
+              <td class="p-3 font-mono-custom font-bold text-[#f15a24]">#TK-104</td>
+              <td class="p-3 font-semibold">Agente IA WhatsApp (Octubre)</td>
+              <td class="p-3 text-[#676862]">Ajuste en horario de respuesta automática para fines de semana.</td>
+              <td class="p-3"><span class="bg-gray-100 text-gray-700 font-semibold px-2 py-0.5 rounded text-[11px]">Baja</span></td>
+              <td class="p-3"><span class="bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded text-[11px]">✓ Resuelto</span></td>
+              <td class="p-3 font-mono-custom text-[#676862]">A-1048</td>
+              <td class="p-3 text-right">
+                <a href="https://wa.me/525514803488?text=Consulta%20Ticket%20TK-104" target="_blank" class="text-[#f15a24] font-semibold hover:underline">Ver chat →</a>
+              </td>
+            </tr>
+            <!-- Ticket 2 -->
+            <tr class="hover:bg-slate-50">
+              <td class="p-3 font-mono-custom font-bold text-[#f15a24]">#TK-105</td>
+              <td class="p-3 font-semibold">Lector OCR Contable</td>
+              <td class="p-3 text-[#676862]">Validar compatibilidad con facturas escaneadas con baja resolución.</td>
+              <td class="p-3"><span class="bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded text-[11px]">Media</span></td>
+              <td class="p-3"><span class="bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded text-[11px]">🔄 En Desarrollo</span></td>
+              <td class="p-3 font-mono-custom text-[#676862]">A-1052</td>
+              <td class="p-3 text-right">
+                <a href="https://wa.me/525514803488?text=Consulta%20Ticket%20TK-105" target="_blank" class="text-[#f15a24] font-semibold hover:underline">Ver chat →</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: RECURSOS FISCALES & EXPEDIENTE COMPARTIDO -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-white border border-[#d9d5cc] p-4 rounded-xl flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-orange-50 text-[#f15a24] flex items-center justify-center font-bold text-lg">🧾</div>
+          <div>
+            <h4 class="text-xs font-bold text-[#11141a]">Bóveda de Facturas CFDI</h4>
+            <p class="text-[11px] text-[#676862]">Todos los XML y PDFs emitidos</p>
+          </div>
+        </div>
+        <button onclick="alert('Descargando ZIP con todas las facturas del año fiscal 2026...')" class="text-xs text-[#f15a24] font-bold hover:underline">Descargar lote</button>
+      </div>
+
+      <a href="https://drive.google.com" target="_blank" class="bg-white border border-[#d9d5cc] p-4 rounded-xl hover:border-[#11141a] transition-all flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg">📁</div>
+          <div>
+            <h4 class="text-xs font-bold text-[#11141a]">Google Drive del Socio</h4>
+            <p class="text-[11px] text-[#676862]">Contratos, diagramas y claves</p>
+          </div>
+        </div>
+        <span class="text-xs text-[#676862]">Abrir ↗</span>
+      </a>
+
+      <a href="index.html" class="bg-white border border-[#d9d5cc] p-4 rounded-xl hover:border-[#f15a24] transition-all flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-[#fff3ed] text-[#f15a24] flex items-center justify-center font-bold text-lg">🏠</div>
+          <div>
+            <h4 class="text-xs font-bold text-[#11141a]">Portal Público NEXOS IA</h4>
+            <p class="text-[11px] text-[#676862]">Volver a la portada principal</p>
+          </div>
+        </div>
+        <span class="text-xs text-[#f15a24] font-bold">Ir al sitio →</span>
+      </a>
+    </section>
+
+  </div>
+
+  <!-- ==============================================================
+       MODAL 1: INSPECTOR DE HITOS DEL PROYECTO (INTERACTIVO)
+       Se abre al hacer clic sobre cualquier caja metálica o su botón
+       ============================================================== -->
+  <div id="milestoneModal" class="fixed inset-0 bg-black/75 backdrop-blur-md hidden items-center justify-center p-4 z-50 overflow-y-auto">
+    <div class="relative bg-white rounded-2xl max-w-2xl w-full border border-[#9aa1ad] shadow-2xl overflow-hidden my-8">
+      
+      <!-- Encabezado Metálico del Modal con Remaches y Textura -->
+      <div class="relative p-6 bg-gradient-to-r from-[#d8dce3] via-[#f1f3f6] to-[#cfd4dc] border-b border-[#a8b0bc] shadow-inner">
+        <!-- Remaches decorativos del modal -->
+        <div class="screw screw-tl"></div>
+        <div class="screw screw-tr"></div>
+
+        <div class="flex justify-between items-start gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span id="m-badge" class="font-mono-custom text-[11px] font-bold px-2 py-0.5 rounded bg-white/80 border border-black/10">#DEV-OCT-2026</span>
+              <span id="m-batch" class="font-mono-custom text-[10px] text-[#555] uppercase">©NEXOS.2026 / HOJA DE ESPECIFICACIÓN</span>
+            </div>
+            <h3 id="m-title" class="font-black text-xl text-[#0f141c] text-embossed-title leading-tight">
+              Agente IA WhatsApp — Jornada Ventas Octubre
+            </h3>
+            <p id="m-scope" class="text-xs text-[#48505c] font-semibold mt-0.5">Operación Nacional (32 Entidades) • Socio: Consultoría Santos Santillanes</p>
+          </div>
+
+          <button onclick="closeMilestones()" class="w-8 h-8 rounded-full bg-white/80 hover:bg-white text-gray-700 hover:text-black font-bold flex items-center justify-center border border-black/15 shadow-sm text-lg flex-shrink-0 transition-all">
+            &times;
+          </button>
+        </div>
+
+        <!-- Barra de avance general y status del proyecto en el encabezado -->
+        <div class="mt-4 pt-3 border-t border-black/10 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-3">
+            <span class="font-bold text-[#11141a]">Avance Global:</span>
+            <div class="w-36 bg-[#c4c9d4] h-2.5 rounded-full overflow-hidden shadow-inner border border-black/15">
+              <div id="m-progress-bar" class="h-full rounded-full transition-all duration-500" style="width: 85%;"></div>
+            </div>
+            <span id="m-progress-pct" class="font-mono-custom font-extrabold text-sm">85%</span>
+          </div>
+
+          <!-- Sticker Naranja en el modal -->
+          <div id="m-sticker" class="orange-sticker px-3 py-1 text-right flex items-center gap-2">
+            <span id="m-status-text" class="text-[10px] font-mono-custom font-extrabold uppercase text-[#0f1115]">85% CONCLUIDO</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuerpo del Modal: Desglose de Hitos Operativos -->
+      <div class="p-6 space-y-6 max-h-[60vh] overflow-y-auto">
+
+        <!-- Lista de Hitos (Timeline Checkpoints) -->
+        <div class="space-y-4">
+          <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+            <h4 class="text-xs font-black uppercase tracking-wider text-[#11141a] flex items-center gap-2">
+              <svg class="w-4 h-4 text-[#f15a24]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+              <span>Cronograma & Hitos de Entrega</span>
+            </h4>
+            <span class="text-[11px] text-[#676862] font-mono-custom">4 Fases Operativas</span>
+          </div>
+
+          <div id="m-milestones-container" class="space-y-3">
+            <!-- Los hitos se inyectan dinámicamente con JavaScript -->
+          </div>
+        </div>
+
+        <!-- Panel de Facturación y Documentación Vinculada -->
+        <div class="bg-[#fbfaf6] border border-[#d9d5cc] rounded-xl p-4 space-y-2">
+          <div class="flex justify-between items-center text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🧾</span>
+              <div>
+                <p id="m-invoice-title" class="font-bold text-[#11141a]">Factura Fiscal CFDI A-1048</p>
+                <p id="m-invoice-desc" class="text-[11px] text-[#676862]">Importe: $15,000 MXN • Timbre SAT Válido</p>
+              </div>
+            </div>
+            <button onclick="alert('Descargando paquete de comprobantes fiscales (PDF / XML)...')" class="bg-white hover:bg-gray-50 border border-[#d9d5cc] text-[#11141a] text-xs font-bold py-1.5 px-3 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
+              <span>Descargar CFDI</span> ↓
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer del Modal: Acciones Directas -->
+      <div class="p-4 bg-[#f7f6f2] border-t border-[#dedad0] flex flex-col sm:flex-row justify-between items-center gap-3">
+        <button id="m-btn-incident" onclick="openIncidentFromMilestone()" class="text-xs font-bold text-[#f15a24] hover:underline flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          <span>Levantar Incidencia o Solicitar Ajuste para este Hito</span>
+        </button>
+
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <button id="m-btn-live" onclick="openLiveDemo()" class="flex-1 sm:flex-none bg-[#11141a] hover:bg-[#2b313b] text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-sm">
+            <span>Probar Desarrollo en Vivo</span> ↗
+          </button>
+          <button onclick="closeMilestones()" class="border border-[#d9d5cc] bg-white hover:bg-gray-100 text-gray-700 text-xs font-bold py-2.5 px-4 rounded-xl transition-all">
+            Cerrar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       MODAL 2: LEVANTAMIENTO DE INCIDENCIAS / TICKETS
+       ============================================================== -->
+  <div id="incidentModal" class="fixed inset-0 bg-black/65 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 border border-[#d9d5cc] shadow-2xl space-y-4">
+      <div class="flex justify-between items-center pb-2 border-b border-[#eee]">
+        <div>
+          <h3 class="font-extrabold text-base text-[#11141a]">Levantar Nueva Incidencia / Ticket</h3>
+          <p class="text-xs text-[#676862]">Se notificará a soporte técnico por WhatsApp de inmediato.</p>
+        </div>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-700 text-xl font-bold">&times;</button>
+      </div>
+
+      <form id="ticketForm" onsubmit="handleTicketSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-[#11141a] mb-1">Desarrollo o Proyecto Afectado</label>
+          <select id="ticketDev" class="w-full border border-[#d9d5cc] rounded-lg p-2.5 text-xs bg-[#fbfaf6]">
+            <option value="Agente IA WhatsApp (Octubre)">Agente IA WhatsApp (Octubre)</option>
+            <option value="Lector OCR Contable">Lector OCR Contable</option>
+            <option value="Portal de Alta Conversión">Portal de Alta Conversión</option>
+            <option value="Tablero Central de Datos">Tablero Central de Datos</option>
+            <option value="Otro requerimiento general">Otro requerimiento general</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-[#11141a] mb-1">Nivel de Urgencia</label>
+          <select id="ticketPriority" class="w-full border border-[#d9d5cc] rounded-lg p-2.5 text-xs bg-[#fbfaf6]">
+            <option value="Baja (Duda o ajuste visual)">Baja — Duda, ajuste visual o texto</option>
+            <option value="Media (Falla de flujo o lentitud)">Media — Falla en flujo o requerimiento nuevo</option>
+            <option value="Alta (Sistema detenido o crítico)">Alta — Sistema caído o venta bloqueada</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-[#11141a] mb-1">Descripción del problema o ajuste</label>
+          <textarea id="ticketDesc" rows="3" required placeholder="Describe qué ocurre, qué esperabas y en qué hito o flujo se presenta..." class="w-full border border-[#d9d5cc] rounded-lg p-2.5 text-xs bg-[#fbfaf6]"></textarea>
+        </div>
+
+        <div class="bg-[#fbfaf6] p-3 rounded-lg border border-dashed border-[#d9d5cc] text-center text-[#676862]">
+          <p class="text-[11px]">📸 Si cuentas con capturas de pantalla, las podrás adjuntar en el chat de WhatsApp que se abrirá automáticamente con el ticket prellenado.</p>
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button type="submit" class="flex-1 bg-[#f15a24] hover:bg-[#d84918] text-white font-bold py-2.5 rounded-xl transition-colors text-xs flex items-center justify-center gap-1.5 shadow-sm">
+            <span>Enviar Ticket Oficial por WhatsApp</span> ↗
+          </button>
+          <button type="button" onclick="closeModal()" class="border border-[#d9d5cc] px-4 py-2.5 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50">
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
   </div>
 
+  <!-- SCRIPT DE INTERACTIVIDAD & HITOS -->
   <script>
-    function openIncidentModal() {
-      document.getElementById('incident-modal').style.display = 'flex';
-    }
-    
-    function closeIncidentModal() {
-      document.getElementById('incident-modal').style.display = 'none';
-      document.getElementById('incidencias-form').reset();
-      document.getElementById('file-list').innerHTML = '';
-    }
-    
-    document.getElementById('inc-file').addEventListener('change', function(e) {
-      if(this.files && this.files.length > 0) {
-        document.getElementById('file-list').innerHTML = `Has preparado ${this.files.length} imagen(es) para adjuntar en WhatsApp.`;
+    // Base de datos de hitos por desarrollo
+    const projectMilestonesData = {
+      'oct-agent': {
+        title: 'Agente IA WhatsApp — Jornada Ventas Octubre',
+        badge: '#DEV-OCT-2026',
+        batch: '©NEXOS.2026 / BATCH-01 / MX-REG.32',
+        scope: 'Operación Nacional (32 Entidades) • Socio: Consultoría Santos Santillanes',
+        progressPct: '85%',
+        progressClass: 'bg-emerald-600',
+        statusText: '85% CONCLUIDO — FASE PRUEBAS',
+        invoiceTitle: 'Factura Fiscal CFDI A-1048',
+        invoiceDesc: 'Importe: $15,000 MXN • Estatus: PAGADA • Timbre SAT Válido',
+        liveUrl: 'https://wa.me/525514803488?text=Hola%20NEXOS%20IA,%20estoy%20probando%20el%20Agente%20de%20Octubre',
+        milestones: [
+          {
+            number: '01',
+            title: 'Diagnóstico & Definición de Flujos de Venta',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '02-Oct-2026',
+            description: 'Mapeo de las 32 entidades federativas, árbol de respuestas, horarios de atención y reglas de asignación a ejecutivos.',
+            deliverable: 'Diagrama OpenAPI v3.1 y documento de arquitectura de calificación aprobado.'
+          },
+          {
+            number: '02',
+            title: 'Conexión Meta Cloud API & Servidor Seguro',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '08-Oct-2026',
+            description: 'Alta de número telefónico comercial verificado en Meta Business Manager, configuración de Webhooks y base PostgreSQL.',
+            deliverable: 'Token permanente y endpoint HTTPS con Cloudflare SSL activo.'
+          },
+          {
+            number: '03',
+            title: 'Entrenamiento de IA Conversacional & Pruebas en Caliente',
+            status: 'En curso (85%)',
+            statusBadge: 'bg-amber-100 text-amber-800 border-amber-300',
+            date: '15-Oct-2026',
+            description: 'Simulación de 137 interacciones reales de clientes. Ajuste de tono consultivo y calificación automática de presupuesto.',
+            deliverable: '117 / 137 pruebas concluidas con 98.4% de asertividad.'
+          },
+          {
+            number: '04',
+            title: 'Despliegue Nacional (+134 Asesores) & Capacitación',
+            status: 'Programado',
+            statusBadge: 'bg-gray-100 text-gray-700 border-gray-300',
+            date: '22-Oct-2026',
+            description: 'Activación del tráfico nacional masivo, entrega de bóveda de credenciales y sesión grabada de transferencia técnica.',
+            deliverable: 'Liberación a producción y entrega de acta de conformidad fiscal.'
+          }
+        ]
+      },
+      'oct-ocr': {
+        title: 'Lector OCR & Pipeline Contable Automatizado',
+        badge: '#DEV-OCT-2026-B',
+        batch: '©NEXOS.2026 / BATCH-02 / OCR-V4',
+        scope: 'Módulo Facturación CFDI 4.0 • Socio: Consultoría Santos Santillanes',
+        progressPct: '40%',
+        progressClass: 'bg-amber-500',
+        statusText: '40% CONSTRUCCIÓN — ENTRENAMIENTO',
+        invoiceTitle: 'Factura Fiscal CFDI A-1052',
+        invoiceDesc: 'Importe: Anticipo 50% ($8,500 MXN) • Saldo restante al entregar',
+        liveUrl: '',
+        milestones: [
+          {
+            number: '01',
+            title: 'Especificación de Catálogos & Campos CFDI 4.0',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '05-Oct-2026',
+            description: 'Matriz de extracción fiscal: RFC emisor/receptor, desglose IVA/IEPS, clave de producto y folio fiscal UUID.',
+            deliverable: 'Diccionario de datos contables y plantilla maestra en Google Sheets.'
+          },
+          {
+            number: '02',
+            title: 'Entrenamiento Google Cloud Vision AI & Limpieza de Imagen',
+            status: 'En curso (40%)',
+            statusBadge: 'bg-amber-100 text-amber-800 border-amber-300',
+            date: '14-Oct-2026',
+            description: 'Calibración del motor de OCR para tickets arrugados, fotografías con baja iluminación y PDFs escaneados a 150 DPI.',
+            deliverable: 'Pipeline de preprocesamiento OpenCV con umbral adaptativo.'
+          },
+          {
+            number: '03',
+            title: 'Conciliación Automática con Google Sheets & Webhook',
+            status: 'Programado',
+            statusBadge: 'bg-gray-100 text-gray-700 border-gray-300',
+            date: '20-Oct-2026',
+            description: 'Sincronización instantánea al detectar nueva factura en Google Drive o correo contable.',
+            deliverable: 'Script Apps Script + endpoint en Cloud Functions.'
+          },
+          {
+            number: '04',
+            title: 'Pruebas de Estrés con Lote de Facturas & Entrega',
+            status: 'Programado',
+            statusBadge: 'bg-gray-100 text-gray-700 border-gray-300',
+            date: '25-Oct-2026',
+            description: 'Validación de 200 facturas de proveedores reales y liquidación de factura final.',
+            deliverable: 'Entrega de código fuente y sesión de capacitación administrativa.'
+          }
+        ]
+      },
+      'sep-web': {
+        title: 'Portal Web de Alta Conversión & Lead Gen',
+        badge: '#DEV-SEP-2026',
+        batch: '©NEXOS.2026 / PROD-03 / RELEASED',
+        scope: 'Sitio Corporativo Oficial & Funnels • Socio: Consultoría Santos Santillanes',
+        progressPct: '100%',
+        progressClass: 'bg-blue-600',
+        statusText: '100% PRODUCCIÓN — EN LÍNEA',
+        invoiceTitle: 'Factura Fiscal CFDI A-1025',
+        invoiceDesc: 'Importe: $12,500 MXN • Estatus: LIQUIDADO AL 100%',
+        liveUrl: 'index.html',
+        milestones: [
+          {
+            number: '01',
+            title: 'Wireframes & Arquitectura de Contenidos Geist',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '10-Sep-2026',
+            description: 'Definición de propuesta de valor, estructura de navegación ligera y funnels a WhatsApp.',
+            deliverable: 'Prototipo UX y copia maestra aprobada.'
+          },
+          {
+            number: '02',
+            title: 'Maquetación Frontend Responsive (HTML / Tailwind)',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '18-Sep-2026',
+            description: 'Construcción con tipografía Geist, botones flotantes de WhatsApp y compatibilidad móvil.',
+            deliverable: 'Repositorio en GitHub con CI/CD automatizado.'
+          },
+          {
+            number: '03',
+            title: 'Optimización de Velocidad & SEO Score 100/100',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '24-Sep-2026',
+            description: 'Auditoría Lighthouse en rendimiento, accesibilidad y mejores prácticas.',
+            deliverable: 'Certificado de auditoría 100% verde en móvil y desktop.'
+          },
+          {
+            number: '04',
+            title: 'Despliegue GitHub Pages + Cloudflare DNS SSL',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '28-Sep-2026',
+            description: 'Configuración de dominio con protección perimetral Cloudflare y enlace a portal.',
+            deliverable: 'Sitio en vivo nexos-ia.com y entrega de llaves.'
+          }
+        ]
+      },
+      'ago-data': {
+        title: 'Tablero Central de Datos & Reporteo',
+        badge: '#HIST-AGO-2026',
+        batch: '©NEXOS.2026 / AUDIT-04 / ARCHIVED',
+        scope: 'Auditoría & Análisis Histórico • Socio: Consultoría Santos Santillanes',
+        progressPct: '100%',
+        progressClass: 'bg-slate-700',
+        statusText: '100% AUDITADO — CORTE FINAL',
+        invoiceTitle: 'Factura Fiscal CFDI A-0988',
+        invoiceDesc: 'Importe: $18,000 MXN • Estatus: AUDITADO & ARCHIVADO',
+        liveUrl: '',
+        milestones: [
+          {
+            number: '01',
+            title: 'Auditoría & Limpieza de Fuentes Dispersas',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '05-Ago-2026',
+            description: 'Extracción de hojas de cálculo operativas, homologación de catálogos y eliminación de duplicados.',
+            deliverable: 'Data lake limpio con más de 109 casos consolidados.'
+          },
+          {
+            number: '02',
+            title: 'Modelado Relacional en BigQuery',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '15-Ago-2026',
+            description: 'Diseño de vistas SQL optimizadas para cálculo automático de métricas semanales y mensuales.',
+            deliverable: 'Conjunto de datos estructurado y consultas programadas.'
+          },
+          {
+            number: '03',
+            title: 'Diseño de Dashboards Ejecutivos en Looker Studio',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '22-Ago-2026',
+            description: 'Creación de gráficos de avance, embudos de conversión y alertas de desviaciones operativas.',
+            deliverable: 'Tablero interactivo compartido con permisos de lectura restringidos.'
+          },
+          {
+            number: '04',
+            title: 'Entrega de Llaves, Documentación & Respaldo en Bóveda',
+            status: 'Completado',
+            statusBadge: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+            date: '30-Ago-2026',
+            description: 'Transferencia de propiedad de reportes, respaldo en frío y cierre formal del proyecto.',
+            deliverable: 'Carpeta en Google Drive con toda la documentación archivada.'
+          }
+        ]
       }
-    });
+    };
 
-    document.getElementById('incidencias-form').addEventListener('submit', function(e) {
+    let currentOpenProjectKey = 'oct-agent';
+
+    // Abrir Modal de Hitos del Proyecto
+    function openMilestones(projectKey) {
+      currentOpenProjectKey = projectKey;
+      const data = projectMilestonesData[projectKey];
+      if (!data) return;
+
+      document.getElementById('m-title').textContent = data.title;
+      document.getElementById('m-badge').textContent = data.badge;
+      document.getElementById('m-batch').textContent = data.batch;
+      document.getElementById('m-scope').textContent = data.scope;
+      document.getElementById('m-progress-pct').textContent = data.progressPct;
+      
+      const bar = document.getElementById('m-progress-bar');
+      bar.style.width = data.progressPct;
+      bar.className = `h-full rounded-full transition-all duration-500 ${data.progressClass}`;
+
+      document.getElementById('m-status-text').textContent = data.statusText;
+      document.getElementById('m-invoice-title').textContent = data.invoiceTitle;
+      document.getElementById('m-invoice-desc').textContent = data.invoiceDesc;
+
+      const liveBtn = document.getElementById('m-btn-live');
+      if (data.liveUrl) {
+        liveBtn.style.display = 'inline-flex';
+        liveBtn.onclick = function() {
+          window.open(data.liveUrl, '_blank');
+        };
+      } else {
+        liveBtn.style.display = 'none';
+      }
+
+      // Renderizar la lista de hitos
+      const container = document.getElementById('m-milestones-container');
+      container.innerHTML = '';
+
+      data.milestones.forEach(m => {
+        const item = document.createElement('div');
+        item.className = 'border border-[#d9d5cc] rounded-xl p-3.5 bg-white shadow-sm space-y-2 hover:border-[#11141a] transition-colors';
+        item.innerHTML = `
+          <div class="flex justify-between items-start gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-md bg-[#11141a] text-white flex items-center justify-center font-mono-custom text-xs font-bold">${m.number}</span>
+              <h5 class="font-extrabold text-xs text-[#11141a]">${m.title}</h5>
+            </div>
+            <div class="flex items-center gap-2 flex-shrink-0">
+              <span class="text-[10px] font-mono-custom font-semibold text-[#676862]">📅 ${m.date}</span>
+              <span class="text-[10px] font-mono-custom font-bold px-2 py-0.5 rounded border ${m.statusBadge}">${m.status}</span>
+            </div>
+          </div>
+          <p class="text-xs text-[#48505c] leading-relaxed pl-8">${m.description}</p>
+          <div class="pl-8 pt-1 flex items-center gap-1.5 text-[11px] text-[#11141a] font-medium">
+            <span class="text-[#f15a24] font-bold">📦 Entregable:</span>
+            <span>${m.deliverable}</span>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+
+      const modal = document.getElementById('milestoneModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeMilestones() {
+      const modal = document.getElementById('milestoneModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openIncidentFromMilestone() {
+      const data = projectMilestonesData[currentOpenProjectKey];
+      closeMilestones();
+      openModal();
+      const select = document.getElementById('ticketDev');
+      if (select && data) {
+        select.value = data.title.includes('WhatsApp') ? 'Agente IA WhatsApp (Octubre)' :
+                       data.title.includes('OCR') ? 'Lector OCR Contable' :
+                       data.title.includes('Conversión') ? 'Portal de Alta Conversión' :
+                       data.title.includes('Datos') ? 'Tablero Central de Datos' : select.value;
+      }
+    }
+
+    function openLiveDemo() {
+      const data = projectMilestonesData[currentOpenProjectKey];
+      if (data && data.liveUrl) {
+        window.open(data.liveUrl, '_blank');
+      }
+    }
+
+    // Filtro por mes interactivo
+    function filterMonth(month) {
+      const cards = document.querySelectorAll('.proj-card');
+      const buttons = ['all', 'oct', 'sep', 'ago'];
+      
+      buttons.forEach(b => {
+        const btn = document.getElementById('btn-' + b);
+        if (b === month) {
+          btn.className = "px-2.5 py-1 rounded-lg bg-[#11141a] text-white font-bold transition-all";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-lg text-[#676862] hover:text-[#11141a] transition-all";
+        }
+      });
+
+      cards.forEach(card => {
+        if (month === 'all') {
+          card.style.display = 'flex';
+        } else {
+          if (card.classList.contains(month)) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    // Modal de Incidencias
+    function openModal() {
+      document.getElementById('incidentModal').classList.remove('hidden');
+      document.getElementById('incidentModal').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('incidentModal').classList.add('hidden');
+      document.getElementById('incidentModal').classList.remove('flex');
+    }
+
+    function openTicketWithDev(devName) {
+      openModal();
+      const select = document.getElementById('ticketDev');
+      if (select) select.value = devName;
+    }
+
+    function handleTicketSubmit(e) {
       e.preventDefault();
-      
-      const area = document.getElementById('inc-area').value;
-      const urgency = document.getElementById('inc-urgency').value;
-      const desc = document.getElementById('inc-desc').value;
-      const files = document.getElementById('inc-file').files;
-      
-      const partnerName = "Consultoría Santos Santillanes"; 
-      
-      let mensaje = `*🎫 NUEVO TICKET DESDE PORTAL - ${area}*\n`;
-      mensaje += `*Socio:* ${partnerName}\n`;
-      mensaje += `*Urgencia:* ${urgency}\n\n`;
-      mensaje += `*Detalles de la incidencia:*\n${desc}\n\n`;
-      
-      if(files.length > 0) {
-        mensaje += `_(Tengo ${files.length} imagen/es de evidencia que te envío a continuación)_`;
-      }
+      const dev = document.getElementById('ticketDev').value;
+      const priority = document.getElementById('ticketPriority').value;
+      const desc = document.getElementById('ticketDesc').value;
+      const partner = "Consultoría Santos Santillanes";
+      const ticketId = 'TK-' + Math.floor(100 + Math.random() * 900);
 
-      const nexosPhone = "525514803488";
-      const waUrl = `https://wa.me/${nexosPhone}?text=${encodeURIComponent(mensaje)}`;
-      
+      const msg = `*🎫 NUEVO TICKET DESDE PORTAL DEL SOCIO [${ticketId}]*
+*Socio:* ${partner}
+*Desarrollo:* ${dev}
+*Prioridad:* ${priority}
+
+*Detalles de la incidencia o hito:*
+${desc}
+
+_(Te adjunto capturas de pantalla de evidencia a continuación)_`;
+
+      const waUrl = `https://wa.me/525514803488?text=${encodeURIComponent(msg)}`;
       window.open(waUrl, '_blank');
-      closeIncidentModal();
+      closeModal();
+      document.getElementById('ticketForm').reset();
+    }
+
+    // Cerrar modales con tecla ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeMilestones();
+        closeModal();
+      }
     });
   </script>
 </body>
