@@ -2,10 +2,210 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=dashboard_sanofi1/">
-    <title>Redirigiendo a Dashboard Sanofi...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Med&Corp • Dashboards Clínicos Sanofi 2026 | NEXOS IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-base: #060b18;
+            --bg-card: #0f172a;
+            --border-card: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #ec5a28;
+            --accent-sanofi: #e11d48;
+            --accent-blue: #0284c7;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .container {
+            max-width: 860px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .header {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .badge {
+            align-self: center;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(225, 29, 72, 0.12);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            color: #fb7185;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 20px;
+            margin-top: 12px;
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(225, 29, 72, 0.5);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .icon-v1 { background: rgba(2, 132, 199, 0.15); color: #38bdf8; }
+        .icon-v2 { background: rgba(225, 29, 72, 0.15); color: #fb7185; }
+        .card-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.05);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 19px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .card-meta {
+            display: flex;
+            gap: 16px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .meta-item strong {
+            color: #fff;
+        }
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-sanofi);
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: auto;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 20px;
+        }
+        .footer a {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
 </head>
-<body style="background: #060b18; color: #fff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
-    <p>Redirigiendo al dashboard... <a href="dashboard_sanofi1/" style="color: #e11d48;">Haz clic aquí si no redirige automáticamente</a></p>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="badge"><i class="fa-solid fa-shield-heart"></i> Portal Clínico Corporativo</span>
+            <h1>Campaña de Salud SANOFI 2026</h1>
+            <p class="subtitle">Selecciona la versión del dashboard epidemiológico que deseas consultar:</p>
+        </div>
+
+        <div class="grid">
+            <a href="dashboard_sanofi1/" class="card">
+                <div class="card-top">
+                    <div class="card-icon icon-v1"><i class="fa-solid fa-hospital-user"></i></div>
+                    <span class="card-tag">Mayo - Julio 2026</span>
+                </div>
+                <div>
+                    <h2 class="card-title">Campaña SANOFI Corporativa</h2>
+                    <p class="card-desc">Evaluación preventiva central con antropometría InBody, laboratorio Chopo 12 elementos, espirometría, EKG y odontograma.</p>
+                </div>
+                <div class="card-meta">
+                    <span class="meta-item">Población: <strong>194 personas</strong></span>
+                    <span class="meta-item">Pestañas: <strong>6 secciones</strong></span>
+                </div>
+                <div class="btn-link">Ver Dashboard Corporativo <i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+
+            <a href="dashboard_sanofi2/" class="card">
+                <div class="card-top">
+                    <div class="card-icon icon-v2"><i class="fa-solid fa-truck-medical"></i></div>
+                    <span class="card-tag">Agosto - Octubre 2026</span>
+                </div>
+                <div>
+                    <h2 class="card-title">Campaña SANOFI Foráneos</h2>
+                    <p class="card-desc">Seguimiento clínico para fuerza laboral remota con telemedicina integrada, biomarcadores Chopo y cuestionario de estilo de vida.</p>
+                </div>
+                <div class="card-meta">
+                    <span class="meta-item">Población: <strong>26/27 personas</strong></span>
+                    <span class="meta-item">Pestañas: <strong>5 secciones</strong></span>
+                </div>
+                <div class="btn-link">Ver Dashboard Foráneos <i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+        </div>
+
+        <div class="footer">
+            Med&Corp • Medicina Corporativa Integral | Desarrollado por <a href="https://nexos-ia.com/">NEXOS IA</a>
+        </div>
+    </div>
 </body>
 </html>
