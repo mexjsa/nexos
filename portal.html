@@ -105,6 +105,11 @@
       background-color: #dedad0;
     }
 
+    /* Avatar hover effect para personalización de foto */
+    .avatar-upload-trigger:hover .avatar-overlay {
+      opacity: 1;
+    }
+
     /* Scrollbars suaves */
     ::-webkit-scrollbar {
       width: 6px;
@@ -127,12 +132,18 @@
   <!-- Barra superior para móviles con botón de menú hamburguesa -->
   <div class="lg:hidden bg-white border-b border-[#dedad0] p-4 flex justify-between items-center sticky top-0 z-40 shadow-sm">
     <div class="flex items-center gap-2.5">
-      <span class="w-7 h-7 rounded-lg bg-[#11141a] text-white flex items-center justify-center font-black text-xs">N</span>
+      <!-- LOGOTIPO NEXOS IA (DOBLE NODO GEOMÉTRICO) -->
+      <span class="w-8 h-8 rounded-lg bg-[#11141a] flex items-center justify-center p-1.5 shadow-sm">
+        <span class="w-5 h-5 relative inline-block">
+          <span class="absolute w-3 h-3 bg-[#ff4800] top-0 left-0 rounded-sm"></span>
+          <span class="absolute w-3 h-3 bg-[#ff4800] bottom-0 right-0 opacity-60 rounded-sm"></span>
+        </span>
+      </span>
       <h1 class="font-extrabold text-sm tracking-tight text-[#11141a]">NEXOS IA</h1>
       <span class="font-mono-custom text-[10px] font-bold uppercase tracking-wider bg-[#fff3ed] text-[#ff4800] px-1.5 py-0.5 rounded border border-[#ffd2c2]">Portal del Socio</span>
     </div>
     <button onclick="toggleMobileSidebar()" class="p-2 rounded-lg bg-[#f6f5f1] border border-[#dedad0] text-xs font-bold flex items-center gap-1.5">
-      <span>Árbol & Secciones</span>
+      <span>Secciones</span>
       <svg class="w-4 h-4 text-[#ff4800]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
     </button>
   </div>
@@ -142,20 +153,25 @@
 
     <!-- ==============================================================
          PANEL LATERAL IZQUIERDO (SIDEBAR):
-         1. Encabezado de Identidad y Socio
-         2. Árbol Ramificado Interactivo con Secciones y Subtemas
+         1. Logotipo oficial de NEXOS IA & Identidad
+         2. Ficha del Socio con Fotografía Personalizable
+         3. Árbol de Secciones con tipografía unificada (Geist)
          ============================================================== -->
     <aside id="sidebarNav" class="w-full lg:w-80 xl:w-96 bg-white border-r border-[#dedad0] flex flex-col justify-between shrink-0 shadow-sm z-30 hidden lg:flex lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
       
       <!-- Contenido Superior del Sidebar -->
       <div class="p-5 md:p-6 space-y-6">
 
-        <!-- 1. Encabezado de Marca y Portal (Reubicado a la izquierda) -->
-        <div class="space-y-3 pb-5 border-b border-[#edebe6]">
+        <!-- 1. Logotipo Oficial NEXOS IA y Título -->
+        <div class="space-y-4 pb-5 border-b border-[#edebe6]">
           <div class="flex items-center gap-3">
-            <span class="w-9 h-9 rounded-xl bg-[#11141a] text-white flex items-center justify-center font-black text-base shadow-sm">
-              N
-            </span>
+            <!-- LOGOTIPO NEXOS IA: NODO DUAL OFICIAL DE LA MARCA -->
+            <div class="w-10 h-10 rounded-xl bg-[#11141a] flex items-center justify-center p-2 shadow-sm border border-[#e5e2db] shrink-0">
+              <span class="w-6 h-6 relative inline-block">
+                <span class="absolute w-3.5 h-3.5 bg-[#ff4800] top-0 left-0 rounded-sm"></span>
+                <span class="absolute w-3.5 h-3.5 bg-[#ff4800] bottom-0 right-0 opacity-60 rounded-sm"></span>
+              </span>
+            </div>
             <div>
               <div class="flex items-center gap-2">
                 <h2 class="font-black text-lg tracking-tight text-[#11141a]">NEXOS IA</h2>
@@ -163,20 +179,43 @@
                   PORTAL DEL SOCIO
                 </span>
               </div>
-              <p class="text-[11px] text-[#6e7178] leading-tight mt-0.5">
+              <p class="text-xs text-[#6e7178] leading-tight mt-0.5">
                 Seguimiento operativo, hitos y facturación
               </p>
             </div>
           </div>
 
-          <!-- Tarjeta de Identidad del Socio Autenticado (Cloudflare Access) -->
-          <div class="bg-[#faf9f6] border border-[#e3e0d8] p-3 rounded-xl flex items-center gap-3 shadow-inner">
-            <div class="w-8 h-8 rounded-full bg-[#11141a] text-white flex items-center justify-center font-bold text-xs font-mono-custom shrink-0 shadow-sm">
-              CS
+          <!-- 2. Tarjeta del Socio con FOTOGRAFÍA PERSONALIZABLE -->
+          <div class="bg-[#faf9f6] border border-[#e3e0d8] p-3 rounded-xl flex items-center gap-3 shadow-inner relative group">
+            
+            <!-- Avatar interactivo con cambio de foto -->
+            <div onclick="triggerPartnerAvatarUpload()" class="avatar-upload-trigger relative w-11 h-11 rounded-full overflow-hidden shrink-0 cursor-pointer shadow-sm border-2 border-white ring-1 ring-[#dedad0] group" title="Haz clic para personalizar con tu fotografía">
+              <!-- Imagen de foto (cargada o por defecto) -->
+              <img id="partnerAvatarImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&h=160&q=80" alt="Fotografía del Socio" class="w-full h-full object-cover">
+              
+              <!-- Fallback inicial si no hay foto -->
+              <div id="partnerAvatarFallback" class="hidden w-full h-full bg-[#11141a] text-white items-center justify-center font-bold text-xs font-mono-custom">
+                CS
+              </div>
+
+              <!-- Overlay para subir foto -->
+              <div class="avatar-overlay absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white text-[9px] font-bold">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span>Foto</span>
+              </div>
             </div>
-            <div class="min-w-0">
-              <p class="font-bold text-xs text-[#11141a] truncate">Consultoría Santos Santillanes</p>
-              <p class="text-[10px] text-[#6e7178] flex items-center gap-1.5 mt-0.5">
+
+            <!-- Input invisible para subir foto desde la computadora -->
+            <input type="file" id="partnerPhotoInput" accept="image/*" class="hidden" onchange="handlePartnerPhotoUpload(event)">
+
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between">
+                <p class="font-bold text-xs text-[#11141a] truncate">Consultoría Santos Santillanes</p>
+                <button onclick="triggerPartnerAvatarUpload()" class="text-[10px] text-[#ff4800] hover:underline font-semibold flex items-center gap-0.5 shrink-0" title="Cambiar imagen">
+                  <span>📸</span>
+                </button>
+              </div>
+              <p class="text-[11px] text-[#6e7178] flex items-center gap-1.5 mt-0.5">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 Autenticado vía Cloudflare Access (PIN)
               </p>
@@ -184,155 +223,146 @@
           </div>
         </div>
 
-        <!-- 2. ÁRBOL RAMIFICADO DE SECCIONES Y SUBTEMAS (INTERACTIVO) -->
-        <div class="space-y-3">
-          <div class="flex items-center justify-between">
-            <p class="font-mono-custom text-[11px] font-bold uppercase tracking-wider text-[#7a7d85] flex items-center gap-1.5">
-              <span>🌿 ÁRBOL DE NAVEGACIÓN</span>
-            </p>
-            <span class="text-[10px] font-mono-custom text-[#ff4800] font-bold">Clic para extender</span>
+        <!-- 3. ÁRBOL DE SECCIONES (TIPOGRAFÍA GEIST UNIFICADA) -->
+        <nav class="space-y-3 text-xs">
+
+          <!-- RAMA 1: DESARROLLOS & PROYECTOS -->
+          <div class="tree-item">
+            <button onclick="toggleTreeNode('tree-devs', 'icon-devs')" class="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f6f5f1] text-[#11141a] font-bold text-left group transition-colors">
+              <div class="flex items-center gap-2">
+                <span id="icon-devs" class="text-[10px] text-[#7a7d85] transition-transform duration-200">▼</span>
+                <span class="w-2 h-2 rounded-full bg-[#ff4800]"></span>
+                <span class="font-bold text-xs text-[#11141a]">1. Desarrollos & Proyectos</span>
+              </div>
+              <span class="text-[10px] font-mono-custom bg-[#edebe6] text-[#11141a] font-bold px-1.5 py-0.5 rounded">4</span>
+            </button>
+
+            <!-- Conector vertical de proyectos -->
+            <div id="tree-devs" class="tree-branch ml-3 pl-3 border-l-2 border-[#e3e0d8] space-y-2 mt-1">
+
+              <!-- SUBRAMA: OCTUBRE 2026 -->
+              <div class="tree-subitem">
+                <button onclick="toggleTreeNode('tree-oct', 'icon-oct'); filterMonth('oct');" class="tree-node-line w-full flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#f6f5f1] text-xs font-semibold text-[#11141a] text-left transition-colors">
+                  <div class="flex items-center gap-1.5">
+                    <span id="icon-oct" class="text-[9px] text-[#7a7d85] transition-transform duration-200">▼</span>
+                    <span>📁 Octubre 2026</span>
+                    <span class="text-[10px] font-bold text-[#ff4800]">(Activo)</span>
+                  </div>
+                  <span class="text-[10px] font-mono-custom bg-emerald-100 text-emerald-800 font-bold px-1.5 rounded">2</span>
+                </button>
+
+                <!-- Hojas de Octubre -->
+                <div id="tree-oct" class="tree-branch ml-3 pl-3 border-l border-[#dedad0] space-y-1 mt-1">
+                  <a href="#proj-oct-agent" onclick="selectProject('oct-agent')" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] hover:text-[#ff4800] text-xs text-[#484b52] font-medium transition-colors">
+                    <span class="truncate">🤖 Agente IA WhatsApp</span>
+                    <span class="text-[10px] font-mono-custom font-bold text-emerald-700">85%</span>
+                  </a>
+                  <a href="#proj-oct-ocr" onclick="selectProject('oct-ocr')" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] hover:text-[#ff4800] text-xs text-[#484b52] font-medium transition-colors">
+                    <span class="truncate">🔍 Lector OCR Contable</span>
+                    <span class="text-[10px] font-mono-custom font-bold text-amber-700">40%</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SUBRAMA: SEPTIEMBRE 2026 -->
+              <div class="tree-subitem">
+                <button onclick="toggleTreeNode('tree-sep', 'icon-sep'); filterMonth('sep');" class="tree-node-line w-full flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#f6f5f1] text-xs font-semibold text-[#11141a] text-left transition-colors">
+                  <div class="flex items-center gap-1.5">
+                    <span id="icon-sep" class="text-[9px] text-[#7a7d85] transition-transform duration-200">▼</span>
+                    <span>📁 Septiembre 2026</span>
+                  </div>
+                  <span class="text-[10px] font-mono-custom bg-blue-100 text-blue-800 font-bold px-1.5 rounded">1</span>
+                </button>
+
+                <div id="tree-sep" class="tree-branch ml-3 pl-3 border-l border-[#dedad0] space-y-1 mt-1">
+                  <a href="#proj-sep-web" onclick="selectProject('sep-web')" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] hover:text-[#ff4800] text-xs text-[#484b52] font-medium transition-colors">
+                    <span class="truncate">🌐 Portal Alta Conversión</span>
+                    <span class="text-[10px] font-mono-custom font-bold text-blue-700">100%</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- SUBRAMA: AGOSTO 2026 -->
+              <div class="tree-subitem">
+                <button onclick="toggleTreeNode('tree-ago', 'icon-ago'); filterMonth('ago');" class="tree-node-line w-full flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#f6f5f1] text-xs font-semibold text-[#11141a] text-left transition-colors">
+                  <div class="flex items-center gap-1.5">
+                    <span id="icon-ago" class="text-[9px] text-[#7a7d85] transition-transform duration-200">▼</span>
+                    <span>📁 Agosto 2026</span>
+                  </div>
+                  <span class="text-[10px] font-mono-custom bg-gray-200 text-gray-700 font-bold px-1.5 rounded">1</span>
+                </button>
+
+                <div id="tree-ago" class="tree-branch ml-3 pl-3 border-l border-[#dedad0] space-y-1 mt-1">
+                  <a href="#proj-ago-data" onclick="selectProject('ago-data')" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] hover:text-[#ff4800] text-xs text-[#484b52] font-medium transition-colors">
+                    <span class="truncate">📊 Tablero Central Datos</span>
+                    <span class="text-[10px] font-mono-custom font-bold text-gray-600">Audit</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
           </div>
 
-          <nav class="space-y-2 text-xs font-mono-custom">
-
-            <!-- RAMA PRINCIPAL 1: DESARROLLOS & PROYECTOS -->
-            <div class="tree-item">
-              <button onclick="toggleTreeNode('tree-devs', 'icon-devs')" class="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f6f5f1] text-[#11141a] font-bold text-left group transition-colors">
-                <div class="flex items-center gap-2">
-                  <span id="icon-devs" class="text-[10px] text-[#7a7d85] transition-transform duration-200">▼</span>
-                  <span class="w-2 h-2 rounded-full bg-[#ff4800]"></span>
-                  <span class="font-sans font-bold text-xs text-[#11141a]">1. Desarrollos & Proyectos</span>
-                </div>
-                <span class="text-[10px] bg-[#edebe6] text-[#11141a] font-bold px-1.5 py-0.5 rounded">4</span>
-              </button>
-
-              <!-- Conector vertical de la rama de proyectos -->
-              <div id="tree-devs" class="tree-branch ml-3 pl-3 border-l-2 border-[#e3e0d8] space-y-2 mt-1">
-
-                <!-- SUBRAMA: OCTUBRE 2026 (ACTIVO) -->
-                <div class="tree-subitem">
-                  <button onclick="toggleTreeNode('tree-oct', 'icon-oct'); filterMonth('oct');" class="tree-node-line w-full flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#f6f5f1] text-[11px] font-semibold text-[#11141a] text-left transition-colors">
-                    <div class="flex items-center gap-1.5">
-                      <span id="icon-oct" class="text-[9px] text-[#7a7d85] transition-transform duration-200">▼</span>
-                      <span>📁 Octubre 2026</span>
-                      <span class="text-[9px] text-[#ff4800] font-bold">(Activo)</span>
-                    </div>
-                    <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 rounded">2</span>
-                  </button>
-
-                  <!-- Nodos hoja de Octubre -->
-                  <div id="tree-oct" class="tree-branch ml-3 pl-3 border-l border-[#dedad0] space-y-1 mt-1">
-                    <a href="#proj-oct-agent" onclick="selectProject('oct-agent')" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] hover:text-[#ff4800] text-[11px] text-[#484b52] transition-colors">
-                      <span class="truncate">🤖 Agente IA WhatsApp</span>
-                      <span class="text-[10px] font-bold text-emerald-700">85%</span>
-                    </a>
-                    <a href="#proj-oct-ocr" onclick="selectProject('oct-ocr')" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] hover:text-[#ff4800] text-[11px] text-[#484b52] transition-colors">
-                      <span class="truncate">🔍 Lector OCR Contable</span>
-                      <span class="text-[10px] font-bold text-amber-700">40%</span>
-                    </a>
-                  </div>
-                </div>
-
-                <!-- SUBRAMA: SEPTIEMBRE 2026 (ENTREGADO) -->
-                <div class="tree-subitem">
-                  <button onclick="toggleTreeNode('tree-sep', 'icon-sep'); filterMonth('sep');" class="tree-node-line w-full flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#f6f5f1] text-[11px] font-semibold text-[#11141a] text-left transition-colors">
-                    <div class="flex items-center gap-1.5">
-                      <span id="icon-sep" class="text-[9px] text-[#7a7d85] transition-transform duration-200">▼</span>
-                      <span>📁 Septiembre 2026</span>
-                    </div>
-                    <span class="text-[9px] bg-blue-100 text-blue-800 font-bold px-1.5 rounded">1</span>
-                  </button>
-
-                  <div id="tree-sep" class="tree-branch ml-3 pl-3 border-l border-[#dedad0] space-y-1 mt-1">
-                    <a href="#proj-sep-web" onclick="selectProject('sep-web')" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] hover:text-[#ff4800] text-[11px] text-[#484b52] transition-colors">
-                      <span class="truncate">🌐 Portal Alta Conversión</span>
-                      <span class="text-[10px] font-bold text-blue-700">100%</span>
-                    </a>
-                  </div>
-                </div>
-
-                <!-- SUBRAMA: AGOSTO 2026 (HISTÓRICO) -->
-                <div class="tree-subitem">
-                  <button onclick="toggleTreeNode('tree-ago', 'icon-ago'); filterMonth('ago');" class="tree-node-line w-full flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#f6f5f1] text-[11px] font-semibold text-[#11141a] text-left transition-colors">
-                    <div class="flex items-center gap-1.5">
-                      <span id="icon-ago" class="text-[9px] text-[#7a7d85] transition-transform duration-200">▼</span>
-                      <span>📁 Agosto 2026</span>
-                    </div>
-                    <span class="text-[9px] bg-gray-200 text-gray-700 font-bold px-1.5 rounded">1</span>
-                  </button>
-
-                  <div id="tree-ago" class="tree-branch ml-3 pl-3 border-l border-[#dedad0] space-y-1 mt-1">
-                    <a href="#proj-ago-data" onclick="selectProject('ago-data')" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#fff3ed] hover:text-[#ff4800] text-[11px] text-[#484b52] transition-colors">
-                      <span class="truncate">📊 Tablero Central Datos</span>
-                      <span class="text-[10px] font-bold text-gray-600">Audit</span>
-                    </a>
-                  </div>
-                </div>
-
+          <!-- RAMA 2: CENTRO DE INCIDENCIAS -->
+          <div class="tree-item pt-2 border-t border-[#edebe6]">
+            <button onclick="toggleTreeNode('tree-incidents', 'icon-incidents')" class="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f6f5f1] text-[#11141a] font-bold text-left group transition-colors">
+              <div class="flex items-center gap-2">
+                <span id="icon-incidents" class="text-[10px] text-[#7a7d85] transition-transform duration-200">▼</span>
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                <span class="font-bold text-xs text-[#11141a]">2. Centro de Incidencias</span>
               </div>
-            </div>
+              <span class="text-[10px] font-mono-custom bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded">2</span>
+            </button>
 
-            <!-- RAMA PRINCIPAL 2: CENTRO DE INCIDENCIAS & SOPORTE -->
-            <div class="tree-item pt-2 border-t border-[#edebe6]">
-              <button onclick="toggleTreeNode('tree-incidents', 'icon-incidents')" class="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f6f5f1] text-[#11141a] font-bold text-left group transition-colors">
-                <div class="flex items-center gap-2">
-                  <span id="icon-incidents" class="text-[10px] text-[#7a7d85] transition-transform duration-200">▼</span>
-                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                  <span class="font-sans font-bold text-xs text-[#11141a]">2. Centro de Incidencias</span>
-                </div>
-                <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded">2</span>
+            <div id="tree-incidents" class="tree-branch ml-3 pl-3 border-l-2 border-[#e3e0d8] space-y-1.5 mt-1">
+              <a href="#seccion-incidencias" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-xs text-[#484b52] font-medium">
+                <span>🎫 #TK-104 (WhatsApp)</span>
+                <span class="text-[10px] font-mono-custom text-emerald-700 font-bold">✓ Resuelto</span>
+              </a>
+              <a href="#seccion-incidencias" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-xs text-[#484b52] font-medium">
+                <span>🎫 #TK-105 (Lector OCR)</span>
+                <span class="text-[10px] font-mono-custom text-amber-700 font-bold">🔄 En curso</span>
+              </a>
+              <button onclick="openModal()" class="tree-node-line w-full flex items-center gap-1.5 py-1 px-2 rounded-md text-xs font-bold text-[#ff4800] hover:bg-[#fff3ed] text-left transition-colors">
+                <span>➕ Levantar Nueva Incidencia</span>
               </button>
-
-              <div id="tree-incidents" class="tree-branch ml-3 pl-3 border-l-2 border-[#e3e0d8] space-y-1.5 mt-1">
-                <a href="#seccion-incidencias" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-[11px] text-[#484b52]">
-                  <span>🎫 #TK-104 (WhatsApp)</span>
-                  <span class="text-[10px] text-emerald-700 font-bold">✓ Resuelto</span>
-                </a>
-                <a href="#seccion-incidencias" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-[11px] text-[#484b52]">
-                  <span>🎫 #TK-105 (Lector OCR)</span>
-                  <span class="text-[10px] text-amber-700 font-bold">🔄 En curso</span>
-                </a>
-                <button onclick="openModal()" class="tree-node-line w-full flex items-center gap-1.5 py-1 px-2 rounded-md text-[11px] font-bold text-[#ff4800] hover:bg-[#fff3ed] text-left transition-colors">
-                  <span>➕ Levantar Nueva Incidencia</span>
-                </button>
-              </div>
             </div>
+          </div>
 
-            <!-- RAMA PRINCIPAL 3: EXPEDIENTE FISCAL & BÓVEDA -->
-            <div class="tree-item pt-2 border-t border-[#edebe6]">
-              <button onclick="toggleTreeNode('tree-vault', 'icon-vault')" class="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f6f5f1] text-[#11141a] font-bold text-left group transition-colors">
-                <div class="flex items-center gap-2">
-                  <span id="icon-vault" class="text-[10px] text-[#7a7d85] transition-transform duration-200">▼</span>
-                  <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                  <span class="font-sans font-bold text-xs text-[#11141a]">3. Bóveda Fiscal & Drive</span>
-                </div>
-                <span class="text-[10px] bg-[#edebe6] text-[#11141a] font-bold px-1.5 py-0.5 rounded">3</span>
+          <!-- RAMA 3: EXPEDIENTE FISCAL & BÓVEDA -->
+          <div class="tree-item pt-2 border-t border-[#edebe6]">
+            <button onclick="toggleTreeNode('tree-vault', 'icon-vault')" class="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#f6f5f1] text-[#11141a] font-bold text-left group transition-colors">
+              <div class="flex items-center gap-2">
+                <span id="icon-vault" class="text-[10px] text-[#7a7d85] transition-transform duration-200">▼</span>
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                <span class="font-bold text-xs text-[#11141a]">3. Bóveda Fiscal & Drive</span>
+              </div>
+              <span class="text-[10px] font-mono-custom bg-[#edebe6] text-[#11141a] font-bold px-1.5 py-0.5 rounded">3</span>
+            </button>
+
+            <div id="tree-vault" class="tree-branch ml-3 pl-3 border-l-2 border-[#e3e0d8] space-y-1.5 mt-1">
+              <button onclick="alert('Descargando ZIP con todas las facturas del año fiscal 2026...')" class="tree-node-line w-full flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-xs text-[#484b52] font-medium text-left transition-colors">
+                <span>🧾 Lote Facturas CFDI (ZIP)</span>
+                <span class="text-xs text-[#ff4800] font-bold">↓</span>
               </button>
-
-              <div id="tree-vault" class="tree-branch ml-3 pl-3 border-l-2 border-[#e3e0d8] space-y-1.5 mt-1">
-                <button onclick="alert('Descargando ZIP con todas las facturas del año fiscal 2026...')" class="tree-node-line w-full flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-[11px] text-[#484b52] text-left transition-colors">
-                  <span>🧾 Lote Facturas CFDI (ZIP)</span>
-                  <span class="text-[10px] text-[#ff4800] font-bold">↓</span>
-                </button>
-                <a href="https://drive.google.com" target="_blank" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-[11px] text-[#484b52]">
-                  <span>📁 Google Drive del Socio</span>
-                  <span class="text-[10px] text-gray-400">↗</span>
-                </a>
-                <a href="index.html" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-[11px] text-[#484b52]">
-                  <span>🏠 Portal Público NEXOS IA</span>
-                  <span class="text-[10px] text-[#ff4800] font-bold">→</span>
-                </a>
-              </div>
+              <a href="https://drive.google.com" target="_blank" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-xs text-[#484b52] font-medium">
+                <span>📁 Google Drive del Socio</span>
+                <span class="text-xs text-gray-400">↗</span>
+              </a>
+              <a href="index.html" class="tree-node-line flex items-center justify-between py-1 px-2 rounded-md hover:bg-[#f6f5f1] text-xs text-[#484b52] font-medium">
+                <span>🏠 Portal Público NEXOS IA</span>
+                <span class="text-xs text-[#ff4800] font-bold">→</span>
+              </a>
             </div>
+          </div>
 
-          </nav>
-        </div>
+        </nav>
 
       </div>
 
       <!-- Footer del Sidebar: Soporte Inmediato por WhatsApp -->
       <div class="p-5 border-t border-[#edebe6] bg-[#faf9f6] space-y-3">
-        <div class="flex items-center justify-between text-[11px] text-[#6e7178]">
+        <div class="flex items-center justify-between text-xs text-[#6e7178]">
           <span class="flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
             <span>Cloudflare Access Activo</span>
@@ -364,7 +394,7 @@
               </h2>
             </div>
             <p class="text-xs text-[#6e7178] mt-1">
-              Selecciona cualquier caja para abrir sus <strong>Hitos Operativos</strong> o utiliza el árbol de navegación lateral.
+              Selecciona cualquier caja para abrir sus <strong>Hitos Operativos</strong> o utiliza el menú de navegación lateral.
             </p>
           </div>
 
@@ -757,15 +787,15 @@
         <!-- Tabla de Incidencias Activas y Pasadas -->
         <div class="overflow-x-auto border border-[#dedad0] rounded-xl">
           <table class="w-full text-left text-xs">
-            <thead class="bg-[#fbfaf8] text-[#6e7178] font-mono-custom border-b border-[#dedad0]">
+            <thead class="bg-[#fbfaf8] text-[#6e7178] border-b border-[#dedad0]">
               <tr>
-                <th class="p-3">FOLIO</th>
-                <th class="p-3">DESARROLLO VINCULADO</th>
-                <th class="p-3">REQUERIMIENTO</th>
-                <th class="p-3">PRIORIDAD</th>
-                <th class="p-3">ESTATUS</th>
-                <th class="p-3">FACTURA ASOCIADA</th>
-                <th class="p-3 text-right">ACCIÓN</th>
+                <th class="p-3 font-semibold">FOLIO</th>
+                <th class="p-3 font-semibold">DESARROLLO VINCULADO</th>
+                <th class="p-3 font-semibold">REQUERIMIENTO</th>
+                <th class="p-3 font-semibold">PRIORIDAD</th>
+                <th class="p-3 font-semibold">ESTATUS</th>
+                <th class="p-3 font-semibold">FACTURA ASOCIADA</th>
+                <th class="p-3 font-semibold text-right">ACCIÓN</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-[#eee] text-[#11141a]">
@@ -992,7 +1022,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT DE INTERACTIVIDAD & ÁRBOL -->
+  <!-- SCRIPT DE INTERACTIVIDAD & ÁRBOL & FOTO DEL SOCIO -->
   <script>
     const projectMilestonesData = {
       'oct-agent': {
@@ -1194,6 +1224,48 @@
     };
 
     let currentOpenProjectKey = 'oct-agent';
+
+    // FUNCIÓN PARA PERSONALIZAR LA FOTOGRAFÍA DEL SOCIO
+    function triggerPartnerAvatarUpload() {
+      const fileInput = document.getElementById('partnerPhotoInput');
+      if (fileInput) fileInput.click();
+    }
+
+    function handlePartnerPhotoUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const photoUrl = e.target.result;
+          const img = document.getElementById('partnerAvatarImg');
+          const fallback = document.getElementById('partnerAvatarFallback');
+          if (img) {
+            img.src = photoUrl;
+            img.classList.remove('hidden');
+          }
+          if (fallback) fallback.classList.add('hidden');
+          try {
+            localStorage.setItem('nexos_partner_photo', photoUrl);
+          } catch (err) {
+            console.warn('LocalStorage excedido al guardar imagen', err);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Cargar foto guardada previamente al iniciar
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const savedPhoto = localStorage.getItem('nexos_partner_photo');
+        if (savedPhoto) {
+          const img = document.getElementById('partnerAvatarImg');
+          if (img) img.src = savedPhoto;
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    });
 
     // INTERACTIVIDAD DEL ÁRBOL RAMIFICADO (Toggles)
     function toggleTreeNode(elementId, iconId) {
